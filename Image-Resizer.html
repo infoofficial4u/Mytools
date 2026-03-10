@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Resizer</title>
+
+<meta name="description" content="Resize images online free">
+<meta name="keywords" content="image resizer, resize photo, image resize online">
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f6fb;
+}
+
+header{
+background:white;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.tool-box{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:10px;
+padding:10px 15px;
+border:none;
+border-radius:5px;
+background:#4a6cff;
+color:white;
+cursor:pointer;
+}
+
+.clear{
+background:#ff4b4b;
+}
+
+.preview{
+margin-top:20px;
+text-align:center;
+display:none;
+}
+
+canvas{
+max-width:100%;
+border-radius:8px;
+}
+
+.info{
+margin-top:8px;
+font-size:14px;
+color:#555;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="index.html">⬅ Back</a>
+<div>MyTools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>🖼 Image Resizer</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<div class="info">Input Size: <span id="inputSize">-</span></div>
+
+<input type="number" id="width" placeholder="Width">
+<input type="number" id="height" placeholder="Height">
+
+<label>
+<input type="checkbox" id="ratio" checked>
+Lock Aspect Ratio
+</label>
+
+<select id="format">
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPEG</option>
+<option value="image/webp">WEBP</option>
+</select>
+
+<button onclick="resizeImage()">Resize Image</button>
+<button class="clear" onclick="clearTool()">Clear</button>
+
+<div class="preview" id="previewBox">
+
+<canvas id="canvas"></canvas>
+
+<div class="info">Output Size: <span id="outputSize">-</span></div>
+
+<button onclick="downloadImage()">Download Image</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
+
+let img = new Image();
+let ratio = 1;
+
+/* IMAGE UPLOAD */
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+let file = e.target.files[0];
+
+if(!file) return;
+
+document.getElementById("inputSize").innerText =
+(file.size/1024).toFixed(2)+" KB";
+
+let reader = new FileReader();
+
+reader.onload = function(event){
+
+img.onload = function(){
+
+ratio = img.width/img.height;
+
+document.getElementById("width").value = img.width;
+document.getElementById("height").value = img.height;
+
+canvas.width = img.width;
+canvas.height = img.height;
+
+ctx.drawImage(img,0,0);
+
+document.getElementById("previewBox").style.display="block";
+
+}
+
+img.src = event.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+});
+
+
+/* ASPECT RATIO */
+
+document.getElementById("width").addEventListener("input",function(){
+
+if(document.getElementById("ratio").checked){
+
+document.getElementById("height").value =
+Math.round(this.value/ratio);
+
+}
+
+});
+
+
+document.getElementById("height").addEventListener("input",function(){
+
+if(document.getElementById("ratio").checked){
+
+document.getElementById("width").value =
+Math.round(this.value*ratio);
+
+}
+
+});
+
+
+/* RESIZE */
+
+function resizeImage(){
+
+let w = parseInt(document.getElementById("width").value);
+let h = parseInt(document.getElementById("height").value);
+
+if(!w || !h){
+alert("Enter width and height");
+return;
+}
+
+canvas.width = w;
+canvas.height = h;
+
+ctx.drawImage(img,0,0,w,h);
+
+let data = canvas.toDataURL();
+
+let size = Math.round((data.length*3)/4)/1024;
+
+document.getElementById("outputSize").innerText =
+size.toFixed(2)+" KB";
+
+}
+
+
+/* DOWNLOAD */
+
+function downloadImage(){
+
+let format = document.getElementById("format").value;
+
+let link = document.createElement("a");
+
+link.download = "resized-image";
+
+link.href = canvas.toDataURL(format,1.0);
+
+document.body.appendChild(link);
+
+link.click();
+
+document.body.removeChild(link);
+
+}
+
+
+/* CLEAR */
+
+function clearTool(){
+
+document.getElementById("upload").value="";
+document.getElementById("width").value="";
+document.getElementById("height").value="";
+
+document.getElementById("inputSize").innerText="-";
+document.getElementById("outputSize").innerText="-";
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+document.getElementById("previewBox").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>
