@@ -5,13 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image Compressor Tool</title>
+<title>Image Resizer Tool</title>
 
-<meta name="description" content="Free image compressor tool to reduce image size online without losing quality. Compress PNG, JPEG, WEBP images instantly.">
-
-<meta name="keywords" content="image compressor, compress image online, reduce image size, photo compressor">
-
-<link rel="icon" href="favicon.svg">
+<meta name="description" content="Resize images online free">
+<meta name="keywords" content="image resizer, resize photo, image resize online">
 
 <style>
 
@@ -70,7 +67,7 @@ text-align:center;
 display:none;
 }
 
-img{
+canvas{
 max-width:100%;
 border-radius:8px;
 }
@@ -82,7 +79,8 @@ color:#555;
 }
 
 .article{
-margin-top:40px;
+max-width:900px;
+margin:40px auto;
 background:white;
 padding:30px;
 border-radius:10px;
@@ -97,43 +95,48 @@ line-height:1.7;
 <body>
 
 <header>
-
 <a href="index.html">⬅ Back</a>
-
 <div>MyTools</div>
-
 </header>
 
 <div class="container">
 
 <div class="tool-box">
 
-<h2>📉 Image Compressor</h2>
+<h2>🖼 Image Resizer</h2>
 
 <input type="file" id="upload" accept="image/*">
 
 <div class="info">Input Size: <span id="inputSize">-</span></div>
 
-<select id="format">
+<input type="number" id="width" placeholder="Width">
+<input type="number" id="height" placeholder="Height">
 
+<label>
+<input type="checkbox" id="ratio" checked>
+Lock Aspect Ratio
+</label>
+
+<select id="format">
 <option value="none">Original (None)</option>
 <option value="image/png">PNG</option>
 <option value="image/jpeg">JPEG</option>
 <option value="image/webp">WEBP</option>
-
+<option value="image/gif">GIF</option>
 </select>
 
-<label>Compression Quality</label>
+<label>Resolution (DPI)</label>
+<input type="number" id="dpi" value="72">
 
-<input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
+<label>Quality</label>
+<input type="range" id="quality" min="0.1" max="1" step="0.1" value="1">
 
-<button onclick="compressImage()">Compress Image</button>
-
+<button onclick="resizeImage()">Resize Image</button>
 <button class="clear" onclick="clearTool()">Clear</button>
 
 <div class="preview" id="previewBox">
 
-<img id="previewImg">
+<canvas id="canvas"></canvas>
 
 <div class="info">Output Size: <span id="outputSize">-</span></div>
 
@@ -143,73 +146,111 @@ line-height:1.7;
 
 </div>
 
+</div>
+
+
+<!-- SEO ARTICLE SECTION -->
+
 <div class="article">
 
-<h1>Image Compressor – Complete Guide</h1>
+<h1>Image Resizer – Resize Images Online Easily</h1>
 
-<p>An image compressor is a powerful online tool designed to reduce the size of image files while maintaining good visual quality. Large images can slow down websites, increase loading time, and consume more storage space. Using an image compressor helps optimize images so they load faster and perform better on websites and applications.</p>
+<p>An image resizer is a powerful tool that allows users to change the dimensions of images quickly and easily. Whether you are a blogger, web developer, designer, or social media creator, resizing images is an important task in daily digital work. Large images can slow down websites and make uploading difficult. Using an image resizer helps adjust the width and height of images so they are optimized for different platforms.</p>
 
-<p>Many website owners, bloggers, designers, and developers rely on image compressor tools to optimize graphics before publishing them online. Smaller image files improve page speed, which is one of the most important ranking factors in modern search engines.</p>
+<p>Images are widely used across websites, blogs, e-commerce stores, and social media platforms. However, high-resolution images often come with large file sizes. These large files may cause slow page loading times and consume more storage space. By using an image resizer, users can reduce image dimensions and create lightweight images that are easier to manage and share.</p>
 
-<h2>Why Image Compression is Important</h2>
+<h2>What is an Image Resizer?</h2>
 
-<p>Image compression plays a crucial role in modern web development. When images are large, websites take longer to load. Slow websites can frustrate users and increase bounce rates. By compressing images, you reduce file sizes significantly, allowing pages to load quickly even on slower internet connections.</p>
+<p>An image resizer is an online tool that allows users to change the size of images without needing complex software. It adjusts the width and height of an image while maintaining good visual quality. Many image resizer tools also include features like aspect ratio locking, format conversion, and quality control.</p>
 
-<p>Search engines such as Google also consider page speed as a ranking factor. Websites with optimized images tend to perform better in search results compared to sites that use large uncompressed images.</p>
+<p>Maintaining aspect ratio is important when resizing images. The aspect ratio ensures that the image keeps its original proportions and does not appear stretched or distorted. When the lock aspect ratio option is enabled, the width and height automatically adjust together.</p>
 
-<h2>Benefits of Using an Image Compressor</h2>
+<h2>Why Image Resizing is Important</h2>
 
-<p>Using an image compressor offers many benefits. It reduces the size of image files, making them easier to upload and share. It saves storage space on servers and devices. It also improves website performance and user experience. Faster loading pages encourage visitors to stay longer and explore more content.</p>
+<p>Image resizing is essential for optimizing websites and improving online performance. Large images can slow down websites significantly. When users visit a webpage that contains large images, the browser needs more time to load them. This can lead to poor user experience and higher bounce rates.</p>
 
-<p>Another advantage of using an image compressor is bandwidth savings. Smaller images require less data transfer, which reduces hosting costs and improves performance on mobile networks.</p>
+<p>Search engines also consider page speed as a ranking factor. Websites that load faster often perform better in search results. By using an image resizer, website owners can ensure that images are properly optimized for speed and performance.</p>
 
-<h2>Supported Image Formats</h2>
+<h2>Benefits of Using an Image Resizer</h2>
 
-<p>Modern image compressor tools support multiple formats such as PNG, JPEG, and WEBP. JPEG images are commonly used for photographs because they provide good compression while maintaining acceptable quality. PNG images are ideal for graphics and images that require transparency. WEBP is a modern format developed to provide excellent compression with high visual quality.</p>
+<p>One of the biggest benefits of using an image resizer is improved website performance. Smaller images load faster and provide a smoother browsing experience. This helps keep visitors engaged and increases the chances that they will explore more pages on the website.</p>
 
-<h2>How Image Compression Works</h2>
+<p>Another advantage is storage efficiency. Large images consume more storage space on servers and devices. By resizing images, users can reduce file size and save valuable storage capacity.</p>
 
-<p>Image compression works by removing unnecessary data from image files. There are two main types of compression: lossy and lossless. Lossy compression removes some image data to achieve smaller file sizes, while lossless compression preserves all original data but still reduces file size through optimization techniques.</p>
+<p>An image resizer also makes sharing images easier. Smaller images upload faster and can be sent quickly through email, messaging apps, and social media platforms.</p>
 
-<p>Most online image compressor tools allow users to adjust the compression level using a quality slider. Lower quality settings produce smaller files but may slightly reduce image clarity, while higher quality settings maintain better visual detail.</p>
+<h2>Image Formats Supported</h2>
 
-<h2>Best Practices for Compressing Images</h2>
+<p>Modern image resizer tools support several popular image formats including JPEG, PNG, WEBP, and GIF. JPEG is widely used for photographs because it provides good compression while maintaining visual quality. PNG is commonly used for graphics and images with transparent backgrounds.</p>
 
-<p>To achieve the best results, always choose the correct format for your images. Use JPEG for photos, PNG for graphics, and WEBP for modern web optimization. Avoid uploading extremely large images and compress them before publishing on websites.</p>
+<p>WEBP is a modern format designed for web optimization. It produces smaller file sizes while maintaining excellent quality. GIF images are typically used for simple animations and small graphics.</p>
 
-<p>Balancing image quality and file size is important. The goal is to maintain good visual quality while reducing the file size enough to improve performance.</p>
+<h2>Image Resizer for Social Media</h2>
+
+<p>Social media platforms require images with specific dimensions. For example, profile pictures, post images, and banner images all have different recommended sizes. An image resizer allows users to adjust images so they fit perfectly on these platforms.</p>
+
+<p>Using correctly sized images ensures that photos appear clear and properly aligned on social media pages.</p>
+
+<h2>Tips for Best Image Resizing Results</h2>
+
+<p>Always start with a high-resolution image when resizing. High-quality source images produce better results when resized. Avoid enlarging images too much because this can reduce clarity and create pixelation.</p>
+
+<p>It is also important to choose the correct image format. JPEG works best for photos, PNG is ideal for graphics, and WEBP is excellent for modern web performance.</p>
 
 <h2>Conclusion</h2>
 
-<p>An image compressor is an essential tool for anyone working with images online. Whether you are a blogger, developer, designer, or content creator, compressing images helps improve performance, reduce loading time, and enhance user experience. Using an image compressor regularly ensures that your website remains fast, efficient, and optimized for both users and search engines.</p>
+<p>An image resizer is an essential tool for anyone working with digital images. It helps optimize images for websites, social media, and online sharing. By resizing images properly, users can improve website speed, reduce storage usage, and provide a better user experience.</p>
+
+<p>Whether you are managing a blog, running an online business, or simply sharing photos online, using an image resizer can make image management faster and more efficient.</p>
 
 </div>
 
-</div>
 
 <script>
 
-let imgData="";
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
+
+let img = new Image();
+let ratio = 1;
 
 document.getElementById("upload").addEventListener("change",function(e){
 
-let file=e.target.files[0];
+let file = e.target.files[0];
 
 if(!file) return;
 
-let sizeKB=file.size/1024;
+let sizeKB = file.size/1024;
 
-document.getElementById("inputSize").innerText=sizeKB.toFixed(2)+" KB";
+if(sizeKB > 1024){
+document.getElementById("inputSize").innerText =
+(sizeKB/1024).toFixed(2)+" MB";
+}else{
+document.getElementById("inputSize").innerText =
+sizeKB.toFixed(2)+" KB";
+}
 
-let reader=new FileReader();
+let reader = new FileReader();
 
-reader.onload=function(event){
+reader.onload = function(event){
 
-imgData=event.target.result;
+img.onload = function(){
 
-document.getElementById("previewImg").src=imgData;
+ratio = img.width/img.height;
+
+document.getElementById("width").value = img.width;
+document.getElementById("height").value = img.height;
+
+canvas.width = img.width;
+canvas.height = img.height;
+
+ctx.drawImage(img,0,0);
 
 document.getElementById("previewBox").style.display="block";
+
+}
+
+img.src = event.target.result;
 
 }
 
@@ -217,58 +258,80 @@ reader.readAsDataURL(file);
 
 });
 
-function compressImage(){
+document.getElementById("width").addEventListener("input",function(){
 
-let format=document.getElementById("format").value;
+if(document.getElementById("ratio").checked){
 
-let quality=parseFloat(document.getElementById("quality").value);
+document.getElementById("height").value =
+Math.round(this.value/ratio);
 
-let img=new Image();
+}
 
-img.onload=function(){
+});
 
-let canvas=document.createElement("canvas");
+document.getElementById("height").addEventListener("input",function(){
 
-let ctx=canvas.getContext("2d");
+if(document.getElementById("ratio").checked){
 
-canvas.width=img.width;
-canvas.height=img.height;
+document.getElementById("width").value =
+Math.round(this.value*ratio);
 
-ctx.drawImage(img,0,0);
+}
+
+});
+
+function resizeImage(){
+
+let w = parseInt(document.getElementById("width").value);
+let h = parseInt(document.getElementById("height").value);
+
+if(!w || !h){
+alert("Enter width and height");
+return;
+}
+
+canvas.width = w;
+canvas.height = h;
+
+ctx.drawImage(img,0,0,w,h);
+
+let format = document.getElementById("format").value;
+let quality = parseFloat(document.getElementById("quality").value);
 
 let data;
 
-if(format==="none"){
-
-data=canvas.toDataURL();
-
+if(format === "none"){
+data = canvas.toDataURL();
 }else{
-
-data=canvas.toDataURL(format,quality);
-
+data = canvas.toDataURL(format,quality);
 }
 
-document.getElementById("previewImg").src=data;
+let size = Math.round((data.length*3)/4)/1024;
 
-let size=Math.round((data.length*3)/4)/1024;
-
-document.getElementById("outputSize").innerText=size.toFixed(2)+" KB";
-
-imgData=data;
-
+if(size > 1024){
+document.getElementById("outputSize").innerText =
+(size/1024).toFixed(2)+" MB";
+}else{
+document.getElementById("outputSize").innerText =
+size.toFixed(2)+" KB";
 }
-
-img.src=imgData;
 
 }
 
 function downloadImage(){
 
-let link=document.createElement("a");
+let format = document.getElementById("format").value;
+let quality = parseFloat(document.getElementById("quality").value);
 
-link.download="compressed-image";
+let link = document.createElement("a");
 
-link.href=imgData;
+link.download = "resized-image";
+
+if(format === "none"){
+link.href = canvas.toDataURL();
+}else{
+link.href = canvas.toDataURL(format,quality);
+}
 
 document.body.appendChild(link);
 
@@ -281,12 +344,15 @@ document.body.removeChild(link);
 function clearTool(){
 
 document.getElementById("upload").value="";
-
-document.getElementById("previewBox").style.display="none";
+document.getElementById("width").value="";
+document.getElementById("height").value="";
 
 document.getElementById("inputSize").innerText="-";
-
 document.getElementById("outputSize").innerText="-";
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+document.getElementById("previewBox").style.display="none";
 
 }
 
