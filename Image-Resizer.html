@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image Resizer</title>
+<title>Image Resizer Tool</title>
 
 <meta name="description" content="Resize images online free">
 <meta name="keywords" content="image resizer, resize photo, image resize online">
@@ -108,10 +108,18 @@ Lock Aspect Ratio
 </label>
 
 <select id="format">
+<option value="none">Original (None)</option>
 <option value="image/png">PNG</option>
 <option value="image/jpeg">JPEG</option>
 <option value="image/webp">WEBP</option>
+<option value="image/gif">GIF</option>
 </select>
+
+<label>Resolution (DPI)</label>
+<input type="number" id="dpi" value="72">
+
+<label>Quality</label>
+<input type="range" id="quality" min="0.1" max="1" step="0.1" value="1">
 
 <button onclick="resizeImage()">Resize Image</button>
 <button class="clear" onclick="clearTool()">Clear</button>
@@ -125,6 +133,75 @@ Lock Aspect Ratio
 <button onclick="downloadImage()">Download Image</button>
 
 </div>
+
+</div>
+
+</div>
+<div style="max-width:900px;margin:auto;padding:20px">
+
+<div style="background:white;padding:30px;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.08);line-height:1.7">
+
+<h1>Image Compressor – Complete Guide to Compress Images Online</h1>
+
+<p>An image compressor is an essential tool for reducing image file size while maintaining good visual quality. Large image files can slow down websites, increase loading time, and use unnecessary storage space. By using an image compressor, users can optimize images for websites, social media, and online sharing without losing clarity.</p>
+
+<p>Modern websites rely heavily on images to create attractive designs and engaging content. However, high-resolution images often come with large file sizes. This is where an image compressor becomes extremely useful. It helps convert large images into smaller files that load faster and perform better on websites.</p>
+
+<h2>What is an Image Compressor?</h2>
+
+<p>An image compressor is an online tool that reduces the size of image files such as JPG, PNG, and WEBP without significantly affecting image quality. Image compression works by removing unnecessary data from image files and optimizing the file structure.</p>
+
+<p>There are two main types of image compression. The first is lossy compression, which removes some image data to significantly reduce file size. The second is lossless compression, which preserves the original quality but still reduces file size through advanced optimization techniques.</p>
+
+<h2>Why Image Compression is Important</h2>
+
+<p>Image compression plays an important role in website performance. Large images can slow down page loading speeds, which negatively affects user experience. A slow website may cause visitors to leave before the page even loads.</p>
+
+<p>Search engines such as Google consider page speed as a ranking factor. Websites with optimized images often rank higher in search results compared to sites that use uncompressed images. Using an image compressor helps improve both user experience and search engine optimization.</p>
+
+<h2>Benefits of Using an Image Compressor</h2>
+
+<p>Using an image compressor provides several benefits for website owners, designers, bloggers, and developers. First, it significantly reduces image file size, allowing pages to load faster. Faster loading websites provide better user experiences and encourage visitors to stay longer.</p>
+
+<p>Another advantage is storage optimization. Smaller images require less storage space on servers and devices. This helps reduce hosting costs and makes file management easier.</p>
+
+<p>Image compression also improves bandwidth efficiency. When images are smaller, less data is transferred when users visit a webpage. This is particularly important for users on mobile networks where data speed and bandwidth may be limited.</p>
+
+<h2>Supported Image Formats</h2>
+
+<p>Most modern image compressor tools support several image formats including JPEG, PNG, and WEBP. JPEG images are commonly used for photographs because they provide good compression with acceptable image quality. PNG images are often used for graphics and images that require transparency.</p>
+
+<p>WEBP is a modern image format developed to provide superior compression compared to traditional formats. It produces smaller file sizes while maintaining excellent visual quality, making it ideal for websites and web applications.</p>
+
+<h2>How an Image Compressor Works</h2>
+
+<p>An image compressor analyzes the image file and removes redundant data while maintaining important visual details. Advanced algorithms adjust pixel data, color depth, and encoding methods to reduce the file size efficiently.</p>
+
+<p>Many image compressor tools allow users to control compression levels through a quality slider. Lower quality values create smaller files but may slightly reduce image clarity, while higher quality values maintain better visual appearance with slightly larger file sizes.</p>
+
+<h2>Image Compression for Websites</h2>
+
+<p>Website performance is one of the most critical factors for online success. When images are optimized using an image compressor, webpages load faster and perform more efficiently. Fast websites improve engagement, reduce bounce rates, and increase conversion rates.</p>
+
+<p>Developers and designers frequently compress images before uploading them to websites. This ensures that pages remain lightweight and responsive across different devices and internet speeds.</p>
+
+<h2>Image Compression for Social Media</h2>
+
+<p>Image compression is also useful for social media platforms. Large images may take longer to upload and may be automatically compressed by social networks. By using an image compressor before uploading, users can control the final quality and size of their images.</p>
+
+<p>Compressed images are easier to share and upload, especially when using mobile devices or slower internet connections.</p>
+
+<h2>Tips for Best Image Compression Results</h2>
+
+<p>To achieve the best results when using an image compressor, choose the correct image format. JPEG works well for photos, PNG is ideal for graphics, and WEBP is excellent for modern web optimization.</p>
+
+<p>Always try to balance quality and file size. Extremely aggressive compression may reduce image clarity, while very high quality may not reduce the file size enough. Finding the right balance ensures optimized performance while maintaining visual quality.</p>
+
+<h2>Conclusion</h2>
+
+<p>An image compressor is a powerful and practical tool for anyone who works with images online. Whether you are a blogger, developer, designer, or content creator, compressing images helps improve performance, reduce loading time, and enhance user experience.</p>
+
+<p>By using an image compressor regularly, you can ensure that your website remains fast, efficient, and optimized for both users and search engines. Optimized images improve page speed, reduce storage usage, and create a smoother browsing experience for visitors.</p>
 
 </div>
 
@@ -146,8 +223,15 @@ let file = e.target.files[0];
 
 if(!file) return;
 
+let sizeKB = file.size/1024;
+
+if(sizeKB > 1024){
 document.getElementById("inputSize").innerText =
-(file.size/1024).toFixed(2)+" KB";
+(sizeKB/1024).toFixed(2)+" MB";
+}else{
+document.getElementById("inputSize").innerText =
+sizeKB.toFixed(2)+" KB";
+}
 
 let reader = new FileReader();
 
@@ -221,12 +305,26 @@ canvas.height = h;
 
 ctx.drawImage(img,0,0,w,h);
 
-let data = canvas.toDataURL();
+let format = document.getElementById("format").value;
+let quality = parseFloat(document.getElementById("quality").value);
+
+let data;
+
+if(format === "none"){
+data = canvas.toDataURL();
+}else{
+data = canvas.toDataURL(format,quality);
+}
 
 let size = Math.round((data.length*3)/4)/1024;
 
+if(size > 1024){
+document.getElementById("outputSize").innerText =
+(size/1024).toFixed(2)+" MB";
+}else{
 document.getElementById("outputSize").innerText =
 size.toFixed(2)+" KB";
+}
 
 }
 
@@ -236,12 +334,17 @@ size.toFixed(2)+" KB";
 function downloadImage(){
 
 let format = document.getElementById("format").value;
+let quality = parseFloat(document.getElementById("quality").value);
 
 let link = document.createElement("a");
 
 link.download = "resized-image";
 
-link.href = canvas.toDataURL(format,1.0);
+if(format === "none"){
+link.href = canvas.toDataURL();
+}else{
+link.href = canvas.toDataURL(format,quality);
+}
 
 document.body.appendChild(link);
 
