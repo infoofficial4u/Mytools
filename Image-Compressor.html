@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Compressor Tool</title>
+
+<meta name="description" content="Free image compressor tool to reduce image size online without losing quality. Compress PNG, JPEG, WEBP images instantly.">
+
+<meta name="keywords" content="image compressor, compress image online, reduce image size, photo compressor">
+
+<link rel="icon" href="favicon.svg">
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f6fb;
+}
+
+header{
+background:white;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.tool-box{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:10px;
+padding:10px 15px;
+border:none;
+border-radius:5px;
+background:#4a6cff;
+color:white;
+cursor:pointer;
+}
+
+.clear{
+background:#ff4b4b;
+}
+
+.preview{
+margin-top:20px;
+text-align:center;
+display:none;
+}
+
+img{
+max-width:100%;
+border-radius:8px;
+}
+
+.info{
+margin-top:8px;
+font-size:14px;
+color:#555;
+}
+
+.article{
+margin-top:40px;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+line-height:1.7;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="index.html">⬅ Back</a>
+
+<div>MyTools</div>
+
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>📉 Image Compressor</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<div class="info">Input Size: <span id="inputSize">-</span></div>
+
+<select id="format">
+
+<option value="none">Original (None)</option>
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPEG</option>
+<option value="image/webp">WEBP</option>
+
+</select>
+
+<label>Compression Quality</label>
+
+<input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
+
+<button onclick="compressImage()">Compress Image</button>
+
+<button class="clear" onclick="clearTool()">Clear</button>
+
+<div class="preview" id="previewBox">
+
+<img id="previewImg">
+
+<div class="info">Output Size: <span id="outputSize">-</span></div>
+
+<button onclick="downloadImage()">Download Image</button>
+
+</div>
+
+</div>
+
+<div class="article">
+
+<h1>Image Compressor – Complete Guide</h1>
+
+<p>An image compressor is a powerful online tool designed to reduce the size of image files while maintaining good visual quality. Large images can slow down websites, increase loading time, and consume more storage space. Using an image compressor helps optimize images so they load faster and perform better on websites and applications.</p>
+
+<p>Many website owners, bloggers, designers, and developers rely on image compressor tools to optimize graphics before publishing them online. Smaller image files improve page speed, which is one of the most important ranking factors in modern search engines.</p>
+
+<h2>Why Image Compression is Important</h2>
+
+<p>Image compression plays a crucial role in modern web development. When images are large, websites take longer to load. Slow websites can frustrate users and increase bounce rates. By compressing images, you reduce file sizes significantly, allowing pages to load quickly even on slower internet connections.</p>
+
+<p>Search engines such as Google also consider page speed as a ranking factor. Websites with optimized images tend to perform better in search results compared to sites that use large uncompressed images.</p>
+
+<h2>Benefits of Using an Image Compressor</h2>
+
+<p>Using an image compressor offers many benefits. It reduces the size of image files, making them easier to upload and share. It saves storage space on servers and devices. It also improves website performance and user experience. Faster loading pages encourage visitors to stay longer and explore more content.</p>
+
+<p>Another advantage of using an image compressor is bandwidth savings. Smaller images require less data transfer, which reduces hosting costs and improves performance on mobile networks.</p>
+
+<h2>Supported Image Formats</h2>
+
+<p>Modern image compressor tools support multiple formats such as PNG, JPEG, and WEBP. JPEG images are commonly used for photographs because they provide good compression while maintaining acceptable quality. PNG images are ideal for graphics and images that require transparency. WEBP is a modern format developed to provide excellent compression with high visual quality.</p>
+
+<h2>How Image Compression Works</h2>
+
+<p>Image compression works by removing unnecessary data from image files. There are two main types of compression: lossy and lossless. Lossy compression removes some image data to achieve smaller file sizes, while lossless compression preserves all original data but still reduces file size through optimization techniques.</p>
+
+<p>Most online image compressor tools allow users to adjust the compression level using a quality slider. Lower quality settings produce smaller files but may slightly reduce image clarity, while higher quality settings maintain better visual detail.</p>
+
+<h2>Best Practices for Compressing Images</h2>
+
+<p>To achieve the best results, always choose the correct format for your images. Use JPEG for photos, PNG for graphics, and WEBP for modern web optimization. Avoid uploading extremely large images and compress them before publishing on websites.</p>
+
+<p>Balancing image quality and file size is important. The goal is to maintain good visual quality while reducing the file size enough to improve performance.</p>
+
+<h2>Conclusion</h2>
+
+<p>An image compressor is an essential tool for anyone working with images online. Whether you are a blogger, developer, designer, or content creator, compressing images helps improve performance, reduce loading time, and enhance user experience. Using an image compressor regularly ensures that your website remains fast, efficient, and optimized for both users and search engines.</p>
+
+</div>
+
+</div>
+
+<script>
+
+let imgData="";
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+let file=e.target.files[0];
+
+if(!file) return;
+
+let sizeKB=file.size/1024;
+
+document.getElementById("inputSize").innerText=sizeKB.toFixed(2)+" KB";
+
+let reader=new FileReader();
+
+reader.onload=function(event){
+
+imgData=event.target.result;
+
+document.getElementById("previewImg").src=imgData;
+
+document.getElementById("previewBox").style.display="block";
+
+}
+
+reader.readAsDataURL(file);
+
+});
+
+function compressImage(){
+
+let format=document.getElementById("format").value;
+
+let quality=parseFloat(document.getElementById("quality").value);
+
+let img=new Image();
+
+img.onload=function(){
+
+let canvas=document.createElement("canvas");
+
+let ctx=canvas.getContext("2d");
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+ctx.drawImage(img,0,0);
+
+let data;
+
+if(format==="none"){
+
+data=canvas.toDataURL();
+
+}else{
+
+data=canvas.toDataURL(format,quality);
+
+}
+
+document.getElementById("previewImg").src=data;
+
+let size=Math.round((data.length*3)/4)/1024;
+
+document.getElementById("outputSize").innerText=size.toFixed(2)+" KB";
+
+imgData=data;
+
+}
+
+img.src=imgData;
+
+}
+
+function downloadImage(){
+
+let link=document.createElement("a");
+
+link.download="compressed-image";
+
+link.href=imgData;
+
+document.body.appendChild(link);
+
+link.click();
+
+document.body.removeChild(link);
+
+}
+
+function clearTool(){
+
+document.getElementById("upload").value="";
+
+document.getElementById("previewBox").style.display="none";
+
+document.getElementById("inputSize").innerText="-";
+
+document.getElementById("outputSize").innerText="-";
+
+}
+
+</script>
+
+</body>
+</html>
