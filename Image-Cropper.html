@@ -6,81 +6,79 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image Cropper Tool</title>
+<title>Image Cropper</title>
 
-<meta name="description" content="Free online image cropper tool to crop images easily.">
-<meta name="keywords" content="image cropper, crop image online, photo crop tool">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
 <style>
 
 body{
 font-family:Arial;
+background:#eef0f6;
 margin:0;
-background:#f4f6fb;
 }
 
 header{
-background:white;
-padding:15px 30px;
+background:#f5f5f5;
+padding:12px 20px;
 display:flex;
 justify-content:space-between;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
 .container{
-max-width:900px;
-margin:auto;
-padding:40px 20px;
+max-width:1000px;
+margin:40px auto;
 }
 
 .tool-box{
 background:white;
-padding:30px;
+padding:40px;
 border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
-}
-
-input{
-margin-top:10px;
-}
-
-button{
-margin-top:10px;
-padding:10px 15px;
-border:none;
-border-radius:5px;
-background:#4a6cff;
-color:white;
-cursor:pointer;
-}
-
-select{
-margin-top:10px;
-padding:8px;
-border-radius:5px;
-border:1px solid #ccc;
-}
-
-canvas{
-max-width:100%;
-margin-top:20px;
-border-radius:8px;
-border:1px solid #ddd;
-}
-
-.preview{
-margin-top:20px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
 text-align:center;
 }
 
-.article{
-max-width:900px;
-margin:40px auto;
-background:white;
-padding:30px;
-border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
-line-height:1.7;
+.preview-area{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.preview-box{
+width:260px;
+height:200px;
+border:2px dashed #ddd;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.preview-box img{
+max-width:100%;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:5px;
+}
+
+select{
+padding:7px;
+border-radius:6px;
+}
+
+.info{
+margin-top:10px;
+font-size:14px;
+color:#555;
 }
 
 </style>
@@ -90,11 +88,8 @@ line-height:1.7;
 <body>
 
 <header>
-
-<a href="index.html">⬅ Back</a>
-
+<a href="#">← Back</a>
 <div>MyTools</div>
-
 </header>
 
 <div class="container">
@@ -105,84 +100,169 @@ line-height:1.7;
 
 <input type="file" id="upload" accept="image/*">
 
-<canvas id="canvas"></canvas>
+<div class="preview-area">
 
-<div class="preview">
+<div>
+<p><b>Input Image</b></p>
+<div class="preview-box">
+<img id="image">
+</div>
+<div class="info">Input Size: <span id="inputSize">0 KB</span></div>
+</div>
+
+<div>
+<p><b>Output Image</b></p>
+<div class="preview-box">
+<img id="output">
+</div>
+<div class="info">Output Size: <span id="outputSize">0 KB</span></div>
+</div>
+
+</div>
+
+<br>
 
 <button onclick="cropImage()">Crop Image</button> <button onclick="downloadImage()">Download Image</button>
 
 <br>
 
 <select id="format">
-<option value="none">none</option>
 <option value="png">png</option>
 <option value="jpeg">jpeg</option>
 <option value="webp">webp</option>
 </select>
 
-<button onclick="clearCanvas()">Clear</button>
+<button onclick="clearAll()">Clear</button>
 
 </div>
 
 </div>
 
-</div>
+<h1>Image Cropper – Best Online Tool to Crop Images Quickly and Easily</h1>
 
-<div class="article">
+<p>In the digital world, images play a very important role in communication, marketing, and online content creation. Whether you are a blogger, graphic designer, photographer, student, or social media user, you often need to edit images to make them look better. One of the most useful and simple editing techniques is cropping. An <b>Image Cropper</b> allows users to remove unwanted parts of an image and focus only on the important area.</p>
 
-<h1>Image Cropper – Complete Guide to Crop Images Online</h1>
+<p>An Image Cropper tool helps improve image composition, adjust framing, and make photos suitable for different platforms such as social media, websites, presentations, or documents. With the help of an online Image Cropper, users can easily upload a photo, select the area they want to keep, and crop the image instantly without installing any software.</p>
 
-<p>An image cropper is a powerful tool that allows users to cut or trim unwanted areas from an image. Cropping is one of the most commonly used image editing techniques because it helps focus attention on the most important part of a photo.</p>
-
-<p>In the digital world, images play an important role in communication and storytelling. However, many photos contain unnecessary elements or empty space. By using an image cropper, users can remove those extra parts and create a cleaner and more focused image.</p>
+<p>Modern online tools are designed to make image editing easier for everyone. Even people with no design experience can crop images within seconds using a simple drag-and-drop interface. This makes the Image Cropper one of the most essential tools for anyone working with digital images.</p>
 
 <h2>What is an Image Cropper?</h2>
 
-<p>An image cropper is a tool that allows users to select a specific portion of an image and remove the rest. This process is known as cropping. Cropping helps improve image composition and ensures that the most important subject of the image remains visible.</p>
+<p>An <b>Image Cropper</b> is a tool that allows users to cut or trim parts of an image. It works by selecting a specific portion of the image and removing everything outside that selection. The remaining portion becomes the final cropped image.</p>
 
-<h2>Benefits of Using an Image Cropper</h2>
+<p>Cropping is commonly used to remove unnecessary background elements, adjust image proportions, or highlight the main subject. For example, if you take a photo and there are unwanted objects around the edges, an Image Cropper can remove them easily.</p>
 
-<p>Using an image cropper provides several advantages. It helps improve image composition by removing unnecessary parts of the photo. Cropped images often look cleaner and more visually appealing which is very important for websites, marketing materials, and social media content.</p>
+<p>Most modern Image Cropper tools allow users to drag the crop box, resize it from the corners, and move it across the image until they get the perfect frame. After that, the cropped image can be downloaded in different formats such as PNG, JPEG, or WEBP.</p>
+
+<h2>Why Cropping Images is Important</h2>
+
+<p>Cropping images is more than just removing parts of a picture. It is a powerful editing technique that improves visual quality and helps communicate the message of the image more clearly.</p>
+
+<p>For example, photographers often crop images to improve composition. By removing unnecessary space around the subject, the viewer’s attention is directed exactly where it should be. Similarly, bloggers and website owners crop images so they fit perfectly within page layouts.</p>
+
+<p>Another important reason to crop images is to prepare them for different platforms. Social media platforms like Instagram, Facebook, and YouTube have specific image sizes. An Image Cropper helps adjust images so they match those required dimensions.</p>
+
+<h2>How an Online Image Cropper Works</h2>
+
+<p>An online Image Cropper is designed to be simple and user-friendly. The process usually takes only a few steps. First, the user uploads an image from their device. After the image is uploaded, a crop box appears on the screen.</p>
+
+<p>The user can drag the crop box to select the desired part of the image. The box can also be resized from the corners to adjust the crop area precisely. Many tools include grid lines that help align the image according to professional composition rules.</p>
+
+<p>Once the user is satisfied with the crop area, they simply click the crop button. The tool processes the image and generates a new cropped version. Finally, the user can download the image in the preferred format.</p>
+
+<h2>Features of a Good Image Cropper Tool</h2>
+
+<p>A good Image Cropper should provide a smooth and easy editing experience. One of the most important features is drag-and-resize cropping, which allows users to adjust the crop area easily.</p>
+
+<p>Another useful feature is support for multiple image formats. Users should be able to download cropped images as PNG, JPEG, or WEBP depending on their needs.</p>
+
+<p>Many advanced tools also include zoom controls, rotation options, and aspect ratio presets. These features allow users to crop images more precisely and create professional-quality results.</p>
+
+<p>Real-time preview is another important feature. It allows users to see exactly how the cropped image will look before downloading it. This helps avoid mistakes and ensures the final image looks perfect.</p>
+
+<h2>Benefits of Using an Online Image Cropper</h2>
+
+<p>Using an online Image Cropper has several advantages. One of the biggest benefits is convenience. Since the tool works directly in the browser, there is no need to install any software on your device.</p>
+
+<p>Online tools are also fast and easy to use. Most cropping operations take only a few seconds. Users can upload an image, crop it, and download the final result almost instantly.</p>
+
+<p>Another benefit is accessibility. Online Image Cropper tools work on computers, tablets, and smartphones. This means you can edit images anytime and anywhere.</p>
+
+<p>Many online tools are also completely free, making them accessible to students, creators, and professionals who need quick image editing solutions.</p>
+
+<h2>Common Uses of an Image Cropper</h2>
+
+<p>The Image Cropper tool is widely used in many different fields. Content creators use it to prepare images for blogs, articles, and social media posts. By cropping images correctly, they can make their content look more professional.</p>
+
+<p>Graphic designers often crop images to focus on important design elements. Photographers use cropping to improve composition and remove distractions from photos.</p>
+
+<p>Students and teachers may use an Image Cropper to prepare images for presentations, assignments, or educational materials. Cropping helps make visuals clearer and easier to understand.</p>
+
+<p>Businesses also use cropping tools to prepare product images for online stores and marketing materials.</p>
+
+<h2>Tips for Cropping Images Effectively</h2>
+
+<p>When using an Image Cropper, it is important to focus on the main subject of the image. Try to remove unnecessary elements that distract from the main focus.</p>
+
+<p>Using grid lines can help maintain proper alignment and balance in the image. Many photographers follow the “rule of thirds,” which divides the image into nine equal parts. Placing the subject along these lines often creates a more visually appealing composition.</p>
+
+<p>Another useful tip is to maintain image quality. Avoid cropping images too small, as this may reduce resolution and clarity. Always check the final preview before downloading the cropped image.</p>
 
 <h2>Image Cropper for Social Media</h2>
 
-<p>Social media platforms require specific image sizes for posts, profile pictures, and banners. An image cropper helps users adjust images so they fit perfectly on these platforms.</p>
+<p>Social media platforms require images in specific sizes and ratios. An Image Cropper makes it easy to adjust photos so they fit perfectly on platforms like Instagram, Facebook, and YouTube.</p>
+
+<p>For example, Instagram posts usually work best with square images, while YouTube thumbnails require a 16:9 aspect ratio. Cropping tools allow users to quickly adapt their images for these requirements.</p>
+
+<p>This helps ensure that images look professional and display correctly across all devices.</p>
 
 <h2>Conclusion</h2>
 
-<p>An image cropper is an essential tool for editing and improving digital images. It allows users to remove unwanted parts of an image and focus on the most important elements.</p>
+<p>An <b>Image Cropper</b> is one of the most essential tools for anyone working with digital images. It allows users to remove unwanted parts of a photo, improve composition, and prepare images for different platforms.</p>
 
-</div>
+<p>Online Image Cropper tools make the process incredibly simple and accessible. With just a few clicks, users can upload an image, adjust the crop area, and download a perfectly edited version.</p>
+
+<p>Whether you are a content creator, photographer, student, or business owner, an Image Cropper can help you create cleaner, more focused, and more professional images. By using this tool regularly, you can significantly improve the visual quality of your digital content.</p>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
 <script>
 
-let canvas=document.getElementById("canvas");
-let ctx=canvas.getContext("2d");
+let cropper;
+let image=document.getElementById("image");
+let output=document.getElementById("output");
 
-let img=new Image();
-
-let startX,startY,endX,endY;
-let dragging=false;
+let inputSize=document.getElementById("inputSize");
+let outputSize=document.getElementById("outputSize");
 
 document.getElementById("upload").addEventListener("change",function(e){
 
 let file=e.target.files[0];
 if(!file) return;
 
+inputSize.innerText=(file.size/1024).toFixed(2)+" KB";
+
 let reader=new FileReader();
 
 reader.onload=function(event){
 
-img.onload=function(){
+image.src=event.target.result;
 
-canvas.width=img.width;
-canvas.height=img.height;
-
-ctx.drawImage(img,0,0);
-
+if(cropper){
+cropper.destroy();
 }
 
-img.src=event.target.result;
+image.onload=function(){
+
+cropper=new Cropper(image,{
+viewMode:1,
+movable:true,
+zoomable:true,
+cropBoxResizable:true
+});
+
+}
 
 }
 
@@ -190,88 +270,18 @@ reader.readAsDataURL(file);
 
 });
 
-canvas.addEventListener("mousedown",function(e){
-
-dragging=true;
-startX=e.offsetX;
-startY=e.offsetY;
-
-});
-
-canvas.addEventListener("mousemove",function(e){
-
-if(!dragging) return;
-
-endX=e.offsetX;
-endY=e.offsetY;
-
-ctx.drawImage(img,0,0);
-
-ctx.strokeStyle="red";
-ctx.lineWidth=2;
-
-ctx.strokeRect(startX,startY,endX-startX,endY-startY);
-
-});
-
-canvas.addEventListener("mouseup",function(){
-
-dragging=false;
-
-});
-
-canvas.addEventListener("touchstart",function(e){
-
-let rect=canvas.getBoundingClientRect();
-
-startX=e.touches[0].clientX-rect.left;
-startY=e.touches[0].clientY-rect.top;
-
-dragging=true;
-
-});
-
-canvas.addEventListener("touchmove",function(e){
-
-if(!dragging) return;
-
-let rect=canvas.getBoundingClientRect();
-
-endX=e.touches[0].clientX-rect.left;
-endY=e.touches[0].clientY-rect.top;
-
-ctx.drawImage(img,0,0);
-
-ctx.strokeStyle="red";
-ctx.lineWidth=2;
-
-ctx.strokeRect(startX,startY,endX-startX,endY-startY);
-
-});
-
-canvas.addEventListener("touchend",function(){
-
-dragging=false;
-
-});
-
 function cropImage(){
 
-let width=endX-startX;
-let height=endY-startY;
+let canvas=cropper.getCroppedCanvas();
 
-let temp=document.createElement("canvas");
-let tctx=temp.getContext("2d");
+output.src=canvas.toDataURL();
 
-temp.width=width;
-temp.height=height;
+canvas.toBlob(function(blob){
 
-tctx.drawImage(canvas,startX,startY,width,height,0,0,width,height);
+let size=(blob.size/1024).toFixed(2);
+outputSize.innerText=size+" KB";
 
-canvas.width=width;
-canvas.height=height;
-
-ctx.drawImage(temp,0,0);
+});
 
 }
 
@@ -279,38 +289,33 @@ function downloadImage(){
 
 let format=document.getElementById("format").value;
 
-let mime="image/png";
-let ext="png";
+let canvas=cropper.getCroppedCanvas();
 
-if(format==="jpeg"){
-mime="image/jpeg";
-ext="jpg";
-}
-
-if(format==="webp"){
-mime="image/webp";
-ext="webp";
-}
+let mime="image/"+format;
 
 let link=document.createElement("a");
 
-link.download="cropped-image."+ext;
+link.download="cropped."+format;
 
 link.href=canvas.toDataURL(mime);
 
-document.body.appendChild(link);
-
 link.click();
-
-document.body.removeChild(link);
 
 }
 
-function clearCanvas(){
+function clearAll(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+image.src="";
+output.src="";
+
+inputSize.innerText="0 KB";
+outputSize.innerText="0 KB";
 
 document.getElementById("upload").value="";
+
+if(cropper){
+cropper.destroy();
+}
 
 }
 
