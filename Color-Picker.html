@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Color Picker Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.color-preview{
+width:200px;
+height:120px;
+margin:20px auto;
+border-radius:10px;
+border:2px solid #ddd;
+}
+
+.controls{
+margin-top:20px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:5px;
+}
+
+input[type="text"]{
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+width:160px;
+text-align:center;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+.article h1{
+margin-top:0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>My Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Color Picker Tool</h2>
+
+<input type="color" id="colorInput">
+
+<div class="color-preview" id="preview"></div>
+
+<div class="controls">
+
+<div>
+HEX :
+<input type="text" id="hexValue" readonly>
+<button onclick="copyHex()">Copy</button>
+</div>
+
+<br>
+
+<div>
+RGB :
+<input type="text" id="rgbValue" readonly>
+<button onclick="copyRGB()">Copy</button>
+</div>
+
+<br>
+
+<button onclick="clearColor()">Clear</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="article">
+
+<h1>Color Picker – Complete Guide</h1>
+
+<p>A Color Picker is an essential tool used in web design, graphic design, and digital content creation. It allows users to select and identify colors quickly and accurately. Whether you are designing a website, creating a logo, editing an image, or building a mobile application, a Color Picker helps you find the perfect color for your project.</p>
+
+<p>Colors play a critical role in digital design. They influence user emotions, brand identity, readability, and visual appeal. Because of this, designers and developers often rely on Color Picker tools to ensure color accuracy and consistency across their projects.</p>
+
+<h2>What is a Color Picker?</h2>
+
+<p>A Color Picker is a tool that allows users to choose colors and obtain their color codes. These codes are commonly used in web design and digital graphics. The most common color formats include HEX, RGB, and sometimes HSL. Using a Color Picker, users can instantly see the color preview and copy the corresponding code for use in websites, applications, or design software.</p>
+
+<p>For example, a web developer might use a Color Picker to select a background color for a website. The tool will display the HEX code such as #3498db, which can then be added to CSS code.</p>
+
+<h2>Why a Color Picker is Important</h2>
+
+<p>A Color Picker is important because it simplifies the process of choosing and managing colors. Without a Color Picker, designers would need to manually calculate color values or rely on guesswork. This can lead to inconsistent designs and inaccurate color combinations.</p>
+
+<p>Using a Color Picker ensures that colors remain consistent throughout a project. For example, a brand might require a specific shade of blue for its logo and website elements. With a Color Picker, designers can easily maintain the exact color code across different design platforms.</p>
+
+<h2>Benefits of Using a Color Picker</h2>
+
+<p>One of the biggest benefits of using a Color Picker is convenience. Users can instantly preview colors and copy their codes without needing advanced design software. This makes Color Picker tools accessible to beginners and professionals alike.</p>
+
+<p>Another advantage is accuracy. Color Picker tools generate precise color codes that can be used in programming languages like HTML, CSS, and JavaScript. This ensures that colors appear exactly as intended across different devices and browsers.</p>
+
+<p>Color Picker tools also improve productivity. Instead of searching for color codes manually, users can simply select a color and copy the value instantly.</p>
+
+<h2>HEX and RGB Color Codes</h2>
+
+<p>HEX color codes are widely used in web development. They are written using six hexadecimal characters that represent red, green, and blue values. For example, the HEX code #ff0000 represents pure red.</p>
+
+<p>RGB stands for Red, Green, and Blue. In RGB format, colors are defined using three numerical values ranging from 0 to 255. For example, rgb(255,0,0) also represents pure red.</p>
+
+<p>A Color Picker typically displays both HEX and RGB values so users can choose the format that works best for their project.</p>
+
+<h2>How to Use a Color Picker</h2>
+
+<p>Using a Color Picker is extremely simple. First, open the Color Picker tool in your browser. Next, click on the color selection box and choose the desired color. As you move the selector, the preview box will display the selected color instantly.</p>
+
+<p>Once you have selected a color, the tool will display its HEX and RGB values. You can then copy the code and use it in your website design, graphic design project, or digital artwork.</p>
+
+<h2>Common Uses of a Color Picker</h2>
+
+<p>Color Picker tools are widely used in many fields. Web developers use them to select colors for websites and applications. Graphic designers use Color Pickers when creating logos, illustrations, and marketing materials.</p>
+
+<p>Digital marketers also use Color Picker tools to maintain consistent branding across social media graphics, advertisements, and landing pages.</p>
+
+<p>Even students and hobbyists use Color Picker tools when experimenting with digital art or learning web development.</p>
+
+<h2>Color Picker and Web Design</h2>
+
+<p>In web design, colors affect readability, accessibility, and user engagement. Choosing the right color combination can make a website visually appealing and easy to navigate. A Color Picker helps designers experiment with different color schemes until they find the best combination.</p>
+
+<p>For example, designers often use Color Pickers to select complementary colors for backgrounds, buttons, and text elements. This improves both aesthetics and usability.</p>
+
+<h2>Conclusion</h2>
+
+<p>A Color Picker is a simple yet powerful tool that helps users select and manage colors effectively. Whether you are designing a website, creating digital artwork, or developing an application, a Color Picker makes the process faster and more accurate.</p>
+
+<p>By providing instant color previews and easy access to HEX and RGB codes, Color Picker tools simplify color selection for beginners and professionals alike. Using a Color Picker ensures consistency, improves design quality, and enhances the overall visual experience of digital projects.</p>
+
+</div>
+
+
+<script>
+
+let colorInput=document.getElementById("colorInput");
+let preview=document.getElementById("preview");
+let hexValue=document.getElementById("hexValue");
+let rgbValue=document.getElementById("rgbValue");
+
+colorInput.addEventListener("input",function(){
+
+let color=this.value;
+
+preview.style.background=color;
+
+hexValue.value=color;
+
+let r=parseInt(color.substr(1,2),16);
+let g=parseInt(color.substr(3,2),16);
+let b=parseInt(color.substr(5,2),16);
+
+rgbValue.value="rgb("+r+","+g+","+b+")";
+
+});
+
+function copyHex(){
+
+navigator.clipboard.writeText(hexValue.value);
+
+}
+
+function copyRGB(){
+
+navigator.clipboard.writeText(rgbValue.value);
+
+}
+
+function clearColor(){
+
+preview.style.background="white";
+hexValue.value="";
+rgbValue.value="";
+
+}
+
+</script>
+
+</body>
+</html>
