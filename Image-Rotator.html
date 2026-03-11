@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Rotator Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview-wrapper{
+display:flex;
+gap:30px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.preview{
+width:320px;
+height:260px;
+border:2px dashed #ddd;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.preview img,canvas{
+max-width:100%;
+max-height:100%;
+}
+
+.controls{
+margin-top:20px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:5px;
+}
+
+select{
+padding:8px;
+border-radius:6px;
+margin-top:10px;
+}
+
+.size-info{
+font-size:14px;
+color:#555;
+margin-top:6px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+.article h1{
+margin-top:0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>My Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Image Rotator Tool</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<div class="preview-wrapper">
+
+<div>
+<h4>Input Image</h4>
+<div class="preview">
+<img id="inputImg">
+</div>
+<div class="size-info" id="inputSize"></div>
+</div>
+
+<div>
+<h4>Output Image</h4>
+<div class="preview">
+<canvas id="canvas"></canvas>
+</div>
+<div class="size-info" id="outputSize"></div>
+</div>
+
+</div>
+
+<div class="controls">
+
+<button onclick="rotateLeft()">Left</button>
+<button onclick="rotateRight()">Right</button>
+<button onclick="flipH()">Flip H</button>
+<button onclick="flipV()">Flip V</button>
+
+<br>
+
+<select id="format">
+<option value="png">PNG</option>
+<option value="jpeg">JPEG</option>
+<option value="webp">WEBP</option>
+</select>
+
+<br>
+
+<button onclick="downloadImage()">Download</button>
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="article">
+
+<h1>Image Rotator – Complete Guide</h1>
+
+<p>An Image Rotator is an online tool designed to rotate images quickly and easily. Images are an important part of websites, blogs, social media posts, and digital marketing content. However, sometimes photos appear sideways or upside down due to camera orientation. An Image Rotator helps fix this problem instantly by allowing users to rotate images to the correct direction.</p>
+
+<p>Many devices such as smartphones and digital cameras store orientation data in the image file. Sometimes browsers or websites do not interpret this data correctly, which results in incorrectly displayed images. Using an Image Rotator ensures that images always appear in the correct orientation on any device.</p>
+
+<h2>Why Image Rotation is Important</h2>
+
+<p>Correct image orientation is important for professional looking content. When images appear sideways or upside down, it can reduce readability and user engagement. A properly rotated image improves the visual appearance of a webpage and makes the content easier to understand.</p>
+
+<p>For example, if a product image on an e-commerce website appears rotated incorrectly, customers may find it confusing. Rotating the image correctly ensures that the product is displayed clearly and professionally.</p>
+
+<h2>Benefits of Using an Image Rotator</h2>
+
+<p>An Image Rotator provides many advantages. The biggest benefit is simplicity. Users can rotate images within seconds without installing complex software. All you need to do is upload an image, choose a rotation option, preview the result, and download the rotated image.</p>
+
+<p>Another benefit is speed. Online tools perform image rotation directly in the browser, which means results appear instantly. This saves time compared to traditional editing programs.</p>
+
+<p>Accessibility is also important. Because Image Rotator tools run in web browsers, they can be used on smartphones, tablets, laptops, and desktop computers.</p>
+
+<h2>Supported Image Formats</h2>
+
+<p>Most Image Rotator tools support common formats such as PNG, JPEG, and WEBP. JPEG images are widely used for photographs, while PNG images are ideal for graphics that require transparency. WEBP is a modern format designed to provide high quality images with smaller file sizes.</p>
+
+<h2>How Image Rotation Works</h2>
+
+<p>An Image Rotator works by changing the position of pixels inside an image. When the image is rotated, the tool recalculates pixel coordinates so that the image appears turned by a specific angle. The most common rotation angles include 90°, 180°, and 270°.</p>
+
+<p>Many tools also provide horizontal and vertical flip options. A horizontal flip mirrors the image from left to right, while a vertical flip mirrors it from top to bottom.</p>
+
+<h2>Common Uses of an Image Rotator</h2>
+
+<p>Bloggers often rotate images before publishing articles. Social media creators use Image Rotator tools to adjust photos before uploading them to platforms such as Instagram or Facebook. Students and teachers rotate scanned documents or diagrams for presentations.</p>
+
+<p>Designers and web developers also use Image Rotator tools to ensure images align correctly with website layouts.</p>
+
+<h2>Image Rotator and SEO</h2>
+
+<p>Correctly oriented images improve user experience, which is an important ranking factor in search engines. When images are properly displayed, users spend more time on the page and interact more with the content.</p>
+
+<p>Optimized images also ensure consistent display across devices and browsers, improving the overall quality of a website.</p>
+
+<h2>Conclusion</h2>
+
+<p>An Image Rotator is a simple yet powerful tool for fixing image orientation problems. It allows users to rotate images, flip them, preview the result, and download the final file instantly. Whether you are a blogger, designer, student, or business owner, an Image Rotator can help you maintain professional looking images across all digital platforms.</p>
+
+</div>
+
+<script>
+
+let inputImg=document.getElementById("inputImg");
+let canvas=document.getElementById("canvas");
+let ctx=canvas.getContext("2d");
+
+let img=new Image();
+let rotation=0;
+let scaleX=1;
+let scaleY=1;
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+let file=e.target.files[0];
+if(!file) return;
+
+document.getElementById("inputSize").innerText="Input Size: "+(file.size/1024).toFixed(2)+" KB";
+
+let reader=new FileReader();
+
+reader.onload=function(event){
+
+inputImg.src=event.target.result;
+
+img.onload=function(){
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+draw();
+
+}
+
+img.src=event.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+});
+
+function draw(){
+
+ctx.save();
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.translate(canvas.width/2,canvas.height/2);
+ctx.rotate(rotation*Math.PI/180);
+ctx.scale(scaleX,scaleY);
+
+ctx.drawImage(img,-img.width/2,-img.height/2);
+
+ctx.restore();
+
+updateOutputSize();
+
+}
+
+function updateOutputSize(){
+
+let dataURL=canvas.toDataURL();
+let sizeKB=(dataURL.length*3/4)/1024;
+
+document.getElementById("outputSize").innerText="Output Size: "+sizeKB.toFixed(2)+" KB";
+
+}
+
+function rotateLeft(){
+rotation-=90;
+draw();
+}
+
+function rotateRight(){
+rotation+=90;
+draw();
+}
+
+function flipH(){
+scaleX*=-1;
+draw();
+}
+
+function flipV(){
+scaleY*=-1;
+draw();
+}
+
+function downloadImage(){
+
+let format=document.getElementById("format").value;
+
+let link=document.createElement("a");
+link.download="image-rotated."+format;
+link.href=canvas.toDataURL("image/"+format);
+link.click();
+
+}
+
+function clearAll(){
+
+inputImg.src="";
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+document.getElementById("upload").value="";
+document.getElementById("inputSize").innerText="";
+document.getElementById("outputSize").innerText="";
+
+rotation=0;
+scaleX=1;
+scaleY=1;
+
+}
+
+</script>
+
+</body>
+</html>
