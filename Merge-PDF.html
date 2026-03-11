@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Merge PDF Tool</title>
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview{
+border:2px dashed #ddd;
+padding:20px;
+margin-top:20px;
+min-height:100px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+.file-list{
+margin-top:10px;
+font-size:14px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+.article h1{
+margin-top:0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>My Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Merge PDF Tool</h2>
+
+<input type="file" id="upload" accept="application/pdf" multiple>
+
+<div class="file-list" id="fileList"></div>
+
+<div class="preview">
+Upload multiple PDF files and merge them into a single PDF document.
+</div>
+
+<br>
+
+<button onclick="mergePDF()">Merge PDF</button>
+<button onclick="clearFiles()">Clear</button>
+
+</div>
+
+</div>
+
+<div class="article">
+
+<h1>Merge PDF – Complete Guide</h1>
+
+<p>The Merge PDF tool is one of the most useful online utilities for managing digital documents. PDF files are widely used for sharing documents because they preserve formatting, fonts, and layout across different devices and operating systems. However, sometimes users need to combine multiple PDF files into a single document. This is where the Merge PDF tool becomes extremely helpful.</p>
+
+<p>A Merge PDF tool allows users to upload multiple PDF files and combine them into one single PDF document. Instead of sending several separate files, users can create one organized document that contains all the pages together. This is particularly useful for business reports, academic documents, presentations, and official paperwork.</p>
+
+<h2>What is a Merge PDF Tool</h2>
+
+<p>A Merge PDF tool is a software or online utility that combines two or more PDF documents into a single PDF file. The tool takes individual PDF pages from each uploaded document and merges them sequentially into one final file.</p>
+
+<p>This process helps users keep documents organized and easier to manage. For example, a student may have several PDF files containing different chapters of a project. Using a Merge PDF tool, those files can be combined into one final report.</p>
+
+<h2>Why Merge PDF Files</h2>
+
+<p>There are many situations where merging PDF files becomes necessary. Businesses often combine invoices, reports, and contracts into one single document. This makes it easier to store, share, and review files.</p>
+
+<p>Students and researchers also merge PDFs when creating project reports or thesis documents. Instead of submitting multiple files, they can combine everything into one organized document.</p>
+
+<h2>Benefits of Using a Merge PDF Tool</h2>
+
+<p>One of the biggest benefits of using a Merge PDF tool is convenience. Instead of managing multiple files separately, users can combine them into a single document. This improves organization and reduces confusion.</p>
+
+<p>Another benefit is improved document sharing. Sending one PDF file is easier than sending several files individually. This simplifies communication and collaboration.</p>
+
+<p>Merge PDF tools also help save time. Instead of manually copying and pasting content into a new document, users can merge files instantly.</p>
+
+<h2>How Merge PDF Tools Work</h2>
+
+<p>Merge PDF tools work by reading the internal structure of each PDF document. When users upload files, the tool extracts all pages from the documents and places them in the order selected by the user. These pages are then combined into a new PDF file.</p>
+
+<p>The final merged PDF preserves the layout, formatting, images, and text from the original documents.</p>
+
+<h2>Common Uses of Merge PDF</h2>
+
+<p>Merge PDF tools are widely used in education, business, and digital publishing. Students merge PDF lecture notes, assignments, and research documents into one final file.</p>
+
+<p>Businesses often merge contracts, financial reports, and presentations into single PDF documents for easier distribution.</p>
+
+<p>Designers and content creators also use Merge PDF tools when combining multiple design pages into one portfolio document.</p>
+
+<h2>Merge PDF and Productivity</h2>
+
+<p>Productivity improves when documents are organized and easy to manage. The Merge PDF tool simplifies document management by combining files quickly. Instead of opening several PDFs separately, users can access all information in one document.</p>
+
+<p>This efficiency is especially useful in professional environments where large numbers of documents need to be managed daily.</p>
+
+<h2>Conclusion</h2>
+
+<p>The Merge PDF tool is an essential solution for anyone who works with digital documents. It allows users to combine multiple PDF files into one organized document quickly and easily.</p>
+
+<p>Whether you are a student preparing assignments, a professional managing reports, or a business owner sharing documents, the Merge PDF tool helps simplify your workflow. By merging PDF files into a single document, users can improve organization, enhance productivity, and manage digital files more effectively.</p>
+
+</div>
+
+<script>
+
+let files=[];
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+files=[...e.target.files];
+
+let list="";
+
+files.forEach((file,index)=>{
+list+="File "+(index+1)+": "+file.name+"<br>";
+});
+
+document.getElementById("fileList").innerHTML=list;
+
+});
+
+async function mergePDF(){
+
+if(files.length<2){
+alert("Please upload at least two PDF files.");
+return;
+}
+
+const mergedPdf=await PDFLib.PDFDocument.create();
+
+for(const file of files){
+
+const arrayBuffer=await file.arrayBuffer();
+
+const pdf=await PDFLib.PDFDocument.load(arrayBuffer);
+
+const pages=await mergedPdf.copyPages(pdf,pdf.getPageIndices());
+
+pages.forEach(page=>mergedPdf.addPage(page));
+
+}
+
+const mergedBytes=await mergedPdf.save();
+
+const blob=new Blob([mergedBytes],{type:"application/pdf"});
+
+const link=document.createElement("a");
+
+link.href=URL.createObjectURL(blob);
+
+link.download="merged.pdf";
+
+link.click();
+
+}
+
+function clearFiles(){
+
+files=[];
+
+document.getElementById("upload").value="";
+
+document.getElementById("fileList").innerHTML="";
+
+}
+
+</script>
+
+</body>
+</html>
