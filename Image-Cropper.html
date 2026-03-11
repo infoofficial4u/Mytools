@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Cropper Tool</title>
+
+<meta name="description" content="Free online image cropper tool to crop images easily.">
+<meta name="keywords" content="image cropper, crop image online, photo crop tool">
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f6fb;
+}
+
+header{
+background:white;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.tool-box{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+input{
+margin-top:10px;
+}
+
+button{
+margin-top:10px;
+padding:10px 15px;
+border:none;
+border-radius:5px;
+background:#4a6cff;
+color:white;
+cursor:pointer;
+}
+
+select{
+margin-top:10px;
+padding:8px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+canvas{
+max-width:100%;
+margin-top:20px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+.preview{
+margin-top:20px;
+text-align:center;
+}
+
+.article{
+max-width:900px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+line-height:1.7;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="index.html">⬅ Back</a>
+
+<div>MyTools</div>
+
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>✂ Image Cropper</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<canvas id="canvas"></canvas>
+
+<div class="preview">
+
+<button onclick="cropImage()">Crop Image</button> <button onclick="downloadImage()">Download Image</button>
+
+<br>
+
+<select id="format">
+<option value="none">none</option>
+<option value="png">png</option>
+<option value="jpeg">jpeg</option>
+<option value="webp">webp</option>
+</select>
+
+<button onclick="clearCanvas()">Clear</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="article">
+
+<h1>Image Cropper – Complete Guide to Crop Images Online</h1>
+
+<p>An image cropper is a powerful tool that allows users to cut or trim unwanted areas from an image. Cropping is one of the most commonly used image editing techniques because it helps focus attention on the most important part of a photo.</p>
+
+<p>In the digital world, images play an important role in communication and storytelling. However, many photos contain unnecessary elements or empty space. By using an image cropper, users can remove those extra parts and create a cleaner and more focused image.</p>
+
+<h2>What is an Image Cropper?</h2>
+
+<p>An image cropper is a tool that allows users to select a specific portion of an image and remove the rest. This process is known as cropping. Cropping helps improve image composition and ensures that the most important subject of the image remains visible.</p>
+
+<h2>Benefits of Using an Image Cropper</h2>
+
+<p>Using an image cropper provides several advantages. It helps improve image composition by removing unnecessary parts of the photo. Cropped images often look cleaner and more visually appealing which is very important for websites, marketing materials, and social media content.</p>
+
+<h2>Image Cropper for Social Media</h2>
+
+<p>Social media platforms require specific image sizes for posts, profile pictures, and banners. An image cropper helps users adjust images so they fit perfectly on these platforms.</p>
+
+<h2>Conclusion</h2>
+
+<p>An image cropper is an essential tool for editing and improving digital images. It allows users to remove unwanted parts of an image and focus on the most important elements.</p>
+
+</div>
+
+<script>
+
+let canvas=document.getElementById("canvas");
+let ctx=canvas.getContext("2d");
+
+let img=new Image();
+
+let startX,startY,endX,endY;
+let dragging=false;
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+let file=e.target.files[0];
+if(!file) return;
+
+let reader=new FileReader();
+
+reader.onload=function(event){
+
+img.onload=function(){
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+ctx.drawImage(img,0,0);
+
+}
+
+img.src=event.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+});
+
+canvas.addEventListener("mousedown",function(e){
+
+dragging=true;
+startX=e.offsetX;
+startY=e.offsetY;
+
+});
+
+canvas.addEventListener("mousemove",function(e){
+
+if(!dragging) return;
+
+endX=e.offsetX;
+endY=e.offsetY;
+
+ctx.drawImage(img,0,0);
+
+ctx.strokeStyle="red";
+ctx.lineWidth=2;
+
+ctx.strokeRect(startX,startY,endX-startX,endY-startY);
+
+});
+
+canvas.addEventListener("mouseup",function(){
+
+dragging=false;
+
+});
+
+canvas.addEventListener("touchstart",function(e){
+
+let rect=canvas.getBoundingClientRect();
+
+startX=e.touches[0].clientX-rect.left;
+startY=e.touches[0].clientY-rect.top;
+
+dragging=true;
+
+});
+
+canvas.addEventListener("touchmove",function(e){
+
+if(!dragging) return;
+
+let rect=canvas.getBoundingClientRect();
+
+endX=e.touches[0].clientX-rect.left;
+endY=e.touches[0].clientY-rect.top;
+
+ctx.drawImage(img,0,0);
+
+ctx.strokeStyle="red";
+ctx.lineWidth=2;
+
+ctx.strokeRect(startX,startY,endX-startX,endY-startY);
+
+});
+
+canvas.addEventListener("touchend",function(){
+
+dragging=false;
+
+});
+
+function cropImage(){
+
+let width=endX-startX;
+let height=endY-startY;
+
+let temp=document.createElement("canvas");
+let tctx=temp.getContext("2d");
+
+temp.width=width;
+temp.height=height;
+
+tctx.drawImage(canvas,startX,startY,width,height,0,0,width,height);
+
+canvas.width=width;
+canvas.height=height;
+
+ctx.drawImage(temp,0,0);
+
+}
+
+function downloadImage(){
+
+let format=document.getElementById("format").value;
+
+let mime="image/png";
+let ext="png";
+
+if(format==="jpeg"){
+mime="image/jpeg";
+ext="jpg";
+}
+
+if(format==="webp"){
+mime="image/webp";
+ext="webp";
+}
+
+let link=document.createElement("a");
+
+link.download="cropped-image."+ext;
+
+link.href=canvas.toDataURL(mime);
+
+document.body.appendChild(link);
+
+link.click();
+
+document.body.removeChild(link);
+
+}
+
+function clearCanvas(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+document.getElementById("upload").value="";
+
+}
+
+</script>
+
+</body>
+</html>
