@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Blur Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview-area{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.preview-box{
+flex:1;
+background:#fafafa;
+padding:20px;
+border-radius:8px;
+border:1px solid #eee;
+}
+
+.preview-box img{
+max-width:100%;
+margin-top:10px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+select{
+padding:8px;
+border-radius:6px;
+margin-top:10px;
+}
+
+.size{
+font-size:14px;
+color:#555;
+margin-top:8px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Image Blur Tool</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<br><br>
+
+<label>Blur Strength</label>
+<br>
+<input type="range" id="blurRange" min="0" max="20" value="5">
+
+<br><br>
+
+<select id="format">
+<option value="none">None (Original)</option>
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPG</option>
+<option value="image/webp">WEBP</option>
+</select>
+
+<div class="preview-area">
+
+<div class="preview-box">
+<h3>Input Image</h3>
+<div id="inputSize" class="size"></div>
+<img id="inputPreview">
+</div>
+
+<div class="preview-box">
+<h3>Output Image</h3>
+<div id="outputSize" class="size"></div>
+<img id="outputPreview">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="blurImage()">Blur Image</button>
+<button onclick="downloadImage()">Download</button>
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+</div>
+
+<div class="article">
+
+<h1>Image Blur Tool – Complete Guide</h1>
+
+<p>The <strong>Image Blur Tool</strong> is an essential image editing utility used to soften or blur parts of an image. In the digital world, images are widely used across websites, social media platforms, blogs, marketing campaigns, and mobile applications. Sometimes, users need to blur an image to hide sensitive information, create artistic effects, or improve visual focus. This is where the Image Blur Tool becomes extremely useful.</p>
+
+<p>An <strong>Image Blur Tool</strong> allows users to apply a blur effect to an image quickly and easily. By adjusting the blur strength, users can control how soft or strong the blur effect appears. This helps improve image presentation and can also protect privacy when sharing images online.</p>
+
+<h2>What is Image Blur Tool</h2>
+
+<p>The <strong>Image Blur Tool</strong> is a digital tool that softens the pixels of an image to reduce sharpness and detail. This process blends nearby pixels together to create a smooth and blurred effect.</p>
+
+<p>The main purpose of an Image Blur Tool is to reduce clarity in certain areas of an image. This can be used to hide personal information, create background effects, or improve the focus on specific parts of an image.</p>
+
+<h2>Why Use an Image Blur Tool</h2>
+
+<p>The <strong>Image Blur Tool</strong> is useful in many situations. One common use is privacy protection. For example, users may blur license plates, faces, addresses, or other sensitive information before sharing images online.</p>
+
+<p>Another reason to use an Image Blur Tool is to improve visual design. Blurred backgrounds are commonly used in graphic design and photography to highlight the main subject of an image.</p>
+
+<h2>Benefits of Image Blur Tool</h2>
+
+<p>The Image Blur Tool offers many advantages for photographers, designers, and content creators. One benefit is improved visual focus. When the background is blurred, viewers naturally focus on the main subject of the image.</p>
+
+<p>Another benefit is privacy protection. Blurring sensitive information ensures that personal details are not exposed online.</p>
+
+<p>The Image Blur Tool also helps create artistic and professional visual effects that enhance the overall appearance of images.</p>
+
+<h2>Image Blur Tool for Photography</h2>
+
+<p>Photographers often use the Image Blur Tool to create depth-of-field effects. By blurring the background while keeping the subject sharp, photographers can produce visually appealing images.</p>
+
+<p>This technique helps make the subject stand out and gives the image a professional look.</p>
+
+<h2>Image Blur Tool for Social Media</h2>
+
+<p>Social media creators frequently use the Image Blur Tool to enhance their content. Blurred backgrounds can make images look more modern and stylish.</p>
+
+<p>Additionally, blurring certain elements helps maintain privacy while still sharing the image online.</p>
+
+<h2>Image Blur Tool for Designers</h2>
+
+<p>Graphic designers use the Image Blur Tool to create attractive design layouts. Blurred images are often used as background elements for banners, posters, and website headers.</p>
+
+<p>This effect allows text and other design elements to stand out clearly.</p>
+
+<h2>How Image Blur Tool Works</h2>
+
+<p>The Image Blur Tool works by averaging nearby pixels to reduce sharpness. This process blends colors together and removes fine details from the image.</p>
+
+<p>Modern Image Blur Tools allow users to adjust the blur intensity using sliders or controls.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>Image Blur Tool</strong> is a powerful and practical solution for improving image presentation and protecting sensitive information. Whether you are a photographer, designer, blogger, or social media creator, the Image Blur Tool can help you create professional-looking images quickly.</p>
+
+<p>By using an Image Blur Tool, users can enhance visual quality, maintain privacy, and create modern design effects with ease.</p>
+
+</div>
+
+<script>
+
+let uploadedImage=null
+let blurredBlob=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+uploadedImage=e.target.files[0]
+
+if(uploadedImage){
+
+let size=(uploadedImage.size/1024).toFixed(2)
+
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+document.getElementById("inputPreview").src=event.target.result
+
+}
+
+reader.readAsDataURL(uploadedImage)
+
+}
+
+})
+
+function blurImage(){
+
+if(!uploadedImage){
+alert("Upload image first")
+return
+}
+
+let blurValue=document.getElementById("blurRange").value
+
+let img=new Image()
+
+img.src=URL.createObjectURL(uploadedImage)
+
+img.onload=function(){
+
+let canvas=document.createElement("canvas")
+
+canvas.width=img.width
+canvas.height=img.height
+
+let ctx=canvas.getContext("2d")
+
+ctx.filter="blur("+blurValue+"px)"
+
+ctx.drawImage(img,0,0)
+
+let format=document.getElementById("format").value
+
+if(format==="none") format="image/png"
+
+canvas.toBlob(function(blob){
+
+blurredBlob=blob
+
+let size=(blob.size/1024).toFixed(2)
+
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+let url=URL.createObjectURL(blob)
+
+document.getElementById("outputPreview").src=url
+
+},format)
+
+}
+
+}
+
+function downloadImage(){
+
+if(!blurredBlob){
+alert("Blur image first")
+return
+}
+
+let link=document.createElement("a")
+
+link.href=URL.createObjectURL(blurredBlob)
+
+link.download="blur-image"
+
+link.click()
+
+}
+
+function clearAll(){
+
+uploadedImage=null
+blurredBlob=null
+
+document.getElementById("upload").value=""
+document.getElementById("inputPreview").src=""
+document.getElementById("outputPreview").src=""
+document.getElementById("inputSize").innerText=""
+document.getElementById("outputSize").innerText=""
+
+}
+
+</script>
+
+</body>
+</html>
