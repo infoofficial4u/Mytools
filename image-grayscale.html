@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Grayscale Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview-area{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.preview-box{
+flex:1;
+background:#fafafa;
+padding:20px;
+border-radius:8px;
+border:1px solid #eee;
+}
+
+.preview-box img{
+max-width:100%;
+margin-top:10px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2b50d0;
+}
+
+select{
+padding:8px;
+border-radius:6px;
+margin-top:10px;
+}
+
+.size{
+font-size:14px;
+color:#555;
+margin-top:10px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Image Grayscale Tool</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<br><br>
+
+<select id="format">
+<option value="none">None (Original)</option>
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPG</option>
+<option value="image/webp">WEBP</option>
+</select>
+
+<div class="preview-area">
+
+<div class="preview-box">
+<h3>Input Image</h3>
+<div id="inputSize" class="size"></div>
+<img id="inputPreview">
+</div>
+
+<div class="preview-box">
+<h3>Output Image</h3>
+<div id="outputSize" class="size"></div>
+<img id="outputPreview">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="convertGray()">Convert to Grayscale</button>
+<button onclick="downloadImage()">Download</button>
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+</div>
+
+<script>
+
+let uploadedImage=null
+let grayBlob=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+uploadedImage=e.target.files[0]
+
+if(uploadedImage){
+
+let size=(uploadedImage.size/1024).toFixed(2)
+
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+document.getElementById("inputPreview").src=event.target.result
+
+}
+
+reader.readAsDataURL(uploadedImage)
+
+}
+
+})
+
+function convertGray(){
+
+if(!uploadedImage){
+alert("Upload image first")
+return
+}
+
+let img=new Image()
+
+img.src=URL.createObjectURL(uploadedImage)
+
+img.onload=function(){
+
+let canvas=document.createElement("canvas")
+
+canvas.width=img.width
+canvas.height=img.height
+
+let ctx=canvas.getContext("2d")
+
+ctx.drawImage(img,0,0)
+
+let imageData=ctx.getImageData(0,0,canvas.width,canvas.height)
+let data=imageData.data
+
+for(let i=0;i<data.length;i+=4){
+
+let r=data[i]
+let g=data[i+1]
+let b=data[i+2]
+
+let gray=(r+g+b)/3
+
+data[i]=gray
+data[i+1]=gray
+data[i+2]=gray
+
+}
+
+ctx.putImageData(imageData,0,0)
+
+let format=document.getElementById("format").value
+
+if(format==="none") format="image/png"
+
+canvas.toBlob(function(blob){
+
+grayBlob=blob
+
+let size=(blob.size/1024).toFixed(2)
+
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+let url=URL.createObjectURL(blob)
+
+document.getElementById("outputPreview").src=url
+
+},format)
+
+}
+
+}
+
+function downloadImage(){
+
+if(!grayBlob){
+alert("Convert image first")
+return
+}
+
+let link=document.createElement("a")
+
+link.href=URL.createObjectURL(grayBlob)
+
+link.download="grayscale-image"
+
+link.click()
+
+}
+
+function clearAll(){
+
+uploadedImage=null
+grayBlob=null
+
+document.getElementById("upload").value=""
+
+document.getElementById("inputPreview").src=""
+document.getElementById("outputPreview").src=""
+
+document.getElementById("inputSize").innerText=""
+document.getElementById("outputSize").innerText=""
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>Image Grayscale Tool – Complete Guide</h1>
+
+<p>The <strong>Image Grayscale Tool</strong> is a powerful online utility that converts colored images into grayscale images. Grayscale images contain only shades of gray ranging from black to white. This technique removes color information while preserving brightness and contrast.</p>
+
+<p>The Image Grayscale Tool is widely used in photography, graphic design, website development, and image processing. Many users prefer grayscale images because they provide a clean, artistic, and professional appearance.</p>
+
+<h2>What is Image Grayscale</h2>
+
+<p>Image grayscale refers to the process of converting a color image into black and white tones. Instead of displaying red, green, and blue colors, grayscale images display different levels of brightness.</p>
+
+<p>The Image Grayscale Tool calculates brightness values for each pixel and converts them into shades of gray. This creates a monochrome image that retains structure and detail.</p>
+
+<h2>Why Use an Image Grayscale Tool</h2>
+
+<p>The Image Grayscale Tool is useful for many purposes. Designers often use grayscale images to create minimalist layouts. Photographers use grayscale effects to highlight texture, lighting, and composition.</p>
+
+<p>Grayscale images also reduce file complexity and sometimes reduce file size. This makes them useful for fast-loading websites and applications.</p>
+
+<h2>Benefits of Image Grayscale Tool</h2>
+
+<p>The Image Grayscale Tool provides several advantages. One major benefit is improved focus on shapes and patterns. Without color distractions, viewers can concentrate on composition and details.</p>
+
+<p>Another advantage is aesthetic appeal. Black-and-white photography has a timeless and artistic style that many users prefer.</p>
+
+<p>The Image Grayscale Tool also helps create consistent visual branding across websites and design projects.</p>
+
+<h2>Image Grayscale Tool for Photography</h2>
+
+<p>Photographers frequently use grayscale editing to produce dramatic effects. By removing color, photographers can emphasize shadows, highlights, and textures.</p>
+
+<p>Portrait photography often looks more emotional and expressive when converted to grayscale.</p>
+
+<h2>Image Grayscale Tool for Web Design</h2>
+
+<p>Web designers use grayscale images to create clean backgrounds and modern UI designs. Many websites use grayscale thumbnails and images to maintain visual consistency.</p>
+
+<h2>How Image Grayscale Works</h2>
+
+<p>The Image Grayscale Tool processes image pixels and calculates brightness values. The red, green, and blue components of each pixel are averaged to produce a gray value.</p>
+
+<p>This gray value replaces the original color, creating the grayscale effect.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>Image Grayscale Tool</strong> is an essential tool for photographers, designers, and digital creators. It allows users to convert colorful images into elegant grayscale versions quickly and easily.</p>
+
+<p>Whether you want to create artistic photographs, simplify web design visuals, or experiment with monochrome effects, the Image Grayscale Tool is the perfect solution.</p>
+
+</div>
+
+</body>
+</html>
