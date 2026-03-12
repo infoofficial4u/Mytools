@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Border Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview-area{
+display:flex;
+justify-content:space-between;
+margin-top:30px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.preview-box{
+flex:1;
+background:#fafafa;
+padding:20px;
+border-radius:8px;
+border:1px solid #eee;
+}
+
+.preview-box img{
+max-width:100%;
+margin-top:10px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.size{
+font-size:14px;
+color:#555;
+margin-top:10px;
+}
+
+input[type=range]{
+width:200px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Image Border Tool</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<br><br>
+
+<label>Border Thickness</label><br>
+<input type="range" id="borderRange" min="0" max="100" value="20">
+
+<br><br>
+
+<label>Border Color</label><br>
+<input type="color" id="borderColor" value="#000000">
+
+<div class="preview-area">
+
+<div class="preview-box">
+<h3>Input Image</h3>
+<div id="inputSize" class="size"></div>
+<img id="inputPreview">
+</div>
+
+<div class="preview-box">
+<h3>Output Image</h3>
+<div id="outputSize" class="size"></div>
+<img id="outputPreview">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="addBorder()">Add Border</button>
+<button onclick="downloadImage()">Download</button>
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+</div>
+
+<script>
+
+let uploadedImage=null
+let borderBlob=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+uploadedImage=e.target.files[0]
+
+if(uploadedImage){
+
+let size=(uploadedImage.size/1024).toFixed(2)
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+document.getElementById("inputPreview").src=event.target.result
+}
+
+reader.readAsDataURL(uploadedImage)
+
+}
+
+})
+
+function addBorder(){
+
+if(!uploadedImage){
+alert("Upload image first")
+return
+}
+
+let border=document.getElementById("borderRange").value
+let color=document.getElementById("borderColor").value
+
+let img=new Image()
+img.src=URL.createObjectURL(uploadedImage)
+
+img.onload=function(){
+
+let canvas=document.createElement("canvas")
+
+canvas.width=img.width + border*2
+canvas.height=img.height + border*2
+
+let ctx=canvas.getContext("2d")
+
+ctx.fillStyle=color
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.drawImage(img,border,border)
+
+canvas.toBlob(function(blob){
+
+borderBlob=blob
+
+let size=(blob.size/1024).toFixed(2)
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+let url=URL.createObjectURL(blob)
+
+document.getElementById("outputPreview").src=url
+
+})
+
+}
+
+}
+
+function downloadImage(){
+
+if(!borderBlob){
+alert("Add border first")
+return
+}
+
+let link=document.createElement("a")
+
+link.href=URL.createObjectURL(borderBlob)
+link.download="image-border.png"
+link.click()
+
+}
+
+function clearAll(){
+
+uploadedImage=null
+borderBlob=null
+
+document.getElementById("upload").value=""
+document.getElementById("inputPreview").src=""
+document.getElementById("outputPreview").src=""
+document.getElementById("inputSize").innerText=""
+document.getElementById("outputSize").innerText=""
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>Image Border Tool – Complete Guide</h1>
+
+<p>The <strong>Image Border Tool</strong> is an essential online tool that allows users to add borders around images quickly and easily. Borders play an important role in image design because they help highlight the image and separate it from the surrounding background. Whether you are designing social media posts, creating blog graphics, or editing photographs, the Image Border Tool can improve the overall presentation of your images.</p>
+
+<p>Many designers and photographers use an Image Border Tool to enhance visual balance and give images a more professional appearance. Adding a border to an image can make it stand out and attract viewer attention.</p>
+
+<h2>What is Image Border Tool</h2>
+
+<p>The <strong>Image Border Tool</strong> is a simple editing utility that allows users to add a colored frame around an image. The border can be customized by changing its thickness, color, and sometimes style.</p>
+
+<p>This tool is widely used in graphic design, photography, digital marketing, and website development.</p>
+
+<h2>Why Use an Image Border Tool</h2>
+
+<p>The Image Border Tool helps improve the visual structure of images. Without a border, images may blend into the background of a webpage or design. A border creates a clear boundary and improves image visibility.</p>
+
+<p>Another reason to use an Image Border Tool is aesthetic enhancement. Borders can make images look cleaner and more organized.</p>
+
+<h2>Benefits of Image Border Tool</h2>
+
+<p>The Image Border Tool offers several benefits for content creators. One advantage is improved visual focus. Borders draw attention to the image and emphasize the subject.</p>
+
+<p>Another benefit is design flexibility. Users can experiment with different border colors and sizes to match their design theme.</p>
+
+<p>The Image Border Tool is also extremely easy to use and does not require advanced editing skills.</p>
+
+<h2>Image Border Tool for Social Media</h2>
+
+<p>Social media creators often use the Image Border Tool to make their posts stand out in crowded feeds. A clean border can make an image more attractive and increase engagement.</p>
+
+<h2>Image Border Tool for Bloggers</h2>
+
+<p>Bloggers use bordered images to improve article design. Borders help organize content and create visually appealing layouts.</p>
+
+<h2>Image Border Tool for Photographers</h2>
+
+<p>Photographers sometimes add borders to their images to frame the subject. This technique helps guide the viewer’s eyes toward the main focus of the photograph.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>Image Border Tool</strong> is a simple yet powerful editing tool that enhances the appearance of images. By adding borders, users can create more professional and visually appealing graphics.</p>
+
+<p>If you want to improve the presentation of your photos, blog images, or social media graphics, the Image Border Tool is an excellent solution.</p>
+
+</div>
+
+</body>
+</html>
