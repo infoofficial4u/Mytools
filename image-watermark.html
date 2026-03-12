@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Watermark Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview-area{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.preview-box{
+flex:1;
+background:#fafafa;
+padding:20px;
+border-radius:8px;
+border:1px solid #eee;
+}
+
+.image-container{
+position:relative;
+display:inline-block;
+}
+
+.image-container img{
+max-width:100%;
+}
+
+#watermark{
+position:absolute;
+top:40px;
+left:40px;
+cursor:move;
+font-weight:bold;
+user-select:none;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 16px;
+border-radius:6px;
+cursor:pointer;
+margin:4px;
+}
+
+input,select{
+padding:6px;
+border-radius:6px;
+margin:6px;
+}
+
+.size{
+font-size:14px;
+color:#555;
+margin-top:8px;
+}
+
+.controls{
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Image Watermark Tool</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<input type="text" id="watermarkText" placeholder="Watermark Text">
+
+<input type="color" id="textColor" value="#ffffff">
+
+<label>Opacity</label>
+<input type="range" id="opacity" min="0" max="1" step="0.1" value="0.7">
+
+<label>Text Size</label>
+<input type="range" id="textSize" min="20" max="120" value="40">
+
+<select id="format">
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPG</option>
+<option value="image/webp">WEBP</option>
+</select>
+
+<div class="controls">
+<button onclick="setPosition('left')">Left</button>
+<button onclick="setPosition('right')">Right</button>
+<button onclick="setPosition('top')">Top</button>
+<button onclick="setPosition('center')">Center</button>
+<button onclick="setPosition('bottom')">Bottom</button>
+
+<button onclick="flipH()">Flip H</button>
+<button onclick="flipV()">Flip V</button>
+</div>
+
+<div class="preview-area">
+
+<div class="preview-box">
+
+<h3>Input Image</h3>
+<div class="size" id="inputSize"></div>
+
+<div class="image-container">
+
+<img id="inputPreview">
+<div id="watermark">Watermark</div>
+
+</div>
+
+</div>
+
+<div class="preview-box">
+
+<h3>Output Image</h3>
+<div class="size" id="outputSize"></div>
+
+<img id="outputPreview" style="max-width:100%;">
+
+</div>
+
+</div>
+
+<br>
+
+<button onclick="generateImage()">Generate</button>
+<button onclick="downloadImage()">Download</button>
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+</div>
+
+<script>
+
+let uploadedImage=null
+let outputBlob=null
+
+let watermark=document.getElementById("watermark")
+let img=document.getElementById("inputPreview")
+
+let flipHorizontal=false
+let flipVertical=false
+
+// upload
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+uploadedImage=e.target.files[0]
+
+if(uploadedImage){
+
+let size=(uploadedImage.size/1024).toFixed(2)
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+img.src=event.target.result
+}
+
+reader.readAsDataURL(uploadedImage)
+
+}
+
+})
+
+// watermark text
+
+document.getElementById("watermarkText").addEventListener("input",function(){
+watermark.innerText=this.value
+})
+
+// size
+
+document.getElementById("textSize").addEventListener("input",function(){
+watermark.style.fontSize=this.value+"px"
+})
+
+// color
+
+document.getElementById("textColor").addEventListener("input",function(){
+updateColor()
+})
+
+// opacity
+
+document.getElementById("opacity").addEventListener("input",function(){
+updateColor()
+})
+
+function updateColor(){
+
+let color=document.getElementById("textColor").value
+let op=document.getElementById("opacity").value
+
+watermark.style.color=color
+watermark.style.opacity=op
+
+}
+
+// drag
+
+let drag=false
+let offsetX,offsetY
+
+watermark.addEventListener("mousedown",function(e){
+
+drag=true
+
+offsetX=e.offsetX
+offsetY=e.offsetY
+
+})
+
+document.addEventListener("mousemove",function(e){
+
+if(!drag) return
+
+let rect=document.querySelector(".image-container").getBoundingClientRect()
+
+watermark.style.left=(e.clientX-rect.left-offsetX)+"px"
+watermark.style.top=(e.clientY-rect.top-offsetY)+"px"
+
+})
+
+document.addEventListener("mouseup",function(){
+drag=false
+})
+
+// positions
+
+function setPosition(pos){
+
+let container=document.querySelector(".image-container")
+
+if(pos==="left") watermark.style.left="10px"
+if(pos==="right") watermark.style.left=(container.offsetWidth-200)+"px"
+if(pos==="top") watermark.style.top="10px"
+if(pos==="center"){
+watermark.style.left=(container.offsetWidth/2)+"px"
+watermark.style.top=(container.offsetHeight/2)+"px"
+}
+if(pos==="bottom") watermark.style.top=(container.offsetHeight-60)+"px"
+
+}
+
+// flip
+
+function flipH(){
+flipHorizontal=!flipHorizontal
+updateFlip()
+}
+
+function flipV(){
+flipVertical=!flipVertical
+updateFlip()
+}
+
+function updateFlip(){
+
+let scaleX=flipHorizontal?-1:1
+let scaleY=flipVertical?-1:1
+
+img.style.transform="scale("+scaleX+","+scaleY+")"
+
+}
+
+// generate
+
+function generateImage(){
+
+if(!img.src) return
+
+let canvas=document.createElement("canvas")
+
+canvas.width=img.naturalWidth
+canvas.height=img.naturalHeight
+
+let ctx=canvas.getContext("2d")
+
+if(flipHorizontal||flipVertical){
+
+ctx.save()
+
+ctx.scale(flipHorizontal?-1:1,flipVertical?-1:1)
+
+ctx.drawImage(img,
+flipHorizontal?-canvas.width:0,
+flipVertical?-canvas.height:0,
+canvas.width,
+canvas.height)
+
+ctx.restore()
+
+}else{
+
+ctx.drawImage(img,0,0)
+
+}
+
+let wmRect=watermark.getBoundingClientRect()
+let imgRect=img.getBoundingClientRect()
+
+let scaleX=canvas.width/imgRect.width
+let scaleY=canvas.height/imgRect.height
+
+let x=(wmRect.left-imgRect.left)*scaleX
+let y=(wmRect.top-imgRect.top)*scaleY
+
+ctx.fillStyle=document.getElementById("textColor").value
+ctx.globalAlpha=document.getElementById("opacity").value
+ctx.font=document.getElementById("textSize").value+"px Arial"
+
+ctx.fillText(watermark.innerText,x,y)
+
+let format=document.getElementById("format").value
+
+canvas.toBlob(function(blob){
+
+outputBlob=blob
+
+let size=(blob.size/1024).toFixed(2)
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+document.getElementById("outputPreview").src=URL.createObjectURL(blob)
+
+},format)
+
+}
+
+// download
+
+function downloadImage(){
+
+if(!outputBlob) return
+
+let link=document.createElement("a")
+link.href=URL.createObjectURL(outputBlob)
+link.download="watermark-image"
+link.click()
+
+}
+
+// clear
+
+function clearAll(){
+
+img.src=""
+document.getElementById("outputPreview").src=""
+document.getElementById("inputSize").innerText=""
+document.getElementById("outputSize").innerText=""
+document.getElementById("upload").value=""
+
+}
+
+</script>
+
+</body>
+</html>
