@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Compress PDF Tool</title>
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview{
+border:2px dashed #ddd;
+padding:20px;
+margin-top:20px;
+min-height:80px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+.size{
+font-size:14px;
+color:#555;
+margin-top:10px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+.article h1{
+margin-top:0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>My Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Compress PDF Tool</h2>
+
+<input type="file" id="upload" accept="application/pdf">
+
+<div class="size" id="inputSize"></div>
+<div class="size" id="outputSize"></div>
+
+<div class="preview">
+Upload a PDF file and compress it to reduce the file size.
+</div>
+
+<br>
+
+<button onclick="compressPDF()">Compress PDF</button>
+<button onclick="downloadPDF()">Download</button>
+<button onclick="clearFile()">Clear</button>
+
+</div>
+
+</div>
+
+<div class="article">
+
+<h1>Compress PDF – Complete Guide</h1>
+
+<p>The Compress PDF tool is one of the most useful utilities for managing digital documents efficiently. PDF files are widely used for sharing documents such as reports, contracts, research papers, invoices, and presentations. However, sometimes PDF files become very large in size, making them difficult to upload, email, or store. This is where a Compress PDF tool becomes extremely helpful.</p>
+
+<p>A Compress PDF tool reduces the file size of a PDF document while maintaining its readability and quality. By compressing a PDF, users can save storage space, upload documents faster, and share files more easily.</p>
+
+<h2>What is Compress PDF</h2>
+
+<p>Compress PDF refers to the process of reducing the file size of a PDF document without significantly affecting its quality. This is achieved by optimizing images, removing unnecessary data, and applying efficient compression techniques.</p>
+
+<p>Many PDF files contain high-resolution images and embedded fonts that increase the file size. Compressing the PDF reduces these elements so the file becomes smaller and easier to manage.</p>
+
+<h2>Why Compress PDF Files</h2>
+
+<p>Large PDF files can cause problems when sending documents through email or uploading them to websites. Many platforms have file size limits, which means large documents cannot be uploaded.</p>
+
+<p>Compressing a PDF file allows users to reduce its size so it meets upload limits and loads faster when shared online.</p>
+
+<h2>Benefits of Using a Compress PDF Tool</h2>
+
+<p>One of the biggest advantages of using a Compress PDF tool is faster document sharing. Smaller files upload quickly and download faster for recipients.</p>
+
+<p>Another benefit is storage efficiency. Compressing PDF files reduces storage usage on devices and cloud platforms.</p>
+
+<p>Compress PDF tools also help improve productivity because users can quickly optimize documents without complicated software.</p>
+
+<h2>How PDF Compression Works</h2>
+
+<p>PDF compression works by optimizing different elements within the document. Images inside the PDF can be resized or compressed, unused metadata can be removed, and internal structures can be optimized.</p>
+
+<p>These techniques reduce the overall file size while preserving the original content and layout.</p>
+
+<h2>Common Uses of Compress PDF</h2>
+
+<p>Students use Compress PDF tools when submitting assignments or research papers online. Many universities require documents to be uploaded within specific file size limits.</p>
+
+<p>Businesses use PDF compression when sending reports, proposals, and contracts through email or cloud storage.</p>
+
+<p>Freelancers and content creators also use Compress PDF tools to optimize documents before publishing them online.</p>
+
+<h2>Compress PDF and Online Workflows</h2>
+
+<p>Modern workplaces rely heavily on digital documents. Compressing PDF files helps ensure that documents are easy to store, share, and manage.</p>
+
+<p>Smaller PDF files load faster in browsers, which improves user experience when viewing documents online.</p>
+
+<h2>Conclusion</h2>
+
+<p>The Compress PDF tool is an essential solution for anyone who works with digital documents regularly. By reducing file sizes, users can share documents faster, save storage space, and improve workflow efficiency.</p>
+
+<p>Whether you are a student, professional, or business owner, using a Compress PDF tool ensures that your documents remain lightweight, accessible, and easy to distribute.</p>
+
+</div>
+
+<script>
+
+let pdfFile=null
+let compressedBytes=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+pdfFile=e.target.files[0]
+
+if(pdfFile){
+
+let size=(pdfFile.size/1024).toFixed(2)
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+}
+
+})
+
+async function compressPDF(){
+
+if(!pdfFile){
+alert("Upload PDF first")
+return
+}
+
+const arrayBuffer=await pdfFile.arrayBuffer()
+
+const pdfDoc=await PDFLib.PDFDocument.load(arrayBuffer)
+
+compressedBytes=await pdfDoc.save({useObjectStreams:true})
+
+let size=(compressedBytes.length/1024).toFixed(2)
+
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+}
+
+function downloadPDF(){
+
+if(!compressedBytes){
+alert("Compress PDF first")
+return
+}
+
+const blob=new Blob([compressedBytes],{type:"application/pdf"})
+
+const link=document.createElement("a")
+
+link.href=URL.createObjectURL(blob)
+
+link.download="compressed.pdf"
+
+link.click()
+
+}
+
+function clearFile(){
+
+pdfFile=null
+compressedBytes=null
+
+document.getElementById("upload").value=""
+document.getElementById("inputSize").innerText=""
+document.getElementById("outputSize").innerText=""
+
+}
+
+</script>
+
+</body>
+</html>
