@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Converter Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview-area{
+display:flex;
+justify-content:space-between;
+margin-top:30px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.preview-box{
+flex:1;
+background:#fafafa;
+padding:20px;
+border-radius:8px;
+border:1px solid #eee;
+}
+
+.preview-box img{
+max-width:100%;
+margin-top:10px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.size{
+font-size:14px;
+color:#555;
+margin-top:10px;
+}
+
+select{
+padding:8px;
+border-radius:5px;
+margin-top:10px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Image Converter Tool</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<br><br>
+
+<select id="format">
+<option value="none">None (Original)</option>
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPG</option>
+<option value="image/webp">WEBP</option>
+</select>
+
+<div class="preview-area">
+
+<div class="preview-box">
+<h3>Input Image</h3>
+<div id="inputSize" class="size"></div>
+<img id="inputPreview">
+</div>
+
+<div class="preview-box">
+<h3>Output Image</h3>
+<div id="outputSize" class="size"></div>
+<img id="outputPreview">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="convertImage()">Convert</button>
+<button onclick="downloadImage()">Download</button>
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+</div>
+
+<script>
+
+let uploadedImage=null
+let convertedBlob=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+uploadedImage=e.target.files[0]
+
+if(uploadedImage){
+
+let size=(uploadedImage.size/1024).toFixed(2)
+
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+document.getElementById("inputPreview").src=event.target.result
+
+}
+
+reader.readAsDataURL(uploadedImage)
+
+}
+
+})
+
+function convertImage(){
+
+if(!uploadedImage){
+alert("Upload image first")
+return
+}
+
+let format=document.getElementById("format").value
+
+if(format==="none"){
+
+document.getElementById("outputPreview").src=document.getElementById("inputPreview").src
+
+document.getElementById("outputSize").innerText=document.getElementById("inputSize").innerText
+
+convertedBlob=uploadedImage
+
+return
+
+}
+
+let img=new Image()
+
+img.src=URL.createObjectURL(uploadedImage)
+
+img.onload=function(){
+
+let canvas=document.createElement("canvas")
+
+canvas.width=img.width
+canvas.height=img.height
+
+let ctx=canvas.getContext("2d")
+
+ctx.drawImage(img,0,0)
+
+canvas.toBlob(function(blob){
+
+convertedBlob=blob
+
+let size=(blob.size/1024).toFixed(2)
+
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+let url=URL.createObjectURL(blob)
+
+document.getElementById("outputPreview").src=url
+
+},format)
+
+}
+
+}
+
+function downloadImage(){
+
+if(!convertedBlob){
+alert("Convert image first")
+return
+}
+
+let link=document.createElement("a")
+
+link.href=URL.createObjectURL(convertedBlob)
+
+link.download="converted-image"
+
+link.click()
+
+}
+
+function clearAll(){
+
+uploadedImage=null
+convertedBlob=null
+
+document.getElementById("upload").value=""
+
+document.getElementById("inputPreview").src=""
+document.getElementById("outputPreview").src=""
+
+document.getElementById("inputSize").innerText=""
+document.getElementById("outputSize").innerText=""
+
+}
+
+</script>
+
+</body>
+</html>
