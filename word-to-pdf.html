@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Word to PDF Converter</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.preview{
+margin-top:30px;
+border:1px solid #eee;
+padding:20px;
+border-radius:8px;
+background:#fafafa;
+min-height:150px;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Word to PDF Converter</h2>
+
+<input type="file" id="upload" accept=".docx">
+
+<br><br>
+
+<button onclick="convertWord()">Convert Word to PDF</button>
+<button onclick="downloadPDF()">Download PDF</button>
+<button onclick="clearAll()">Clear</button>
+
+<div id="preview" class="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let converted=false
+
+function convertWord(){
+
+let file=document.getElementById("upload").files[0]
+
+if(!file){
+alert("Upload Word file first")
+return
+}
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+let arrayBuffer=event.target.result
+
+mammoth.convertToHtml({arrayBuffer:arrayBuffer})
+.then(function(result){
+
+document.getElementById("preview").innerHTML=result.value
+converted=true
+
+})
+
+}
+
+reader.readAsArrayBuffer(file)
+
+}
+
+function downloadPDF(){
+
+if(!converted){
+alert("Convert file first")
+return
+}
+
+let element=document.getElementById("preview")
+
+html2pdf().from(element).save("converted.pdf")
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+converted=false
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>Word to PDF – Complete Guide</h1>
+
+<p>The <strong>Word to PDF</strong> converter is one of the most useful document tools available online. Many professionals, students, and businesses rely on Word documents for writing reports, creating assignments, and preparing documents. However, when it comes to sharing or publishing documents, the PDF format is often preferred.</p>
+
+<p>A <strong>Word to PDF</strong> converter allows users to transform Microsoft Word documents into PDF files quickly and easily. PDF files maintain consistent formatting, making them perfect for sharing documents across different devices and operating systems.</p>
+
+<h2>What is Word to PDF</h2>
+
+<p>Word to PDF refers to the process of converting a Microsoft Word document (.doc or .docx) into a PDF file format. PDF stands for Portable Document Format and is widely used for document sharing because it preserves layout, fonts, and formatting.</p>
+
+<p>When users convert Word to PDF, the final document looks the same on all devices. This is important for professional documents such as resumes, contracts, reports, and academic papers.</p>
+
+<h2>Why Use Word to PDF</h2>
+
+<p>The main reason to use a Word to PDF converter is compatibility. Word documents may display differently depending on software versions and fonts. Converting Word to PDF ensures that the document appears exactly as intended.</p>
+
+<p>Another reason is security. PDF files can be protected with passwords, restricted editing, and digital signatures.</p>
+
+<h2>Benefits of Word to PDF</h2>
+
+<p>The Word to PDF conversion process offers many benefits. One advantage is universal compatibility. PDF files can be opened on almost any device without requiring Microsoft Word.</p>
+
+<p>Another advantage is document integrity. PDF files maintain the same layout, spacing, fonts, and images as the original document.</p>
+
+<p>PDF files are also widely used for printing. Many professional printing services prefer PDF because it preserves formatting accurately.</p>
+
+<h2>Word to PDF for Students</h2>
+
+<p>Students frequently convert Word to PDF when submitting assignments and projects. Many educational institutions require PDF submissions to ensure that documents display correctly for teachers and examiners.</p>
+
+<h2>Word to PDF for Businesses</h2>
+
+<p>Businesses use Word to PDF conversion for contracts, invoices, proposals, and official documents. PDF files look professional and maintain a consistent appearance when shared with clients and partners.</p>
+
+<h2>Word to PDF for Online Sharing</h2>
+
+<p>When documents are uploaded to websites, blogs, or online platforms, PDF format is usually preferred. Converting Word to PDF ensures that users can view the document without editing it accidentally.</p>
+
+<h2>How Word to PDF Conversion Works</h2>
+
+<p>The Word to PDF process involves reading the content of a Word document and converting its text, images, and formatting into a PDF structure. Modern converters perform this process automatically using advanced algorithms.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>Word to PDF</strong> converter is an essential tool for anyone who works with documents. It allows users to convert Word files into secure, professional, and universally compatible PDF files.</p>
+
+<p>Whether you are a student, professional, or business owner, the Word to PDF tool can help you share documents easily while preserving formatting and quality.</p>
+
+</div>
+
+</body>
+</html>
