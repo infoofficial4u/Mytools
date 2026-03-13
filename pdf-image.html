@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF to Image</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f2f2;
+margin:0;
+padding:30px;
+text-align:center;
+}
+
+.tool{
+background:#fff;
+padding:40px;
+border-radius:10px;
+max-width:900px;
+margin:auto;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.previewBox{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:30px;
+}
+
+.box{
+width:250px;
+height:180px;
+border:2px dashed #ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+background:#fafafa;
+}
+
+.box img{
+max-width:100%;
+}
+
+button{
+background:#3d6ef7;
+color:#fff;
+border:none;
+padding:10px 18px;
+margin:8px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1f4ed8;
+}
+
+select{
+padding:8px;
+}
+
+.sizeText{
+margin-top:10px;
+color:#666;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="tool">
+
+<h2>📄 PDF to Image</h2>
+
+<input type="file" id="upload" accept="application/pdf">
+
+<div class="previewBox">
+
+<div>
+<p><b>Input PDF</b></p>
+<div class="box" id="inputBox"></div>
+<p class="sizeText" id="inputSize">Input Size: 0 KB</p>
+</div>
+
+<div>
+<p><b>Output Image</b></p>
+<div class="box" id="outputBox"></div>
+<p class="sizeText" id="outputSize">Output Size: 0 KB</p>
+</div>
+
+</div>
+
+<br>
+
+<button onclick="convertPDF()">Convert PDF</button>
+<button onclick="downloadImage()">Download Image</button>
+
+<br>
+
+<select id="format">
+<option value="png">png</option>
+<option value="jpg">jpg</option>
+<option value="webp">webp</option>
+</select>
+
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+
+<div style="max-width:900px;margin:40px auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.08);text-align:left;line-height:1.7">
+
+<h2>PDF to Image – Convert PDF to Image Online</h2>
+
+<p>
+The <b>PDF to Image</b> tool is a powerful online utility that allows users to convert PDF documents into image files quickly and easily. Many people work with PDF documents every day, including students, office workers, designers, and business professionals. However, there are many situations where it becomes necessary to convert a PDF file into an image format such as PNG, JPG, or WEBP.
+</p>
+
+<p>
+Using a <b>PDF to Image converter</b>, users can extract pages from a PDF document and convert them into high-quality image files. This makes it easier to share, edit, display, or upload the content online. Whether you need to convert a document page into an image for presentations, social media, or website content, the <b>PDF to Image tool</b> provides a simple and efficient solution.
+</p>
+
+<h3>What is PDF to Image?</h3>
+
+<p>
+<b>PDF to Image</b> refers to the process of converting a PDF document into one or more image files. Each page of the PDF can be converted into an individual image. These images can then be saved in formats such as PNG, JPG, or WEBP.
+</p>
+
+<p>
+The main purpose of converting a PDF into an image is to make the content easier to use in different environments. Images can be uploaded to websites, embedded in presentations, or shared on social media platforms more easily than PDF documents.
+</p>
+
+<h3>Why Use a PDF to Image Tool?</h3>
+
+<p>
+There are many reasons why people use a <b>PDF to Image converter</b>. One common reason is compatibility. Some platforms do not allow PDF uploads but support image formats such as PNG or JPG.
+</p>
+
+<p>
+Another reason is visual presentation. When content from a PDF needs to be displayed in a design layout, converting it into an image makes it easier to position and customize.
+</p>
+
+<p>
+The <b>PDF to Image tool</b> is also useful for extracting diagrams, charts, infographics, or screenshots from PDF documents.
+</p>
+
+<h3>Benefits of PDF to Image Conversion</h3>
+
+<p>
+Converting a PDF document into an image provides many advantages. Image files are easy to share, upload, and embed in different types of digital content.
+</p>
+
+<p>
+Images also load faster on websites compared to PDF documents. This makes them useful for blogs, tutorials, and online guides.
+</p>
+
+<p>
+Another advantage is editing flexibility. Once a PDF page is converted into an image, it can be edited using graphic design software or image editing tools.
+</p>
+
+<h3>PDF to Image for Students</h3>
+
+<p>
+Students often use <b>PDF to Image tools</b> when preparing presentations or assignments. For example, diagrams or charts from a PDF textbook can be converted into images and inserted into slides or reports.
+</p>
+
+<p>
+This makes studying and content creation more efficient.
+</p>
+
+<h3>PDF to Image for Businesses</h3>
+
+<p>
+Businesses frequently convert PDF files into images for marketing materials, product documentation, and digital content. Converting PDF pages into images makes it easier to share visual content on websites and social platforms.
+</p>
+
+<h3>How to Use This PDF to Image Tool</h3>
+
+<p>
+Using this <b>PDF to Image converter</b> is extremely simple. First, upload the PDF file you want to convert. The tool will display the PDF preview and file size.
+</p>
+
+<p>
+Next, click the convert button to extract the PDF page and transform it into an image.
+</p>
+
+<p>
+Finally, download the generated image file in the format you selected.
+</p>
+
+<h3>Features of This PDF to Image Tool</h3>
+
+<p>
+This tool provides multiple useful features including input preview, output preview, file size display, and format selection options such as PNG, JPG, and WEBP.
+</p>
+
+<p>
+Users can also clear the uploaded file and start a new conversion instantly.
+</p>
+
+<h3>Conclusion</h3>
+
+<p>
+The <b>PDF to Image</b> tool is an essential online utility for converting PDF documents into image files. Whether you need images for presentations, blogs, websites, or educational materials, converting PDF pages into images makes the content more flexible and accessible.
+</p>
+
+<p>
+With this <b>PDF to Image converter</b>, users can easily transform PDF pages into high-quality images that can be shared, edited, and used anywhere.
+</p>
+
+</div>
+
+
+<script>
+
+let pdfFile=null
+let imageData=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+pdfFile=e.target.files[0]
+
+if(!pdfFile) return
+
+let size=(pdfFile.size/1024).toFixed(2)
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+document.getElementById("inputBox").innerHTML="<p>PDF Loaded</p>"
+
+})
+
+async function convertPDF(){
+
+if(!pdfFile){
+alert("Upload PDF first")
+return
+}
+
+let reader=new FileReader()
+
+reader.onload=async function(){
+
+let typedarray=new Uint8Array(this.result)
+
+let pdf=await pdfjsLib.getDocument(typedarray).promise
+let page=await pdf.getPage(1)
+
+let viewport=page.getViewport({scale:1.5})
+
+let canvas=document.createElement("canvas")
+let context=canvas.getContext("2d")
+
+canvas.height=viewport.height
+canvas.width=viewport.width
+
+await page.render({
+canvasContext:context,
+viewport:viewport
+}).promise
+
+let format=document.getElementById("format").value
+
+imageData=canvas.toDataURL("image/"+format)
+
+let img=document.createElement("img")
+img.src=imageData
+
+let outputBox=document.getElementById("outputBox")
+outputBox.innerHTML=""
+outputBox.appendChild(img)
+
+let size=(imageData.length/1024).toFixed(2)
+
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+}
+
+reader.readAsArrayBuffer(pdfFile)
+
+}
+
+function downloadImage(){
+
+if(!imageData){
+alert("Convert first")
+return
+}
+
+let link=document.createElement("a")
+link.href=imageData
+link.download="pdf-to-image."+document.getElementById("format").value
+link.click()
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("inputBox").innerHTML=""
+document.getElementById("outputBox").innerHTML=""
+document.getElementById("inputSize").innerText="Input Size: 0 KB"
+document.getElementById("outputSize").innerText="Output Size: 0 KB"
+
+pdfFile=null
+imageData=null
+
+}
+
+</script>
+
+</body>
+</html>
