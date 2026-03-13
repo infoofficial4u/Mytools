@@ -358,5 +358,31 @@ document.getElementById("previewBox").style.display="none";
 
 </script>
 
+  <!-- Add this script to every tool page -->
+<script>
+// Read language from URL parameter
+const urlParams = new URLSearchParams(window.location.search);
+const lang = urlParams.get('lang') || localStorage.getItem('selectedLanguage') || 'en';
+
+// Use the same translations dictionary (you can copy it here or link to an external JS)
+const translations = { /* copy the full translations object from main page */ };
+
+function applyToolTranslations(lang) {
+  const dict = translations[lang] || translations.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+    else if (translations.en[key]) el.textContent = translations.en[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) el.placeholder = dict[key];
+    else if (translations.en[key]) el.placeholder = translations.en[key];
+  });
+}
+
+applyToolTranslations(lang);
+</script>
+  
 </body>
 </html>
