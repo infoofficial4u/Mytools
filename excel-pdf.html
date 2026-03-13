@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Excel to PDF Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.preview{
+margin-top:20px;
+text-align:left;
+max-height:300px;
+overflow:auto;
+}
+
+table{
+border-collapse:collapse;
+width:100%;
+}
+
+td,th{
+border:1px solid #ccc;
+padding:6px;
+font-size:14px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Excel to PDF Tool</h2>
+
+<input type="file" id="upload" accept=".xlsx,.xls">
+
+<br><br>
+
+<button onclick="convertExcel()">Convert to PDF</button>
+<button onclick="downloadPDF()">Download PDF</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let pdfFile=null
+
+function convertExcel(){
+
+let file=document.getElementById("upload").files[0]
+
+if(!file){
+alert("Upload Excel file first")
+return
+}
+
+let reader=new FileReader()
+
+reader.onload=function(e){
+
+let data=new Uint8Array(e.target.result)
+
+let workbook=XLSX.read(data,{type:"array"})
+
+let sheet=workbook.Sheets[workbook.SheetNames[0]]
+
+let html=XLSX.utils.sheet_to_html(sheet)
+
+document.getElementById("preview").innerHTML=html
+
+generatePDF()
+
+}
+
+reader.readAsArrayBuffer(file)
+
+}
+
+function generatePDF(){
+
+const {jsPDF}=window.jspdf
+
+let pdf=new jsPDF()
+
+let text=document.getElementById("preview").innerText
+
+pdf.text(text,10,10)
+
+pdfFile=pdf
+
+}
+
+function downloadPDF(){
+
+if(!pdfFile){
+alert("Convert Excel first")
+return
+}
+
+pdfFile.save("excel-to-pdf.pdf")
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+pdfFile=null
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>Excel to PDF – Complete Guide</h1>
+
+<p>The <strong>Excel to PDF</strong> tool is one of the most useful document conversion utilities available online today. Microsoft Excel files are widely used for storing and organizing data in rows and columns. However, when it comes to sharing data with others, PDF format is often preferred. Converting Excel to PDF ensures that the formatting, layout, and structure of the spreadsheet remain consistent across all devices.</p>
+
+<h2>What is Excel to PDF</h2>
+
+<p><strong>Excel to PDF</strong> refers to the process of converting spreadsheet files such as XLS or XLSX into PDF documents. This allows users to share their data in a fixed format that cannot easily be edited.</p>
+
+<p>The Excel to PDF process is widely used by students, professionals, and businesses who want to present data in a secure and professional format.</p>
+
+<h2>Why Use Excel to PDF</h2>
+
+<p>Many organizations use Excel spreadsheets for calculations, reports, and financial analysis. However, Excel files can sometimes look different on various devices depending on software compatibility.</p>
+
+<p>When you convert Excel to PDF, the document layout becomes fixed and consistent.</p>
+
+<h2>Benefits of Excel to PDF</h2>
+
+<p>The Excel to PDF tool provides several advantages. One major benefit is compatibility. PDF files can be opened on almost any device including computers, tablets, and smartphones.</p>
+
+<p>Another advantage is security. PDF files are harder to modify compared to Excel spreadsheets.</p>
+
+<p>Excel to PDF conversion also improves presentation quality when sharing reports or documents.</p>
+
+<h2>Excel to PDF for Students</h2>
+
+<p>Students frequently use Excel to PDF tools when submitting assignments, data reports, or research projects.</p>
+
+<p>Instead of sending raw Excel files, converting them to PDF ensures the formatting remains unchanged.</p>
+
+<h2>Excel to PDF for Businesses</h2>
+
+<p>Businesses use Excel spreadsheets for financial records, sales reports, and project tracking. Converting Excel to PDF makes these documents easier to share with clients and colleagues.</p>
+
+<h2>Excel to PDF for Online Sharing</h2>
+
+<p>When uploading documents to websites or sending them via email, PDF format is often preferred because it preserves layout and formatting.</p>
+
+<h2>How Excel to PDF Works</h2>
+
+<p>The Excel to PDF conversion process reads spreadsheet data and recreates it inside a PDF document structure. Modern tools ensure that tables and text are preserved correctly.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>Excel to PDF</strong> tool is an essential solution for converting spreadsheet data into a professional document format. Whether you are a student, professional, or business owner, using an Excel to PDF tool can help you share information more effectively.</p>
+
+</div>
+
+</body>
+</html>
