@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF to PNG Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.preview img{
+width:160px;
+margin:10px;
+border-radius:6px;
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>PDF to PNG Tool</h2>
+
+<input type="file" id="upload" accept="application/pdf">
+
+<br><br>
+
+<button onclick="convertPDF()">Convert to PNG</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+async function convertPDF(){
+
+let file=document.getElementById("upload").files[0]
+
+if(!file){
+alert("Upload PDF first")
+return
+}
+
+const fileReader=new FileReader()
+
+fileReader.onload=async function(){
+
+const typedarray=new Uint8Array(this.result)
+
+const pdf=await pdfjsLib.getDocument(typedarray).promise
+
+let preview=document.getElementById("preview")
+preview.innerHTML=""
+
+for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
+
+const page=await pdf.getPage(pageNum)
+
+const viewport=page.getViewport({scale:2})
+
+const canvas=document.createElement("canvas")
+
+const context=canvas.getContext("2d")
+
+canvas.height=viewport.height
+canvas.width=viewport.width
+
+await page.render({
+canvasContext:context,
+viewport:viewport
+}).promise
+
+let imgURL=canvas.toDataURL("image/png")
+
+let img=document.createElement("img")
+img.src=imgURL
+preview.appendChild(img)
+
+let link=document.createElement("a")
+link.href=imgURL
+link.download="page-"+pageNum+".png"
+link.innerText="Download Page "+pageNum
+link.style.display="block"
+link.style.marginBottom="10px"
+
+preview.appendChild(link)
+
+}
+
+}
+
+fileReader.readAsArrayBuffer(file)
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>PDF to PNG – Complete Guide</h1>
+
+<p>The <strong>PDF to PNG</strong> tool is one of the most useful utilities for converting document pages into high-quality image files. PDF files are commonly used for sharing documents because they preserve formatting and layout. However, sometimes users need to convert those pages into images for editing, presentations, or website content.</p>
+
+<h2>What is PDF to PNG</h2>
+
+<p><strong>PDF to PNG</strong> refers to the process of converting each page of a PDF document into a PNG image file. PNG images are known for their high quality and lossless compression, which makes them ideal for graphics and visual documents.</p>
+
+<p>During the PDF to PNG conversion process, every page of the PDF becomes a separate PNG image.</p>
+
+<h2>Why Use PDF to PNG</h2>
+
+<p>There are many situations where converting PDF documents into PNG images is beneficial. Images can be easily uploaded to websites, presentations, and social media platforms.</p>
+
+<p>Unlike PDF documents, PNG images can also be edited with various graphic design tools.</p>
+
+<h2>Benefits of PDF to PNG</h2>
+
+<p>The PDF to PNG tool offers several advantages. One major benefit is improved image quality. PNG files maintain high resolution and clarity.</p>
+
+<p>Another advantage is flexibility. PNG images can be used in design software, presentations, and digital marketing materials.</p>
+
+<p>The PDF to PNG conversion process also allows users to extract visual elements from PDF documents.</p>
+
+<h2>PDF to PNG for Students</h2>
+
+<p>Students often convert diagrams, charts, and notes from PDF textbooks into PNG images so they can include them in presentations or assignments.</p>
+
+<h2>PDF to PNG for Businesses</h2>
+
+<p>Businesses frequently convert PDF reports into PNG images when preparing marketing materials or presentations.</p>
+
+<h2>PDF to PNG for Website Content</h2>
+
+<p>Website owners sometimes convert PDF pages into PNG images to display them directly on webpages.</p>
+
+<h2>How PDF to PNG Works</h2>
+
+<p>The PDF to PNG conversion process renders each page of the PDF document as an image and then exports it in PNG format.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>PDF to PNG</strong> tool is an essential solution for converting document pages into high-quality images. Whether you are a student, professional, or business owner, using a PDF to PNG tool helps you extract and reuse visual content easily.</p>
+
+</div>
+
+</body>
+</html>
