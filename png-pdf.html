@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PNG to PDF Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.preview img{
+width:120px;
+margin:8px;
+border-radius:6px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>PNG to PDF Tool</h2>
+
+<input type="file" id="upload" accept="image/png" multiple>
+
+<br><br>
+
+<button onclick="convertPDF()">Convert to PDF</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let images=[]
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+images=[]
+let preview=document.getElementById("preview")
+preview.innerHTML=""
+
+Array.from(e.target.files).forEach(file=>{
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+images.push(event.target.result)
+
+let img=document.createElement("img")
+img.src=event.target.result
+preview.appendChild(img)
+
+}
+
+reader.readAsDataURL(file)
+
+})
+
+})
+
+function convertPDF(){
+
+if(images.length===0){
+alert("Upload PNG images first")
+return
+}
+
+const {jsPDF}=window.jspdf
+
+let pdf=new jsPDF()
+
+images.forEach((img,index)=>{
+
+if(index>0) pdf.addPage()
+
+pdf.addImage(img,"PNG",10,10,190,0)
+
+})
+
+pdf.save("png-to-pdf.pdf")
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+images=[]
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>PNG to PDF – Complete Guide</h1>
+
+<p>The <strong>PNG to PDF</strong> tool is an extremely useful solution for converting image files into a professional document format. PNG images are widely used because they provide high-quality graphics and support transparency. However, when it comes to organizing multiple images into a single document, converting PNG to PDF becomes the best solution.</p>
+
+<h2>What is PNG to PDF</h2>
+
+<p><strong>PNG to PDF</strong> refers to the process of converting PNG image files into a PDF document. Each image can become a page inside the PDF file. This allows users to combine multiple images into a single organized document.</p>
+
+<p>The PNG to PDF conversion process preserves the visual quality of the images while packaging them into a portable document format.</p>
+
+<h2>Why Use PNG to PDF</h2>
+
+<p>There are many situations where converting PNG images to PDF is beneficial. One common reason is document organization. Instead of sharing several image files separately, users can combine them into one PDF document.</p>
+
+<p>Another reason is compatibility. PDF files can be opened on almost any device without losing formatting.</p>
+
+<h2>Benefits of PNG to PDF</h2>
+
+<p>The PNG to PDF tool offers several advantages. One major benefit is improved document management. Multiple images can be organized into a single PDF file.</p>
+
+<p>Another advantage is better presentation quality. PDF documents appear more professional when sharing images in reports, assignments, or presentations.</p>
+
+<p>PNG to PDF conversion also makes it easier to send documents via email or upload them to websites.</p>
+
+<h2>PNG to PDF for Students</h2>
+
+<p>Students often scan notes, diagrams, or handwritten assignments as PNG images. Converting PNG to PDF allows them to combine all pages into one document before submitting assignments.</p>
+
+<h2>PNG to PDF for Businesses</h2>
+
+<p>Businesses frequently convert PNG images into PDF documents for reports, presentations, and documentation.</p>
+
+<p>For example, product screenshots, charts, and diagrams can be organized inside a single PDF file.</p>
+
+<h2>PNG to PDF for Document Sharing</h2>
+
+<p>PDF documents are easier to share compared to multiple image files. Converting PNG to PDF ensures that all images remain together in a single document.</p>
+
+<h2>How PNG to PDF Works</h2>
+
+<p>The PNG to PDF process works by embedding image files into a PDF document structure. Each image becomes a page within the PDF file.</p>
+
+<p>Modern conversion tools maintain image quality during this process.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>PNG to PDF</strong> tool is an essential solution for anyone who needs to convert images into a professional document format. Whether you are a student, professional, or business owner, using a PNG to PDF tool helps organize and share images efficiently.</p>
+
+</div>
+
+</body>
+</html>
