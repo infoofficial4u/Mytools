@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image to PDF</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f2f2;
+margin:0;
+padding:30px;
+text-align:center;
+}
+
+.tool{
+background:#fff;
+padding:40px;
+border-radius:10px;
+max-width:900px;
+margin:auto;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.previewBox{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:30px;
+}
+
+.box{
+width:250px;
+height:180px;
+border:2px dashed #ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+background:#fafafa;
+}
+
+.box img{
+max-width:100%;
+}
+
+button{
+background:#3d6ef7;
+color:#fff;
+border:none;
+padding:10px 18px;
+margin:8px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1f4ed8;
+}
+
+select{
+padding:8px;
+}
+
+.sizeText{
+margin-top:10px;
+color:#666;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="tool">
+
+<h2>📄 Image to PDF</h2>
+
+<input type="file" id="upload" accept="image/*">
+
+<div class="previewBox">
+
+<div>
+<p><b>Input Image</b></p>
+<div class="box" id="inputBox"></div>
+<p class="sizeText" id="inputSize">Input Size: 0 KB</p>
+</div>
+
+<div>
+<p><b>Output PDF</b></p>
+<div class="box" id="outputBox"></div>
+<p class="sizeText" id="outputSize">Output Size: 0 KB</p>
+</div>
+
+</div>
+
+<br>
+
+<button onclick="convertPDF()">Convert Image</button>
+<button onclick="downloadPDF()">Download PDF</button>
+
+<br>
+
+<select id="format">
+<option value="none">none</option>
+<option value="png">png</option>
+<option value="jpg">jpg</option>
+<option value="webp">webp</option>
+</select>
+
+<button onclick="clearAll()">Clear</button>
+
+</div>
+
+<div style="max-width:900px;margin:40px auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.08);text-align:left;line-height:1.7">
+
+<h2>Image to PDF – Free Online Image to PDF Converter</h2>
+
+<p>
+The <b>Image to PDF</b> tool is a powerful and easy solution that allows users to convert images into a PDF document within seconds. In today's digital environment, people often capture photos of documents, notes, receipts, invoices, or study materials using their smartphones or cameras. These images are usually stored in formats such as JPG, PNG, or WEBP. However, managing multiple images separately can be inconvenient. This is where an <b>Image to PDF converter</b> becomes extremely useful.
+</p>
+
+<p>
+Using this <b>Image to PDF tool</b>, you can quickly convert your images into a single PDF file. Each image becomes a page inside the PDF document, making it easier to organize, store, and share your files. Whether you are a student, professional, teacher, office worker, or business owner, converting images into PDF format can simplify document management.
+</p>
+
+<h3>What is Image to PDF?</h3>
+
+<p>
+<b>Image to PDF</b> refers to the process of converting image files into a PDF document format. When an image is converted into a PDF, the image becomes part of a digital document that can be opened on almost any device including computers, smartphones, and tablets. The PDF format is widely used because it maintains the layout, quality, and structure of the content.
+</p>
+
+<p>
+With an <b>Image to PDF converter</b>, users can upload an image and instantly transform it into a professional PDF document. This process is extremely helpful when sending scanned documents, assignments, contracts, or forms online.
+</p>
+
+<h3>Why Use an Image to PDF Tool?</h3>
+
+<p>
+There are many reasons why people prefer using an <b>Image to PDF converter</b>. One of the biggest advantages is document organization. Instead of sending multiple image files separately, you can combine them into one single PDF file.
+</p>
+
+<p>
+Another benefit is compatibility. The PDF format is supported by almost every device and operating system. This means anyone can open your document without worrying about formatting issues.
+</p>
+
+<p>
+Using an <b>Image to PDF tool</b> also helps make your documents look more professional. Instead of sharing scattered image files, a PDF document presents your information in a structured and organized format.
+</p>
+
+<h3>Benefits of Image to PDF Conversion</h3>
+
+<p>
+Converting images into PDF format offers many advantages. One major benefit is file organization. When multiple images represent different pages of a document, converting them into a single PDF keeps everything in order.
+</p>
+
+<p>
+Another benefit is easier sharing. A single PDF file can be sent through email, uploaded to websites, or shared through messaging platforms more easily than multiple images.
+</p>
+
+<p>
+The <b>Image to PDF converter</b> also helps preserve document structure. Each image becomes a page inside the PDF file, ensuring the content appears in the correct order.
+</p>
+
+<h3>Image to PDF for Students</h3>
+
+<p>
+Students frequently use <b>Image to PDF tools</b> for academic work. Many assignments are written on paper and then photographed using smartphones. Instead of submitting multiple images, students can convert them into a single PDF document before uploading them to their school or college portal.
+</p>
+
+<p>
+Image to PDF tools are also helpful for creating digital study notes. Students can capture diagrams, lecture notes, and textbook pages, then combine them into a structured PDF document for easier reading.
+</p>
+
+<h3>Image to PDF for Office Work</h3>
+
+<p>
+Professionals and office workers often rely on <b>Image to PDF conversion</b> to manage documents. Scanned contracts, receipts, forms, and invoices are frequently saved as images. By converting them into PDF format, businesses can maintain organized digital records.
+</p>
+
+<p>
+Using an <b>Image to PDF converter</b> also improves workflow efficiency. Instead of handling multiple image files, employees can work with a single PDF document.
+</p>
+
+<h3>How to Use the Image to PDF Tool</h3>
+
+<p>
+Using this <b>Image to PDF converter</b> is extremely simple and requires only a few steps.
+</p>
+
+<p>
+First, upload the image you want to convert. After uploading, the tool will display a preview of your image so you can confirm the correct file has been selected.
+</p>
+
+<p>
+Next, click the convert button to transform the image into a PDF document. The tool will generate the PDF instantly.
+</p>
+
+<p>
+Finally, click the download button to save the PDF file to your device.
+</p>
+
+<h3>Features of This Image to PDF Tool</h3>
+
+<p>
+This <b>Image to PDF tool</b> provides several helpful features that make the conversion process easy and efficient. Users can preview the input image before conversion, view the input file size, and see the output PDF size after conversion.
+</p>
+
+<p>
+The tool also includes options for selecting image formats such as PNG, JPG, and WEBP before converting the file into PDF format.
+</p>
+
+<p>
+A clear button is also available so users can remove the uploaded file and start a new conversion quickly.
+</p>
+
+<h3>Advantages of Online Image to PDF Converters</h3>
+
+<p>
+Online <b>Image to PDF converters</b> offer several advantages compared to traditional software. They do not require installation and can be used directly from any web browser.
+</p>
+
+<p>
+This makes them accessible on laptops, desktop computers, tablets, and smartphones. Users can convert images into PDF documents anytime and anywhere.
+</p>
+
+<p>
+Online tools are also faster because the conversion process typically takes only a few seconds.
+</p>
+
+<h3>Security and Privacy</h3>
+
+<p>
+Many modern <b>Image to PDF tools</b> perform conversions directly inside the browser. This means the images are processed locally on your device instead of being uploaded to external servers.
+</p>
+
+<p>
+This improves privacy and ensures sensitive documents remain secure.
+</p>
+
+<h3>Conclusion</h3>
+
+<p>
+The <b>Image to PDF</b> converter is an essential online tool for anyone who needs to convert images into organized PDF documents. Whether you are submitting assignments, sharing scanned documents, managing office files, or storing personal records, converting images into PDF format makes document handling easier and more efficient.
+</p>
+
+<p>
+With this <b>Image to PDF tool</b>, you can quickly transform your images into professional PDF files that are easy to share, store, and access on any device.
+</p>
+
+</div>
+
+<script>
+
+let imageData=null
+let pdfBlob=null
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+let file=e.target.files[0]
+
+if(!file) return
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+imageData=event.target.result
+
+let img=document.createElement("img")
+img.src=imageData
+
+let inputBox=document.getElementById("inputBox")
+inputBox.innerHTML=""
+inputBox.appendChild(img)
+
+let size=(file.size/1024).toFixed(2)
+
+document.getElementById("inputSize").innerText="Input Size: "+size+" KB"
+
+}
+
+reader.readAsDataURL(file)
+
+})
+
+function convertPDF(){
+
+if(!imageData){
+alert("Upload image first")
+return
+}
+
+const {jsPDF}=window.jspdf
+
+let pdf=new jsPDF()
+
+pdf.addImage(imageData,"JPEG",10,10,190,0)
+
+pdfBlob=pdf.output("blob")
+
+let size=(pdfBlob.size/1024).toFixed(2)
+
+document.getElementById("outputSize").innerText="Output Size: "+size+" KB"
+
+let outputBox=document.getElementById("outputBox")
+
+outputBox.innerHTML="<p>PDF Ready</p>"
+
+}
+
+function downloadPDF(){
+
+if(!pdfBlob){
+alert("Convert first")
+return
+}
+
+const {jsPDF}=window.jspdf
+
+let pdf=new jsPDF()
+
+pdf.addImage(imageData,"JPEG",10,10,190,0)
+
+pdf.save("image-to-pdf.pdf")
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("inputBox").innerHTML=""
+document.getElementById("outputBox").innerHTML=""
+document.getElementById("inputSize").innerText="Input Size: 0 KB"
+document.getElementById("outputSize").innerText="Output Size: 0 KB"
+
+imageData=null
+pdfBlob=null
+
+}
+
+</script>
+
+</body>
+</html>
