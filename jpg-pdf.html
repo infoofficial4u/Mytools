@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JPG to PDF Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+input{
+padding:8px;
+margin-top:10px;
+}
+
+.preview img{
+width:120px;
+margin:6px;
+border-radius:6px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>JPG to PDF Tool</h2>
+
+<input type="file" id="upload" accept="image/jpeg" multiple>
+
+<br><br>
+
+<button onclick="convertPDF()">Convert to PDF</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let images=[]
+
+document.getElementById("upload").addEventListener("change",function(e){
+
+images=[]
+let preview=document.getElementById("preview")
+preview.innerHTML=""
+
+Array.from(e.target.files).forEach(file=>{
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+
+images.push(event.target.result)
+
+let img=document.createElement("img")
+img.src=event.target.result
+preview.appendChild(img)
+
+}
+
+reader.readAsDataURL(file)
+
+})
+
+})
+
+async function convertPDF(){
+
+if(images.length===0){
+alert("Upload JPG images first")
+return
+}
+
+const {jsPDF}=window.jspdf
+
+let pdf=new jsPDF()
+
+images.forEach((img,index)=>{
+
+if(index>0) pdf.addPage()
+
+pdf.addImage(img,"JPEG",10,10,190,0)
+
+})
+
+pdf.save("converted.pdf")
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+images=[]
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>JPG to PDF – Complete Guide</h1>
+
+<p>The <strong>JPG to PDF</strong> tool is one of the most widely used document conversion tools on the internet. Images are commonly saved in JPG format because it provides good quality while maintaining a small file size. However, in many situations, users need to convert those images into a PDF document. This is where a reliable JPG to PDF tool becomes extremely useful.</p>
+
+<h2>What is JPG to PDF</h2>
+
+<p><strong>JPG to PDF</strong> refers to the process of converting image files in JPG format into a PDF document. When multiple images are combined into a single PDF file, it becomes easier to organize, store, and share documents.</p>
+
+<p>The JPG to PDF conversion process preserves the visual appearance of the image while packaging it inside a structured document format.</p>
+
+<h2>Why Use JPG to PDF</h2>
+
+<p>There are many reasons why people prefer using a JPG to PDF tool. One common reason is document organization. Instead of sharing multiple images separately, users can combine them into a single PDF file.</p>
+
+<p>Another reason is compatibility. PDF files can be opened on almost any device without losing formatting.</p>
+
+<h2>Benefits of JPG to PDF</h2>
+
+<p>The JPG to PDF tool offers several advantages. First, it allows users to combine multiple images into a single document. This makes file management much easier.</p>
+
+<p>Second, PDF files are widely supported across computers, smartphones, and tablets. This ensures that documents look the same on every device.</p>
+
+<p>Another benefit of JPG to PDF conversion is improved document presentation.</p>
+
+<h2>JPG to PDF for Students</h2>
+
+<p>Students frequently use JPG to PDF tools to convert scanned notes, homework assignments, and handwritten documents into a single PDF file.</p>
+
+<p>This makes it easier to upload assignments to online learning platforms.</p>
+
+<h2>JPG to PDF for Businesses</h2>
+
+<p>Businesses often need to convert scanned invoices, receipts, contracts, and forms into digital documents. A JPG to PDF tool allows companies to store these records in an organized format.</p>
+
+<h2>JPG to PDF for Document Sharing</h2>
+
+<p>PDF files are ideal for sharing documents because they preserve formatting and layout. Converting JPG images to PDF ensures that the document appears consistent across different devices.</p>
+
+<h2>How JPG to PDF Works</h2>
+
+<p>The JPG to PDF process works by embedding image files inside a PDF document structure. Each image becomes a separate page within the PDF.</p>
+
+<p>Modern conversion tools ensure that image quality is preserved during this process.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>JPG to PDF</strong> tool is an essential solution for anyone who needs to convert images into a professional document format.</p>
+
+<p>Whether you are a student, professional, or business owner, using a JPG to PDF tool can help you organize and share documents more efficiently.</p>
+
+</div>
+
+</body>
+</html>
