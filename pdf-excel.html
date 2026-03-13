@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF to Excel Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.preview{
+margin-top:20px;
+max-height:300px;
+overflow:auto;
+text-align:left;
+border:1px solid #ddd;
+padding:10px;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>PDF to Excel Tool</h2>
+
+<input type="file" id="upload" accept="application/pdf">
+
+<br><br>
+
+<button onclick="convertPDF()">Convert to Excel</button>
+<button onclick="downloadExcel()">Download Excel</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let excelData=[]
+
+async function convertPDF(){
+
+let file=document.getElementById("upload").files[0]
+
+if(!file){
+alert("Upload PDF first")
+return
+}
+
+const reader=new FileReader()
+
+reader.onload=async function(){
+
+const typedarray=new Uint8Array(this.result)
+
+const pdf=await pdfjsLib.getDocument(typedarray).promise
+
+excelData=[]
+
+for(let page=1;page<=pdf.numPages;page++){
+
+const p=await pdf.getPage(page)
+
+const textContent=await p.getTextContent()
+
+let pageText=textContent.items.map(item=>item.str).join(" ")
+
+excelData.push([pageText])
+
+}
+
+document.getElementById("preview").innerText=excelData.map(r=>r[0]).join("\n\n")
+
+}
+
+reader.readAsArrayBuffer(file)
+
+}
+
+function downloadExcel(){
+
+if(excelData.length===0){
+alert("Convert PDF first")
+return
+}
+
+let ws=XLSX.utils.aoa_to_sheet(excelData)
+
+let wb=XLSX.utils.book_new()
+
+XLSX.utils.book_append_sheet(wb,ws,"Data")
+
+XLSX.writeFile(wb,"pdf-to-excel.xlsx")
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+excelData=[]
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>PDF to Excel – Complete Guide</h1>
+
+<p>The <strong>PDF to Excel</strong> tool is an essential document conversion solution for users who want to extract structured data from PDF files and convert it into spreadsheet format. Many reports, invoices, and tables are shared as PDF documents. However, editing or analyzing data inside a PDF can be difficult. Converting PDF to Excel allows users to transform static documents into editable spreadsheets.</p>
+
+<h2>What is PDF to Excel</h2>
+
+<p><strong>PDF to Excel</strong> refers to the process of converting data from a PDF document into an Excel spreadsheet. This process makes it possible to edit, analyze, and manipulate the data using spreadsheet tools.</p>
+
+<p>The PDF to Excel conversion process extracts text and numerical information from the PDF file and organizes it into rows and columns.</p>
+
+<h2>Why Use PDF to Excel</h2>
+
+<p>PDF files are excellent for sharing documents because they preserve formatting and layout. However, they are not ideal for editing or data analysis.</p>
+
+<p>Using a PDF to Excel tool allows users to convert the data into a format that can be easily modified.</p>
+
+<h2>Benefits of PDF to Excel</h2>
+
+<p>The PDF to Excel tool offers several advantages. One major benefit is improved data accessibility. Once the data is converted into Excel format, users can perform calculations, create charts, and analyze information easily.</p>
+
+<p>Another benefit is time efficiency. Instead of manually copying data from a PDF document, users can convert the entire document automatically.</p>
+
+<p>PDF to Excel conversion also improves productivity in business workflows.</p>
+
+<h2>PDF to Excel for Students</h2>
+
+<p>Students often use PDF to Excel tools when working with research data, statistical tables, or academic reports.</p>
+
+<p>Converting PDF documents into Excel format allows students to analyze information more effectively.</p>
+
+<h2>PDF to Excel for Businesses</h2>
+
+<p>Businesses frequently receive reports, financial statements, and invoices in PDF format. Using a PDF to Excel tool allows companies to convert this data into spreadsheets for analysis.</p>
+
+<h2>PDF to Excel for Data Analysis</h2>
+
+<p>Data analysts often convert PDF reports into Excel spreadsheets so they can perform calculations and create charts.</p>
+
+<h2>How PDF to Excel Works</h2>
+
+<p>The PDF to Excel conversion process involves reading the content of a PDF file and extracting text and numbers. The tool then places the extracted information into spreadsheet cells.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>PDF to Excel</strong> tool is an essential utility for converting document data into an editable spreadsheet format. Whether you are a student, professional, or business owner, using a PDF to Excel tool can help you manage data more efficiently.</p>
+
+</div>
+
+</body>
+</html>
