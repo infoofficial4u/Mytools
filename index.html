@@ -23,6 +23,8 @@ header{
   justify-content:space-between;
   align-items:center;
   box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  flex-wrap:wrap;
+  gap:15px;
 }
 
 .logo{
@@ -89,43 +91,46 @@ nav a{
   cursor:pointer;
 }
 
-/* TOOL GRID – increased card size */
+/* TOOL GRID – larger cards */
 .tools{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:25px;
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:30px;
   padding:40px;
 }
 .tool-card{
   background:white;
-  padding:30px;
-  border-radius:10px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+  padding:40px;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
   transition:0.3s;
 }
 .tool-card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-8px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.12);
 }
 .tool-card h3{
   margin-top:10px;
-  font-size:1.3rem;
+  font-size:1.6rem;
 }
 .tool-card p{
-  font-size:15px;
+  font-size:1.05rem;
   color:#666;
   line-height:1.5;
 }
 .open-btn{
   display:inline-block;
-  margin-top:15px;
-  padding:10px 18px;
+  margin-top:18px;
+  padding:12px 22px;
   background:#4a6cff;
   color:white;
   text-decoration:none;
-  border-radius:5px;
+  border-radius:6px;
+  font-size:1rem;
+  font-weight:500;
 }
 
-/* FOOTER – redesigned */
+/* FOOTER */
 footer{
   background:white;
   margin-top:40px;
@@ -173,6 +178,7 @@ footer{
   text-decoration:none;
   font-size:14px;
   transition:0.2s;
+  cursor:pointer;
 }
 .footer-col a:hover{
   color:#ff4b4b;
@@ -192,13 +198,78 @@ footer{
   position:fixed;
   bottom:30px;
   right:30px;
-  padding:10px 14px;
+  padding:12px 18px;
   background:#ff4b4b;
   color:white;
   border:none;
-  border-radius:6px;
+  border-radius:60px;
   cursor:pointer;
   display:none;
+  font-size:1.1rem;
+  box-shadow:0 5px 15px rgba(255,75,75,0.4);
+}
+
+/* LANGUAGE POPUP MODAL */
+.lang-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+}
+.lang-modal-content {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.lang-modal-content h3 {
+  margin-top: 0;
+  color: #ff4b4b;
+  font-size: 1.8rem;
+}
+.lang-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+.lang-item {
+  background: #f0f0f0;
+  padding: 12px 8px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+.lang-item:hover {
+  background: #ff4b4b;
+  color: white;
+  border-color: white;
+}
+.close-modal {
+  margin-top: 25px;
+  padding: 10px 25px;
+  background: #4a6cff;
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.close-modal:hover {
+  background: #ff4b4b;
 }
 </style>
 </head>
@@ -206,7 +277,6 @@ footer{
 <body>
 
 <header>
-  <!-- Logo is clickable and returns to homepage (index.html) -->
   <a href="index.html" style="text-decoration:none; color:inherit;">
     <div class="logo">
       <svg width="32" height="32" viewBox="0 0 100 100" style="vertical-align:middle;margin-right:8px">
@@ -216,300 +286,326 @@ footer{
       MyTools
     </div>
   </a>
-
   <nav>
-    <a href="index.html">Home</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
-    <a href="#">All Tools</a>
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="#" data-i18n="nav_about">About</a>
+    <a href="#" data-i18n="nav_contact">Contact</a>
+    <a href="#" data-i18n="nav_all">All Tools</a>
   </nav>
 </header>
 
 <section class="hero">
-  <h1>All Your Online Tools – 100% Free</h1>
-  <p>Resize images, convert PDFs, generate AI content and more.</p>
+  <h1 data-i18n="hero_title">All Your Online Tools – 100% Free</h1>
+  <p data-i18n="hero_subtitle">Resize images, convert PDFs, generate AI content and more.</p>
 </section>
 
 <!-- SEARCH -->
 <div class="search-box">
-  <input type="text" id="toolSearch" placeholder="🔍 Search tools">
-  <button onclick="clearSearch()">Clear</button>
+  <input type="text" id="toolSearch" placeholder="🔍 Search tools" data-i18n-placeholder="search_placeholder">
+  <button onclick="clearSearch()" data-i18n="clear_btn">Clear</button>
 </div>
 
-<!-- FILTER (NEW: Calculator category added) -->
+<!-- FILTER -->
 <div class="filters">
-  <button onclick="filterTools('all')">All</button>
-  <button onclick="filterTools('image')">🖼 Image</button>
-  <button onclick="filterTools('pdf')">📄 PDF</button>
-  <button onclick="filterTools('ai')">🤖 AI</button>
-  <button onclick="filterTools('seo')">📈 SEO</button>
-  <button onclick="filterTools('dev')">💻 Developer</button>
-  <button onclick="filterTools('calculator')">🧮 Calculator</button>
+  <button onclick="filterTools('all')" data-i18n="filter_all">All</button>
+  <button onclick="filterTools('image')" data-i18n="filter_image">🖼 Image</button>
+  <button onclick="filterTools('pdf')" data-i18n="filter_pdf">📄 PDF</button>
+  <button onclick="filterTools('ai')" data-i18n="filter_ai">🤖 AI</button>
+  <button onclick="filterTools('seo')" data-i18n="filter_seo">📈 SEO</button>
+  <button onclick="filterTools('dev')" data-i18n="filter_dev">💻 Developer</button>
+  <button onclick="filterTools('calculator')" data-i18n="filter_calculator">🧮 Calculator</button>
 </div>
 
 <!-- TOOLS -->
 <section class="tools">
   <!-- image tools -->
   <div class="tool-card" data-category="image">
-    <h3>🖼 Image Resizer</h3>
-    <p>Resize images easily for social media.</p>
-    <a class="open-btn" href="image-resizer.html">Open Tool</a>
+    <h3 data-i18n="tool_image_resizer">🖼 Image Resizer</h3>
+    <p data-i18n="tool_image_resizer_desc">Resize images easily for social media.</p>
+    <a class="open-btn" href="image-resizer.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>📉 Image Compressor</h3>
-    <p>Reduce image size without losing quality.</p>
-    <a class="open-btn" href="image-compressor.html">Open Tool</a>
+    <h3 data-i18n="tool_image_compressor">📉 Image Compressor</h3>
+    <p data-i18n="tool_image_compressor_desc">Reduce image size without losing quality.</p>
+    <a class="open-btn" href="image-compressor.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>✂️ Image Cropper</h3>
-    <p>Crop unwanted parts of an image.</p>
-    <a class="open-btn" href="image-cropper.html">Open Tool</a>
+    <h3 data-i18n="tool_image_cropper">✂️ Image Cropper</h3>
+    <p data-i18n="tool_image_cropper_desc">Crop unwanted parts of an image.</p>
+    <a class="open-btn" href="image-cropper.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>🔄 Image Rotator</h3>
-    <p>Rotate images instantly.</p>
-    <a class="open-btn" href="image-rotator.html">Open Tool</a>
+    <h3 data-i18n="tool_image_rotator">🔄 Image Rotator</h3>
+    <p data-i18n="tool_image_rotator_desc">Rotate images instantly.</p>
+    <a class="open-btn" href="image-rotator.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>🎨 Color Picker</h3>
-    <p>Pick HEX and RGB colors from images.</p>
-    <a class="open-btn" href="color-picker.html">Open Tool</a>
+    <h3 data-i18n="tool_color_picker">🎨 Color Picker</h3>
+    <p data-i18n="tool_color_picker_desc">Pick HEX and RGB colors from images.</p>
+    <a class="open-btn" href="color-picker.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>🖼 Image Converter</h3>
-    <p>Convert images between JPG, PNG and WEBP formats.</p>
-    <a class="open-btn" href="image-converter.html">Open Tool</a>
+    <h3 data-i18n="tool_image_converter">🖼 Image Converter</h3>
+    <p data-i18n="tool_image_converter_desc">Convert images between JPG, PNG and WEBP formats.</p>
+    <a class="open-btn" href="image-converter.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>💧 Image Watermark</h3>
-    <p>Add text or logo watermark to your images.</p>
-    <a class="open-btn" href="image-watermark.html">Open Tool</a>
+    <h3 data-i18n="tool_watermark">💧 Image Watermark</h3>
+    <p data-i18n="tool_watermark_desc">Add text or logo watermark to your images.</p>
+    <a class="open-btn" href="image-watermark.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>🌫 Image Blur Tool</h3>
-    <p>Blur selected parts of an image easily.</p>
-    <a class="open-btn" href="image-blur.html">Open Tool</a>
+    <h3 data-i18n="tool_blur">🌫 Image Blur Tool</h3>
+    <p data-i18n="tool_blur_desc">Blur selected parts of an image easily.</p>
+    <a class="open-btn" href="image-blur.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>⚫ Image Grayscale</h3>
-    <p>Convert color images into grayscale.</p>
-    <a class="open-btn" href="image-grayscale.html">Open Tool</a>
-  </div>
-  <!-- Image Border Tool with updated emoji 🔲 -->
-  <div class="tool-card" data-category="image">
-    <h3>🔲 Image Border Tool</h3>
-    <p>Add borders to your images.</p>
-    <a class="open-btn" href="image-border-tool.html">Open Tool</a>
+    <h3 data-i18n="tool_grayscale">⚫ Image Grayscale</h3>
+    <p data-i18n="tool_grayscale_desc">Convert color images into grayscale.</p>
+    <a class="open-btn" href="image-grayscale.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="image">
-    <h3>📸 Thumbnail Generator</h3>
-    <p>Create YouTube and social media thumbnails.</p>
-    <a class="open-btn" href="thumbnail-generator.html">Open Tool</a>
+    <h3 data-i18n="tool_border">🔲 Image Border Tool</h3>
+    <p data-i18n="tool_border_desc">Add borders to your images.</p>
+    <a class="open-btn" href="image-border-tool.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3 data-i18n="tool_thumbnail">📸 Thumbnail Generator</h3>
+    <p data-i18n="tool_thumbnail_desc">Create YouTube and social media thumbnails.</p>
+    <a class="open-btn" href="thumbnail-generator.html" data-i18n="open_btn">Open Tool</a>
   </div>
 
   <!-- pdf tools -->
   <div class="tool-card" data-category="pdf">
-    <h3>📄 PDF to Word</h3>
-    <p>Convert PDF into editable Word.</p>
-    <a class="open-btn" href="pdf-word.html">Open Tool</a>
+    <h3 data-i18n="tool_pdf_word">📄 PDF to Word</h3>
+    <p data-i18n="tool_pdf_word_desc">Convert PDF into editable Word.</p>
+    <a class="open-btn" href="pdf-word.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="pdf">
-    <h3>📦 Merge PDF</h3>
-    <p>Combine multiple PDF files.</p>
-    <a class="open-btn" href="merge-pdf.html">Open Tool</a>
+    <h3 data-i18n="tool_merge_pdf">📦 Merge PDF</h3>
+    <p data-i18n="tool_merge_pdf_desc">Combine multiple PDF files.</p>
+    <a class="open-btn" href="merge-pdf.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="pdf">
-    <h3>📉 Compress PDF</h3>
-    <p>Reduce PDF file size.</p>
-    <a class="open-btn" href="compress-pdf.html">Open Tool</a>
+    <h3 data-i18n="tool_compress_pdf">📉 Compress PDF</h3>
+    <p data-i18n="tool_compress_pdf_desc">Reduce PDF file size.</p>
+    <a class="open-btn" href="compress-pdf.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="pdf">
-    <h3>📄 Word to PDF</h3>
-    <p>Convert Word documents into PDF.</p>
-    <a class="open-btn" href="word-to-pdf.html">Open Tool</a>
+    <h3 data-i18n="tool_word_pdf">📄 Word to PDF</h3>
+    <p data-i18n="tool_word_pdf_desc">Convert Word documents into PDF.</p>
+    <a class="open-btn" href="word-to-pdf.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="pdf">
-    <h3>📂 Split PDF</h3>
-    <p>Split large PDF files into smaller files.</p>
-    <a class="open-btn" href="split-pdf.html">Open Tool</a>
+    <h3 data-i18n="tool_split_pdf">📂 Split PDF</h3>
+    <p data-i18n="tool_split_pdf_desc">Split large PDF files into smaller files.</p>
+    <a class="open-btn" href="split-pdf.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="pdf">
-    <h3>🔐 Protect PDF</h3>
-    <p>Add password protection to your PDF.</p>
-    <a class="open-btn" href="protect-pdf.html">Open Tool</a>
+    <h3 data-i18n="tool_protect_pdf">🔐 Protect PDF</h3>
+    <p data-i18n="tool_protect_pdf_desc">Add password protection to your PDF.</p>
+    <a class="open-btn" href="protect-pdf.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="pdf">
-    <h3>🔓 Unlock PDF</h3>
-    <p>Remove password protection from PDF.</p>
-    <a class="open-btn" href="unlock-pdf.html">Open Tool</a>
+    <h3 data-i18n="tool_unlock_pdf">🔓 Unlock PDF</h3>
+    <p data-i18n="tool_unlock_pdf_desc">Remove password protection from PDF.</p>
+    <a class="open-btn" href="unlock-pdf.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+
+  <!-- NEW PDF CONVERSION TOOLS -->
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_jpg_pdf">📸 JPG to PDF</h3>
+    <p data-i18n="tool_jpg_pdf_desc">Convert JPG images to PDF documents quickly.</p>
+    <a class="open-btn" href="jpg-pdf.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_pdf_jpg">📄 PDF to JPG</h3>
+    <p data-i18n="tool_pdf_jpg_desc">Extract JPG images from PDF files.</p>
+    <a class="open-btn" href="pdf-jpg.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_png_pdf">🌄 PNG to PDF</h3>
+    <p data-i18n="tool_png_pdf_desc">Convert PNG images to PDF format.</p>
+    <a class="open-btn" href="png-pdf.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_pdf_png">📄 PDF to PNG</h3>
+    <p data-i18n="tool_pdf_png_desc">Transform PDF pages into PNG images.</p>
+    <a class="open-btn" href="pdf-png.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_excel_pdf">📊 Excel to PDF</h3>
+    <p data-i18n="tool_excel_pdf_desc">Convert Excel spreadsheets to PDF.</p>
+    <a class="open-btn" href="#excel-pdf.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_pdf_excel">📄 PDF to Excel</h3>
+    <p data-i18n="tool_pdf_excel_desc">Extract tables from PDF to Excel format.</p>
+    <a class="open-btn" href="pdf-excel.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_image_pdf">🖼 Image to PDF</h3>
+    <p data-i18n="tool_image_pdf_desc">Combine multiple images into a single PDF.</p>
+    <a class="open-btn" href="image-pdf.html" data-i18n="open_btn">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3 data-i18n="tool_pdf_image">📄 PDF to Image</h3>
+    <p data-i18n="tool_pdf_image_desc">Convert each PDF page into an image file.</p>
+    <a class="open-btn" href="pdf-image.html" data-i18n="open_btn">Open Tool</a>
   </div>
 
   <!-- ai tools -->
   <div class="tool-card" data-category="ai">
-    <h3>🤖 AI Article Writer</h3>
-    <p>Generate articles automatically.</p>
-    <a class="open-btn" href="ai-article-writer.html">Open Tool</a>
+    <h3 data-i18n="tool_ai_writer">🤖 AI Article Writer</h3>
+    <p data-i18n="tool_ai_writer_desc">Generate articles automatically.</p>
+    <a class="open-btn" href="ai-article-writer.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="ai">
-    <h3>🎬 YouTube Title Generator</h3>
-    <p>Create viral YouTube titles.</p>
-    <a class="open-btn" href="youtube-title-generator.html">Open Tool</a>
+    <h3 data-i18n="tool_yt_title">🎬 YouTube Title Generator</h3>
+    <p data-i18n="tool_yt_title_desc">Create viral YouTube titles.</p>
+    <a class="open-btn" href="youtube-title-generator.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="ai">
-    <h3>📝 Blog Topic Generator</h3>
-    <p>Generate unique blog topic ideas.</p>
-    <a class="open-btn" href="blog-topic.html">Open Tool</a>
+    <h3 data-i18n="tool_blog_topic">📝 Blog Topic Generator</h3>
+    <p data-i18n="tool_blog_topic_desc">Generate unique blog topic ideas.</p>
+    <a class="open-btn" href="blog-topic.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="ai">
-    <h3>📱 Instagram Caption Generator</h3>
-    <p>Create engaging captions for Instagram posts.</p>
-    <a class="open-btn" href="caption-generator.html">Open Tool</a>
+    <h3 data-i18n="tool_instagram_caption">📱 Instagram Caption Generator</h3>
+    <p data-i18n="tool_instagram_caption_desc">Create engaging captions for Instagram posts.</p>
+    <a class="open-btn" href="caption-generator.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="ai">
-    <h3>🔁 AI Article Rewriter</h3>
-    <p>Rewrite articles while keeping meaning.</p>
-    <a class="open-btn" href="article-rewriter.html">Open Tool</a>
+    <h3 data-i18n="tool_rewriter">🔁 AI Article Rewriter</h3>
+    <p data-i18n="tool_rewriter_desc">Rewrite articles while keeping meaning.</p>
+    <a class="open-btn" href="article-rewriter.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="ai">
-    <h3>📄 AI Text Summarizer</h3>
-    <p>Summarize long text into short content.</p>
-    <a class="open-btn" href="text-summarizer.html">Open Tool</a>
+    <h3 data-i18n="tool_summarizer">📄 AI Text Summarizer</h3>
+    <p data-i18n="tool_summarizer_desc">Summarize long text into short content.</p>
+    <a class="open-btn" href="text-summarizer.html" data-i18n="open_btn">Open Tool</a>
   </div>
 
   <!-- seo tools -->
   <div class="tool-card" data-category="seo">
-    <h3>🔍 Keyword Density Checker</h3>
-    <p>Analyze keyword usage in content.</p>
-    <a class="open-btn" href="keyword-density-checker.html">Open Tool</a>
+    <h3 data-i18n="tool_keyword_density">🔍 Keyword Density Checker</h3>
+    <p data-i18n="tool_keyword_density_desc">Analyze keyword usage in content.</p>
+    <a class="open-btn" href="keyword-density-checker.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="seo">
-    <h3>🏷 Meta Tag Generator</h3>
-    <p>Generate SEO meta tags for websites.</p>
-    <a class="open-btn" href="meta-generator.html">Open Tool</a>
+    <h3 data-i18n="tool_meta_generator">🏷 Meta Tag Generator</h3>
+    <p data-i18n="tool_meta_generator_desc">Generate SEO meta tags for websites.</p>
+    <a class="open-btn" href="meta-generator.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="seo">
-    <h3>🔢 Word Counter</h3>
-    <p>Count words and characters instantly.</p>
-    <a class="open-btn" href="word-counter.html">Open Tool</a>
+    <h3 data-i18n="tool_word_counter">🔢 Word Counter</h3>
+    <p data-i18n="tool_word_counter_desc">Count words and characters instantly.</p>
+    <a class="open-btn" href="word-counter.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="seo">
-    <h3>🔗 URL Slug Generator</h3>
-    <p>Create SEO friendly URLs for pages.</p>
-    <a class="open-btn" href="slug-generator.html">Open Tool</a>
+    <h3 data-i18n="tool_slug_generator">🔗 URL Slug Generator</h3>
+    <p data-i18n="tool_slug_generator_desc">Create SEO friendly URLs for pages.</p>
+    <a class="open-btn" href="slug-generator.html" data-i18n="open_btn">Open Tool</a>
   </div>
 
   <!-- dev tools -->
   <div class="tool-card" data-category="dev">
-    <h3>💻 JSON Formatter</h3>
-    <p>Format and validate JSON data.</p>
-    <a class="open-btn" href="json-formatter.html">Open Tool</a>
+    <h3 data-i18n="tool_json_formatter">💻 JSON Formatter</h3>
+    <p data-i18n="tool_json_formatter_desc">Format and validate JSON data.</p>
+    <a class="open-btn" href="json-formatter.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="dev">
-    <h3>🔐 Password Generator</h3>
-    <p>Generate secure random passwords.</p>
-    <a class="open-btn" href="password-generator.html">Open Tool</a>
+    <h3 data-i18n="tool_password_generator">🔐 Password Generator</h3>
+    <p data-i18n="tool_password_generator_desc">Generate secure random passwords.</p>
+    <a class="open-btn" href="password-generator.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="dev">
-    <h3>🔡 Base64 Encoder</h3>
-    <p>Encode text into Base64 format.</p>
-    <a class="open-btn" href="base64-encoder.html">Open Tool</a>
+    <h3 data-i18n="tool_base64_encoder">🔡 Base64 Encoder</h3>
+    <p data-i18n="tool_base64_encoder_desc">Encode text into Base64 format.</p>
+    <a class="open-btn" href="base64-encoder.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="dev">
-    <h3>🔓 Base64 Decoder</h3>
-    <p>Decode Base64 text back to normal.</p>
-    <a class="open-btn" href="base64-decoder.html">Open Tool</a>
+    <h3 data-i18n="tool_base64_decoder">🔓 Base64 Decoder</h3>
+    <p data-i18n="tool_base64_decoder_desc">Decode Base64 text back to normal.</p>
+    <a class="open-btn" href="base64-decoder.html" data-i18n="open_btn">Open Tool</a>
   </div>
   <div class="tool-card" data-category="dev">
-    <h3>🎨 Color Code Converter</h3>
-    <p>Convert HEX color to RGB and HSL.</p>
-    <a class="open-btn" href="color-converter.html">Open Tool</a>
+    <h3 data-i18n="tool_color_converter">🎨 Color Code Converter</h3>
+    <p data-i18n="tool_color_converter_desc">Convert HEX color to RGB and HSL.</p>
+    <a class="open-btn" href="color-converter.html" data-i18n="open_btn">Open Tool</a>
   </div>
 
-  <!-- ========== NEW CALCULATOR TOOLS ========== -->
-  <!-- scientific calculator -->
+  <!-- CALCULATOR TOOLS -->
   <div class="tool-card" data-category="calculator">
-    <h3>🧮 Scientific Calculator</h3>
-    <p>Advanced scientific calculations, trigonometry, logarithms and more.</p>
-    <a class="open-btn" href="scientific-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_scientific_calc">🧮 Scientific Calculator</h3>
+    <p data-i18n="tool_scientific_calc_desc">Advanced scientific calculations, trigonometry, logarithms and more.</p>
+    <a class="open-btn" href="scientific-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- loan calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>💰 Loan Calculator</h3>
-    <p>Calculate EMI, total interest and loan tenure.</p>
-    <a class="open-btn" href="#loan-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_loan_calc">💰 Loan Calculator</h3>
+    <p data-i18n="tool_loan_calc_desc">Calculate EMI, total interest and loan tenure.</p>
+    <a class="open-btn" href="loan-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- sip calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>📈 SIP Calculator</h3>
-    <p>Estimate returns on Systematic Investment Plans.</p>
-    <a class="open-btn" href="sip-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_sip_calc">📈 SIP Calculator</h3>
+    <p data-i18n="tool_sip_calc_desc">Estimate returns on Systematic Investment Plans.</p>
+    <a class="open-btn" href="sip-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- fd calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>🏦 FD Calculator</h3>
-    <p>Fixed deposit maturity and interest calculator.</p>
-    <a class="open-btn" href="fd-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_fd_calc">🏦 FD Calculator</h3>
+    <p data-i18n="tool_fd_calc_desc">Fixed deposit maturity and interest calculator.</p>
+    <a class="open-btn" href="fd-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- gst calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>📊 GST Calculator</h3>
-    <p>Compute GST amounts, net price and tax.</p>
-    <a class="open-btn" href="gst-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_gst_calc">📊 GST Calculator</h3>
+    <p data-i18n="tool_gst_calc_desc">Compute GST amounts, net price and tax.</p>
+    <a class="open-btn" href="gst-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- age calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>🎂 Age Calculator</h3>
-    <p>Calculate exact age in years, months and days.</p>
-    <a class="open-btn" href="#age-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_age_calc">🎂 Age Calculator</h3>
+    <p data-i18n="tool_age_calc_desc">Calculate exact age in years, months and days.</p>
+    <a class="open-btn" href="age-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- fuel cost calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>⛽ Fuel Cost Calculator</h3>
-    <p>Estimate trip fuel cost based on distance and mileage.</p>
-    <a class="open-btn" href="fuel-cost-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_fuel_calc">⛽ Fuel Cost Calculator</h3>
+    <p data-i18n="tool_fuel_calc_desc">Estimate trip fuel cost based on distance and mileage.</p>
+    <a class="open-btn" href="fuel-cost-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- shopping list calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>🛒 Shopping List Calculator</h3>
-    <p>Add items, track expenses and split bills.</p>
-    <a class="open-btn" href="shopping-list-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_shopping_calc">🛒 Shopping List Calculator</h3>
+    <p data-i18n="tool_shopping_calc_desc">Add items, track expenses and split bills.</p>
+    <a class="open-btn" href="shopping-list-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- discount calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>🏷️ Discount Calculator</h3>
-    <p>Find final price after percentage discount.</p>
-    <a class="open-btn" href="discount-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_discount_calc">🏷️ Discount Calculator</h3>
+    <p data-i18n="tool_discount_calc_desc">Find final price after percentage discount.</p>
+    <a class="open-btn" href="discount-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- tip calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>🍽️ Tip Calculator</h3>
-    <p>Split bill and calculate tip per person.</p>
-    <a class="open-btn" href="tip-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_tip_calc">🍽️ Tip Calculator</h3>
+    <p data-i18n="tool_tip_calc_desc">Split bill and calculate tip per person.</p>
+    <a class="open-btn" href="tip-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- bmi calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>⚖️ BMI Calculator</h3>
-    <p>Body Mass Index based on height and weight.</p>
-    <a class="open-btn" href="bmi-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_bmi_calc">⚖️ BMI Calculator</h3>
+    <p data-i18n="tool_bmi_calc_desc">Body Mass Index based on height and weight.</p>
+    <a class="open-btn" href="bmi-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- calorie calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>🔥 Calorie Calculator</h3>
-    <p>Estimate daily calorie needs for weight maintenance.</p>
-    <a class="open-btn" href="calorie-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_calorie_calc">🔥 Calorie Calculator</h3>
+    <p data-i18n="tool_calorie_calc_desc">Estimate daily calorie needs for weight maintenance.</p>
+    <a class="open-btn" href="calorie-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
-  <!-- electricity bill calculator -->
   <div class="tool-card" data-category="calculator">
-    <h3>💡 Electricity Bill Calculator</h3>
-    <p>Compute electricity cost based on usage and tariff.</p>
-    <a class="open-btn" href="electricity-bill-calculator.html">Open Tool</a>
+    <h3 data-i18n="tool_electricity_calc">💡 Electricity Bill Calculator</h3>
+    <p data-i18n="tool_electricity_calc_desc">Compute electricity cost based on usage and tariff.</p>
+    <a class="open-btn" href="electricity-bill-calculator.html" data-i18n="open_btn">Open Tool</a>
   </div>
 </section>
 
-<!-- REDESIGNED FOOTER with logo, description, links and categories -->
+<!-- FOOTER with language popup trigger -->
 <footer>
   <div class="footer-container">
-    <!-- Logo + description column -->
     <div class="footer-col">
       <div class="logo">
         <svg width="32" height="32" viewBox="0 0 100 100" style="vertical-align:middle;margin-right:8px">
@@ -518,44 +614,1560 @@ footer{
         </svg>
         MyTools
       </div>
-      <p>Your ultimate destination for free online tools. From image editing to AI content generation, we provide easy-to-use utilities for everyone. 100% free, no registration required.</p>
+      <p data-i18n="footer_description">Your ultimate destination for free online tools. From image editing to AI content generation, we provide easy-to-use utilities for everyone. 100% free, no registration required.</p>
     </div>
 
-    <!-- Quick links (privacy, terms, contact, home) -->
     <div class="footer-col">
-      <h4>Quick Links</h4>
+      <h4 data-i18n="quick_links">Quick Links</h4>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="index.html" data-i18n="home">Home</a></li>
+        <li><a href="#" data-i18n="contact">Contact</a></li>
+        <li><a href="#" data-i18n="privacy">Privacy Policy</a></li>
+        <li><a href="#" data-i18n="terms">Terms & Conditions</a></li>
       </ul>
     </div>
 
-    <!-- Categories (filter triggers) - updated with Calculator -->
     <div class="footer-col">
-      <h4>Categories</h4>
+      <h4 data-i18n="categories">Categories</h4>
       <ul>
-        <li><a href="#" onclick="filterTools('image'); return false;">🖼 Image Tools</a></li>
-        <li><a href="#" onclick="filterTools('pdf'); return false;">📄 PDF Tools</a></li>
-        <li><a href="#" onclick="filterTools('ai'); return false;">🤖 AI Tools</a></li>
-        <li><a href="#" onclick="filterTools('seo'); return false;">📈 SEO Tools</a></li>
-        <li><a href="#" onclick="filterTools('dev'); return false;">💻 Developer Tools</a></li>
-        <li><a href="#" onclick="filterTools('calculator'); return false;">🧮 Calculator Tools</a></li>
+        <li><a href="#" onclick="filterTools('image'); return false;" data-i18n="cat_image">🖼 Image Tools</a></li>
+        <li><a href="#" onclick="filterTools('pdf'); return false;" data-i18n="cat_pdf">📄 PDF Tools</a></li>
+        <li><a href="#" onclick="filterTools('ai'); return false;" data-i18n="cat_ai">🤖 AI Tools</a></li>
+        <li><a href="#" onclick="filterTools('seo'); return false;" data-i18n="cat_seo">📈 SEO Tools</a></li>
+        <li><a href="#" onclick="filterTools('dev'); return false;" data-i18n="cat_dev">💻 Developer Tools</a></li>
+        <li><a href="#" onclick="filterTools('calculator'); return false;" data-i18n="cat_calculator">🧮 Calculator Tools</a></li>
+      </ul>
+    </div>
+
+    <!-- 🌐 LANGUAGE SECTION (popup trigger) -->
+    <div class="footer-col">
+      <h4 data-i18n="language_title">🌐 Language</h4>
+      <ul>
+        <li><a href="#" onclick="openLanguageModal(); return false;" data-i18n="lang_en">🇬🇧 English</a></li>
       </ul>
     </div>
   </div>
 
-  <!-- Copyright line -->
   <div class="footer-bottom">
-    <p>© 2026 MyTools Website. All rights reserved.</p>
+    <p data-i18n="copyright">© 2026 MyTools Website. All rights reserved.</p>
   </div>
 </footer>
+
+<!-- LANGUAGE POPUP MODAL -->
+<div id="languageModal" class="lang-modal">
+  <div class="lang-modal-content">
+    <h3 data-i18n="choose_language">Choose Your Language</h3>
+    <div class="lang-list">
+      <div class="lang-item" onclick="setLanguage('en'); closeModal()">🇬🇧 English</div>
+      <div class="lang-item" onclick="setLanguage('es'); closeModal()">🇪🇸 Español</div>
+      <div class="lang-item" onclick="setLanguage('hi'); closeModal()">🇮🇳 हिन्दी</div>
+      <div class="lang-item" onclick="setLanguage('fr'); closeModal()">🇫🇷 Français</div>
+      <div class="lang-item" onclick="setLanguage('de'); closeModal()">🇩🇪 Deutsch</div>
+      <div class="lang-item" onclick="setLanguage('zh'); closeModal()">🇨🇳 中文</div>
+      <div class="lang-item" onclick="setLanguage('ja'); closeModal()">🇯🇵 日本語</div>
+      <div class="lang-item" onclick="setLanguage('it'); closeModal()">🇮🇹 Italiano</div>
+      <div class="lang-item" onclick="setLanguage('pt'); closeModal()">🇵🇹 Português</div>
+      <div class="lang-item" onclick="setLanguage('ru'); closeModal()">🇷🇺 Русский</div>
+    </div>
+    <button class="close-modal" onclick="closeModal()" data-i18n="close">Close</button>
+  </div>
+</div>
 
 <button id="topBtn" onclick="topFunction()">⬆ Top</button>
 
 <script>
-/* SEARCH */
+/* ========== TRANSLATION DICTIONARY (all 10 languages) ========== */
+const translations = {
+  // English (full)
+  en: {
+    nav_home: "Home",
+    nav_about: "About",
+    nav_contact: "Contact",
+    nav_all: "All Tools",
+    hero_title: "All Your Online Tools – 100% Free",
+    hero_subtitle: "Resize images, convert PDFs, generate AI content and more.",
+    search_placeholder: "🔍 Search tools",
+    clear_btn: "Clear",
+    filter_all: "All",
+    filter_image: "🖼 Image",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 AI",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Developer",
+    filter_calculator: "🧮 Calculator",
+    open_btn: "Open Tool",
+    tool_image_resizer: "🖼 Image Resizer",
+    tool_image_resizer_desc: "Resize images easily for social media.",
+    tool_image_compressor: "📉 Image Compressor",
+    tool_image_compressor_desc: "Reduce image size without losing quality.",
+    tool_image_cropper: "✂️ Image Cropper",
+    tool_image_cropper_desc: "Crop unwanted parts of an image.",
+    tool_image_rotator: "🔄 Image Rotator",
+    tool_image_rotator_desc: "Rotate images instantly.",
+    tool_color_picker: "🎨 Color Picker",
+    tool_color_picker_desc: "Pick HEX and RGB colors from images.",
+    tool_image_converter: "🖼 Image Converter",
+    tool_image_converter_desc: "Convert images between JPG, PNG and WEBP formats.",
+    tool_watermark: "💧 Image Watermark",
+    tool_watermark_desc: "Add text or logo watermark to your images.",
+    tool_blur: "🌫 Image Blur Tool",
+    tool_blur_desc: "Blur selected parts of an image easily.",
+    tool_grayscale: "⚫ Image Grayscale",
+    tool_grayscale_desc: "Convert color images into grayscale.",
+    tool_border: "🔲 Image Border Tool",
+    tool_border_desc: "Add borders to your images.",
+    tool_thumbnail: "📸 Thumbnail Generator",
+    tool_thumbnail_desc: "Create YouTube and social media thumbnails.",
+    tool_pdf_word: "📄 PDF to Word",
+    tool_pdf_word_desc: "Convert PDF into editable Word.",
+    tool_merge_pdf: "📦 Merge PDF",
+    tool_merge_pdf_desc: "Combine multiple PDF files.",
+    tool_compress_pdf: "📉 Compress PDF",
+    tool_compress_pdf_desc: "Reduce PDF file size.",
+    tool_word_pdf: "📄 Word to PDF",
+    tool_word_pdf_desc: "Convert Word documents into PDF.",
+    tool_split_pdf: "📂 Split PDF",
+    tool_split_pdf_desc: "Split large PDF files into smaller files.",
+    tool_protect_pdf: "🔐 Protect PDF",
+    tool_protect_pdf_desc: "Add password protection to your PDF.",
+    tool_unlock_pdf: "🔓 Unlock PDF",
+    tool_unlock_pdf_desc: "Remove password protection from PDF.",
+    tool_jpg_pdf: "📸 JPG to PDF",
+    tool_jpg_pdf_desc: "Convert JPG images to PDF documents quickly.",
+    tool_pdf_jpg: "📄 PDF to JPG",
+    tool_pdf_jpg_desc: "Extract JPG images from PDF files.",
+    tool_png_pdf: "🌄 PNG to PDF",
+    tool_png_pdf_desc: "Convert PNG images to PDF format.",
+    tool_pdf_png: "📄 PDF to PNG",
+    tool_pdf_png_desc: "Transform PDF pages into PNG images.",
+    tool_excel_pdf: "📊 Excel to PDF",
+    tool_excel_pdf_desc: "Convert Excel spreadsheets to PDF.",
+    tool_pdf_excel: "📄 PDF to Excel",
+    tool_pdf_excel_desc: "Extract tables from PDF to Excel format.",
+    tool_image_pdf: "🖼 Image to PDF",
+    tool_image_pdf_desc: "Combine multiple images into a single PDF.",
+    tool_pdf_image: "📄 PDF to Image",
+    tool_pdf_image_desc: "Convert each PDF page into an image file.",
+    tool_ai_writer: "🤖 AI Article Writer",
+    tool_ai_writer_desc: "Generate articles automatically.",
+    tool_yt_title: "🎬 YouTube Title Generator",
+    tool_yt_title_desc: "Create viral YouTube titles.",
+    tool_blog_topic: "📝 Blog Topic Generator",
+    tool_blog_topic_desc: "Generate unique blog topic ideas.",
+    tool_instagram_caption: "📱 Instagram Caption Generator",
+    tool_instagram_caption_desc: "Create engaging captions for Instagram posts.",
+    tool_rewriter: "🔁 AI Article Rewriter",
+    tool_rewriter_desc: "Rewrite articles while keeping meaning.",
+    tool_summarizer: "📄 AI Text Summarizer",
+    tool_summarizer_desc: "Summarize long text into short content.",
+    tool_keyword_density: "🔍 Keyword Density Checker",
+    tool_keyword_density_desc: "Analyze keyword usage in content.",
+    tool_meta_generator: "🏷 Meta Tag Generator",
+    tool_meta_generator_desc: "Generate SEO meta tags for websites.",
+    tool_word_counter: "🔢 Word Counter",
+    tool_word_counter_desc: "Count words and characters instantly.",
+    tool_slug_generator: "🔗 URL Slug Generator",
+    tool_slug_generator_desc: "Create SEO friendly URLs for pages.",
+    tool_json_formatter: "💻 JSON Formatter",
+    tool_json_formatter_desc: "Format and validate JSON data.",
+    tool_password_generator: "🔐 Password Generator",
+    tool_password_generator_desc: "Generate secure random passwords.",
+    tool_base64_encoder: "🔡 Base64 Encoder",
+    tool_base64_encoder_desc: "Encode text into Base64 format.",
+    tool_base64_decoder: "🔓 Base64 Decoder",
+    tool_base64_decoder_desc: "Decode Base64 text back to normal.",
+    tool_color_converter: "🎨 Color Code Converter",
+    tool_color_converter_desc: "Convert HEX color to RGB and HSL.",
+    tool_scientific_calc: "🧮 Scientific Calculator",
+    tool_scientific_calc_desc: "Advanced scientific calculations, trigonometry, logarithms and more.",
+    tool_loan_calc: "💰 Loan Calculator",
+    tool_loan_calc_desc: "Calculate EMI, total interest and loan tenure.",
+    tool_sip_calc: "📈 SIP Calculator",
+    tool_sip_calc_desc: "Estimate returns on Systematic Investment Plans.",
+    tool_fd_calc: "🏦 FD Calculator",
+    tool_fd_calc_desc: "Fixed deposit maturity and interest calculator.",
+    tool_gst_calc: "📊 GST Calculator",
+    tool_gst_calc_desc: "Compute GST amounts, net price and tax.",
+    tool_age_calc: "🎂 Age Calculator",
+    tool_age_calc_desc: "Calculate exact age in years, months and days.",
+    tool_fuel_calc: "⛽ Fuel Cost Calculator",
+    tool_fuel_calc_desc: "Estimate trip fuel cost based on distance and mileage.",
+    tool_shopping_calc: "🛒 Shopping List Calculator",
+    tool_shopping_calc_desc: "Add items, track expenses and split bills.",
+    tool_discount_calc: "🏷️ Discount Calculator",
+    tool_discount_calc_desc: "Find final price after percentage discount.",
+    tool_tip_calc: "🍽️ Tip Calculator",
+    tool_tip_calc_desc: "Split bill and calculate tip per person.",
+    tool_bmi_calc: "⚖️ BMI Calculator",
+    tool_bmi_calc_desc: "Body Mass Index based on height and weight.",
+    tool_calorie_calc: "🔥 Calorie Calculator",
+    tool_calorie_calc_desc: "Estimate daily calorie needs for weight maintenance.",
+    tool_electricity_calc: "💡 Electricity Bill Calculator",
+    tool_electricity_calc_desc: "Compute electricity cost based on usage and tariff.",
+    footer_description: "Your ultimate destination for free online tools. From image editing to AI content generation, we provide easy-to-use utilities for everyone. 100% free, no registration required.",
+    quick_links: "Quick Links",
+    home: "Home",
+    contact: "Contact",
+    privacy: "Privacy Policy",
+    terms: "Terms & Conditions",
+    categories: "Categories",
+    cat_image: "🖼 Image Tools",
+    cat_pdf: "📄 PDF Tools",
+    cat_ai: "🤖 AI Tools",
+    cat_seo: "📈 SEO Tools",
+    cat_dev: "💻 Developer Tools",
+    cat_calculator: "🧮 Calculator Tools",
+    language_title: "🌐 Language",
+    lang_en: "🇬🇧 English",
+    choose_language: "Choose Your Language",
+    close: "Close",
+    copyright: "© 2026 MyTools Website. All rights reserved."
+  },
+
+  // Spanish (full)
+  es: {
+    nav_home: "Inicio",
+    nav_about: "Acerca de",
+    nav_contact: "Contacto",
+    nav_all: "Todas las herramientas",
+    hero_title: "Todas tus herramientas en línea – 100% gratis",
+    hero_subtitle: "Redimensiona imágenes, convierte PDFs, genera contenido AI y más.",
+    search_placeholder: "🔍 Buscar herramientas",
+    clear_btn: "Limpiar",
+    filter_all: "Todos",
+    filter_image: "🖼 Imagen",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 IA",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Desarrollador",
+    filter_calculator: "🧮 Calculadora",
+    open_btn: "Abrir herramienta",
+    tool_image_resizer: "🖼 Redimensionar imagen",
+    tool_image_resizer_desc: "Redimensiona imágenes fácilmente para redes sociales.",
+    tool_image_compressor: "📉 Compresor de imagen",
+    tool_image_compressor_desc: "Reduce el tamaño de la imagen sin perder calidad.",
+    tool_image_cropper: "✂️ Recortar imagen",
+    tool_image_cropper_desc: "Recorta partes no deseadas de una imagen.",
+    tool_image_rotator: "🔄 Rotar imagen",
+    tool_image_rotator_desc: "Rota imágenes al instante.",
+    tool_color_picker: "🎨 Selector de color",
+    tool_color_picker_desc: "Elige colores HEX y RGB de imágenes.",
+    tool_image_converter: "🖼 Convertidor de imagen",
+    tool_image_converter_desc: "Convierte imágenes entre formatos JPG, PNG y WEBP.",
+    tool_watermark: "💧 Marca de agua",
+    tool_watermark_desc: "Añade marca de agua de texto o logo a tus imágenes.",
+    tool_blur: "🌫 Difuminar imagen",
+    tool_blur_desc: "Difumina partes seleccionadas de una imagen fácilmente.",
+    tool_grayscale: "⚫ Escala de grises",
+    tool_grayscale_desc: "Convierte imágenes a color en escala de grises.",
+    tool_border: "🔲 Borde para imagen",
+    tool_border_desc: "Añade bordes a tus imágenes.",
+    tool_thumbnail: "📸 Generador de miniaturas",
+    tool_thumbnail_desc: "Crea miniaturas para YouTube y redes sociales.",
+    tool_pdf_word: "📄 PDF a Word",
+    tool_pdf_word_desc: "Convierte PDF a Word editable.",
+    tool_merge_pdf: "📦 Fusionar PDF",
+    tool_merge_pdf_desc: "Combina múltiples archivos PDF.",
+    tool_compress_pdf: "📉 Comprimir PDF",
+    tool_compress_pdf_desc: "Reduce el tamaño del archivo PDF.",
+    tool_word_pdf: "📄 Word a PDF",
+    tool_word_pdf_desc: "Convierte documentos de Word a PDF.",
+    tool_split_pdf: "📂 Dividir PDF",
+    tool_split_pdf_desc: "Divide archivos PDF grandes en archivos más pequeños.",
+    tool_protect_pdf: "🔐 Proteger PDF",
+    tool_protect_pdf_desc: "Añade protección con contraseña a tu PDF.",
+    tool_unlock_pdf: "🔓 Desbloquear PDF",
+    tool_unlock_pdf_desc: "Elimina la protección con contraseña de PDF.",
+    tool_jpg_pdf: "📸 JPG a PDF",
+    tool_jpg_pdf_desc: "Convierte imágenes JPG a PDF rápidamente.",
+    tool_pdf_jpg: "📄 PDF a JPG",
+    tool_pdf_jpg_desc: "Extrae imágenes JPG de archivos PDF.",
+    tool_png_pdf: "🌄 PNG a PDF",
+    tool_png_pdf_desc: "Convierte imágenes PNG a formato PDF.",
+    tool_pdf_png: "📄 PDF a PNG",
+    tool_pdf_png_desc: "Transforma páginas PDF en imágenes PNG.",
+    tool_excel_pdf: "📊 Excel a PDF",
+    tool_excel_pdf_desc: "Convierte hojas de cálculo Excel a PDF.",
+    tool_pdf_excel: "📄 PDF a Excel",
+    tool_pdf_excel_desc: "Extrae tablas de PDF a formato Excel.",
+    tool_image_pdf: "🖼 Imagen a PDF",
+    tool_image_pdf_desc: "Combina múltiples imágenes en un solo PDF.",
+    tool_pdf_image: "📄 PDF a Imagen",
+    tool_pdf_image_desc: "Convierte cada página PDF en un archivo de imagen.",
+    tool_ai_writer: "🤖 Escritor de artículos IA",
+    tool_ai_writer_desc: "Genera artículos automáticamente.",
+    tool_yt_title: "🎬 Generador de títulos YouTube",
+    tool_yt_title_desc: "Crea títulos virales para YouTube.",
+    tool_blog_topic: "📝 Generador de temas para blog",
+    tool_blog_topic_desc: "Genera ideas únicas para temas de blog.",
+    tool_instagram_caption: "📱 Generador de pies de foto Instagram",
+    tool_instagram_caption_desc: "Crea pies de foto atractivos para Instagram.",
+    tool_rewriter: "🔁 Reescribir artículos IA",
+    tool_rewriter_desc: "Reescribe artículos manteniendo el significado.",
+    tool_summarizer: "📄 Resumidor de texto IA",
+    tool_summarizer_desc: "Resume textos largos en contenido breve.",
+    tool_keyword_density: "🔍 Analizador de densidad de palabras clave",
+    tool_keyword_density_desc: "Analiza el uso de palabras clave en contenido.",
+    tool_meta_generator: "🏷 Generador de metaetiquetas",
+    tool_meta_generator_desc: "Genera metaetiquetas SEO para sitios web.",
+    tool_word_counter: "🔢 Contador de palabras",
+    tool_word_counter_desc: "Cuenta palabras y caracteres al instante.",
+    tool_slug_generator: "🔗 Generador de slugs URL",
+    tool_slug_generator_desc: "Crea URLs amigables para SEO.",
+    tool_json_formatter: "💻 Formateador JSON",
+    tool_json_formatter_desc: "Formatea y valida datos JSON.",
+    tool_password_generator: "🔐 Generador de contraseñas",
+    tool_password_generator_desc: "Genera contraseñas seguras aleatorias.",
+    tool_base64_encoder: "🔡 Codificador Base64",
+    tool_base64_encoder_desc: "Codifica texto a formato Base64.",
+    tool_base64_decoder: "🔓 Decodificador Base64",
+    tool_base64_decoder_desc: "Decodifica texto Base64 a texto normal.",
+    tool_color_converter: "🎨 Convertidor de color",
+    tool_color_converter_desc: "Convierte color HEX a RGB y HSL.",
+    tool_scientific_calc: "🧮 Calculadora científica",
+    tool_scientific_calc_desc: "Cálculos científicos avanzados, trigonometría, logaritmos y más.",
+    tool_loan_calc: "💰 Calculadora de préstamos",
+    tool_loan_calc_desc: "Calcula EMI, interés total y plazo del préstamo.",
+    tool_sip_calc: "📈 Calculadora SIP",
+    tool_sip_calc_desc: "Estima rendimientos de inversiones sistemáticas.",
+    tool_fd_calc: "🏦 Calculadora de depósito fijo",
+    tool_fd_calc_desc: "Calculadora de vencimiento e interés de depósito fijo.",
+    tool_gst_calc: "📊 Calculadora GST",
+    tool_gst_calc_desc: "Calcula montos de GST, precio neto e impuesto.",
+    tool_age_calc: "🎂 Calculadora de edad",
+    tool_age_calc_desc: "Calcula edad exacta en años, meses y días.",
+    tool_fuel_calc: "⛽ Calculadora de costo de combustible",
+    tool_fuel_calc_desc: "Estima costo de combustible para viajes según distancia y rendimiento.",
+    tool_shopping_calc: "🛒 Calculadora de lista de compras",
+    tool_shopping_calc_desc: "Agrega artículos, controla gastos y divide cuentas.",
+    tool_discount_calc: "🏷️ Calculadora de descuento",
+    tool_discount_calc_desc: "Encuentra precio final después de descuento porcentual.",
+    tool_tip_calc: "🍽️ Calculadora de propina",
+    tool_tip_calc_desc: "Divide la cuenta y calcula propina por persona.",
+    tool_bmi_calc: "⚖️ Calculadora IMC",
+    tool_bmi_calc_desc: "Índice de masa corporal según altura y peso.",
+    tool_calorie_calc: "🔥 Calculadora de calorías",
+    tool_calorie_calc_desc: "Estima necesidades calóricas diarias.",
+    tool_electricity_calc: "💡 Calculadora de factura eléctrica",
+    tool_electricity_calc_desc: "Calcula costo de electricidad según consumo y tarifa.",
+    footer_description: "Tu destino definitivo para herramientas online gratuitas. Desde edición de imágenes hasta generación de contenido con IA, proporcionamos utilidades fáciles de usar para todos. 100% gratis, sin necesidad de registro.",
+    quick_links: "Enlaces rápidos",
+    home: "Inicio",
+    contact: "Contacto",
+    privacy: "Política de privacidad",
+    terms: "Términos y condiciones",
+    categories: "Categorías",
+    cat_image: "🖼 Herramientas de imagen",
+    cat_pdf: "📄 Herramientas PDF",
+    cat_ai: "🤖 Herramientas IA",
+    cat_seo: "📈 Herramientas SEO",
+    cat_dev: "💻 Herramientas desarrollador",
+    cat_calculator: "🧮 Calculadoras",
+    language_title: "🌐 Idioma",
+    lang_en: "🇬🇧 Inglés",
+    choose_language: "Elige tu idioma",
+    close: "Cerrar",
+    copyright: "© 2026 MyTools Website. Todos los derechos reservados."
+  },
+
+  // Hindi (full)
+  hi: {
+    nav_home: "होम",
+    nav_about: "हमारे बारे में",
+    nav_contact: "संपर्क",
+    nav_all: "सभी उपकरण",
+    hero_title: "आपके सभी ऑनलाइन उपकरण – 100% मुफ्त",
+    hero_subtitle: "छवियों का आकार बदलें, PDF कन्वर्ट करें, AI सामग्री जनरेट करें और भी बहुत कुछ।",
+    search_placeholder: "🔍 उपकरण खोजें",
+    clear_btn: "साफ करें",
+    filter_all: "सभी",
+    filter_image: "🖼 छवि",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 AI",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 डेवलपर",
+    filter_calculator: "🧮 कैलकुलेटर",
+    open_btn: "उपकरण खोलें",
+    tool_image_resizer: "🖼 छवि आकार बदलने वाला",
+    tool_image_resizer_desc: "सोशल मीडिया के लिए आसानी से छवियों का आकार बदलें।",
+    tool_image_compressor: "📉 छवि संपीडक",
+    tool_image_compressor_desc: "गुणवत्ता खोए बिना छवि का आकार कम करें।",
+    tool_image_cropper: "✂️ छवि क्रॉपर",
+    tool_image_cropper_desc: "छवि के अनावश्यक भागों को क्रॉप करें।",
+    tool_image_rotator: "🔄 छवि घुमाने वाला",
+    tool_image_rotator_desc: "तुरंत छवियों को घुमाएं।",
+    tool_color_picker: "🎨 रंग चुनने वाला",
+    tool_color_picker_desc: "छवियों से HEX और RGB रंग चुनें।",
+    tool_image_converter: "🖼 छवि कनवर्टर",
+    tool_image_converter_desc: "छवियों को JPG, PNG और WEBP प्रारूपों में बदलें।",
+    tool_watermark: "💧 छवि वॉटरमार्क",
+    tool_watermark_desc: "अपनी छवियों में टेक्स्ट या लोगो वॉटरमार्क जोड़ें।",
+    tool_blur: "🌫 छवि धुंधला करने वाला",
+    tool_blur_desc: "छवि के चयनित भागों को आसानी से धुंधला करें।",
+    tool_grayscale: "⚫ छवि ग्रेस्केल",
+    tool_grayscale_desc: "रंगीन छवियों को ग्रेस्केल में बदलें।",
+    tool_border: "🔲 छवि बॉर्डर उपकरण",
+    tool_border_desc: "अपनी छवियों में बॉर्डर जोड़ें।",
+    tool_thumbnail: "📸 थंबनेल जनरेटर",
+    tool_thumbnail_desc: "YouTube और सोशल मीडिया थंबनेल बनाएं।",
+    tool_pdf_word: "📄 PDF से Word",
+    tool_pdf_word_desc: "PDF को संपादन योग्य Word में बदलें।",
+    tool_merge_pdf: "📦 PDF मर्ज करें",
+    tool_merge_pdf_desc: "कई PDF फाइलों को मिलाएं।",
+    tool_compress_pdf: "📉 PDF संपीड़ित करें",
+    tool_compress_pdf_desc: "PDF फ़ाइल का आकार कम करें।",
+    tool_word_pdf: "📄 Word से PDF",
+    tool_word_pdf_desc: "Word दस्तावेज़ों को PDF में बदलें।",
+    tool_split_pdf: "📂 PDF विभाजित करें",
+    tool_split_pdf_desc: "बड़ी PDF फाइलों को छोटी फाइलों में विभाजित करें।",
+    tool_protect_pdf: "🔐 PDF सुरक्षित करें",
+    tool_protect_pdf_desc: "अपनी PDF में पासवर्ड सुरक्षा जोड़ें।",
+    tool_unlock_pdf: "🔓 PDF अनलॉक करें",
+    tool_unlock_pdf_desc: "PDF से पासवर्ड सुरक्षा हटाएं।",
+    tool_jpg_pdf: "📸 JPG से PDF",
+    tool_jpg_pdf_desc: "JPG छवियों को तुरंत PDF दस्तावेज़ों में बदलें।",
+    tool_pdf_jpg: "📄 PDF से JPG",
+    tool_pdf_jpg_desc: "PDF फाइलों से JPG छवियां निकालें।",
+    tool_png_pdf: "🌄 PNG से PDF",
+    tool_png_pdf_desc: "PNG छवियों को PDF प्रारूप में बदलें।",
+    tool_pdf_png: "📄 PDF से PNG",
+    tool_pdf_png_desc: "PDF पृष्ठों को PNG छवियों में बदलें।",
+    tool_excel_pdf: "📊 Excel से PDF",
+    tool_excel_pdf_desc: "Excel स्प्रेडशीट को PDF में बदलें।",
+    tool_pdf_excel: "📄 PDF से Excel",
+    tool_pdf_excel_desc: "PDF से तालिकाएं Excel प्रारूप में निकालें।",
+    tool_image_pdf: "🖼 छवि से PDF",
+    tool_image_pdf_desc: "कई छवियों को एक PDF में मिलाएं।",
+    tool_pdf_image: "📄 PDF से छवि",
+    tool_pdf_image_desc: "प्रत्येक PDF पृष्ठ को एक छवि फ़ाइल में बदलें।",
+    tool_ai_writer: "🤖 AI लेख लेखक",
+    tool_ai_writer_desc: "स्वचालित रूप से लेख जनरेट करें।",
+    tool_yt_title: "🎬 YouTube शीर्षक जनरेटर",
+    tool_yt_title_desc: "वायरल YouTube शीर्षक बनाएं।",
+    tool_blog_topic: "📝 ब्लॉग विषय जनरेटर",
+    tool_blog_topic_desc: "अद्वितीय ब्लॉग विषय विचार जनरेट करें।",
+    tool_instagram_caption: "📱 Instagram कैप्शन जनरेटर",
+    tool_instagram_caption_desc: "Instagram पोस्ट के लिए आकर्षक कैप्शन बनाएं।",
+    tool_rewriter: "🔁 AI लेख पुनर्लेखक",
+    tool_rewriter_desc: "अर्थ बनाए रखते हुए लेखों को फिर से लिखें।",
+    tool_summarizer: "📄 AI पाठ सारांशक",
+    tool_summarizer_desc: "लंबे पाठ को छोटी सामग्री में संक्षेपित करें।",
+    tool_keyword_density: "🔍 कीवर्ड घनत्व जांचक",
+    tool_keyword_density_desc: "सामग्री में कीवर्ड उपयोग का विश्लेषण करें।",
+    tool_meta_generator: "🏷 मेटा टैग जनरेटर",
+    tool_meta_generator_desc: "वेबसाइटों के लिए SEO मेटा टैग जनरेट करें।",
+    tool_word_counter: "🔢 शब्द गणक",
+    tool_word_counter_desc: "तुरंत शब्दों और वर्णों की गणना करें।",
+    tool_slug_generator: "🔗 URL स्लग जनरेटर",
+    tool_slug_generator_desc: "पृष्ठों के लिए SEO अनुकूल URL बनाएं।",
+    tool_json_formatter: "💻 JSON स्वरूपक",
+    tool_json_formatter_desc: "JSON डेटा को प्रारूपित और मान्य करें।",
+    tool_password_generator: "🔐 पासवर्ड जनरेटर",
+    tool_password_generator_desc: "सुरक्षित यादृच्छिक पासवर्ड जनरेट करें।",
+    tool_base64_encoder: "🔡 Base64 एनकोडर",
+    tool_base64_encoder_desc: "पाठ को Base64 प्रारूप में एनकोड करें।",
+    tool_base64_decoder: "🔓 Base64 डीकोडर",
+    tool_base64_decoder_desc: "Base64 पाठ को सामान्य में डीकोड करें।",
+    tool_color_converter: "🎨 रंग कोड परिवर्तक",
+    tool_color_converter_desc: "HEX रंग को RGB और HSL में बदलें।",
+    tool_scientific_calc: "🧮 वैज्ञानिक कैलकुलेटर",
+    tool_scientific_calc_desc: "उन्नत वैज्ञानिक गणना, त्रिकोणमिति, लघुगणक और अधिक।",
+    tool_loan_calc: "💰 ऋण कैलकुलेटर",
+    tool_loan_calc_desc: "EMI, कुल ब्याज और ऋण अवधि की गणना करें।",
+    tool_sip_calc: "📈 SIP कैलकुलेटर",
+    tool_sip_calc_desc: "व्यवस्थित निवेश योजनाओं पर रिटर्न का अनुमान लगाएं।",
+    tool_fd_calc: "🏦 सावधि जमा कैलकुलेटर",
+    tool_fd_calc_desc: "सावधि जमा परिपक्वता और ब्याज कैलकुलेटर।",
+    tool_gst_calc: "📊 GST कैलकुलेटर",
+    tool_gst_calc_desc: "GST राशि, शुद्ध मूल्य और कर की गणना करें।",
+    tool_age_calc: "🎂 आयु कैलकुलेटर",
+    tool_age_calc_desc: "वर्षों, महीनों और दिनों में सटीक आयु की गणना करें।",
+    tool_fuel_calc: "⛽ ईंधन लागत कैलकुलेटर",
+    tool_fuel_calc_desc: "दूरी और माइलेज के आधार पर यात्रा ईंधन लागत का अनुमान लगाएं।",
+    tool_shopping_calc: "🛒 खरीदारी सूची कैलकुलेटर",
+    tool_shopping_calc_desc: "आइटम जोड़ें, खर्च ट्रैक करें और बिल विभाजित करें।",
+    tool_discount_calc: "🏷️ छूट कैलकुलेटर",
+    tool_discount_calc_desc: "प्रतिशत छूट के बाद अंतिम मूल्य ज्ञात करें।",
+    tool_tip_calc: "🍽️ टिप कैलकुलेटर",
+    tool_tip_calc_desc: "बिल विभाजित करें और प्रति व्यक्ति टिप की गणना करें।",
+    tool_bmi_calc: "⚖️ BMI कैलकुलेटर",
+    tool_bmi_calc_desc: "ऊंचाई और वजन के आधार पर बॉडी मास इंडेक्स।",
+    tool_calorie_calc: "🔥 कैलोरी कैलकुलेटर",
+    tool_calorie_calc_desc: "वजन प्रबंधन के लिए दैनिक कैलोरी आवश्यकताओं का अनुमान लगाएं।",
+    tool_electricity_calc: "💡 बिजली बिल कैलकुलेटर",
+    tool_electricity_calc_desc: "उपयोग और टैरिफ के आधार पर बिजली लागत की गणना करें।",
+    footer_description: "मुफ्त ऑनलाइन उपकरणों के लिए आपका अंतिम गंतव्य। छवि संपादन से AI सामग्री निर्माण तक, हम सभी के लिए उपयोग में आसान उपयोगिताएँ प्रदान करते हैं। 100% मुफ्त, कोई पंजीकरण आवश्यक नहीं।",
+    quick_links: "त्वरित लिंक",
+    home: "होम",
+    contact: "संपर्क",
+    privacy: "गोपनीयता नीति",
+    terms: "नियम व शर्तें",
+    categories: "श्रेणियाँ",
+    cat_image: "🖼 छवि उपकरण",
+    cat_pdf: "📄 PDF उपकरण",
+    cat_ai: "🤖 AI उपकरण",
+    cat_seo: "📈 SEO उपकरण",
+    cat_dev: "💻 डेवलपर उपकरण",
+    cat_calculator: "🧮 कैलकुलेटर",
+    language_title: "🌐 भाषा",
+    lang_en: "🇬🇧 अंग्रेज़ी",
+    choose_language: "अपनी भाषा चुनें",
+    close: "बंद करें",
+    copyright: "© 2026 MyTools Website. सर्वाधिकार सुरक्षित।"
+  },
+
+  // French (placeholder – replace with real translations)
+  fr: {
+    nav_home: "Accueil",
+    nav_about: "À propos",
+    nav_contact: "Contact",
+    nav_all: "Tous les outils",
+    hero_title: "Tous vos outils en ligne – 100% gratuits",
+    hero_subtitle: "Redimensionnez des images, convertissez des PDF, générez du contenu IA et plus encore.",
+    search_placeholder: "🔍 Rechercher des outils",
+    clear_btn: "Effacer",
+    filter_all: "Tous",
+    filter_image: "🖼 Image",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 IA",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Développeur",
+    filter_calculator: "🧮 Calculatrice",
+    open_btn: "Ouvrir l'outil",
+    tool_image_resizer: "🖼 Redimensionneur d'image",
+    tool_image_resizer_desc: "Redimensionnez facilement les images pour les réseaux sociaux.",
+    tool_image_compressor: "📉 Compresseur d'image",
+    tool_image_compressor_desc: "Réduisez la taille de l'image sans perte de qualité.",
+    tool_image_cropper: "✂️ Recadreur d'image",
+    tool_image_cropper_desc: "Recadrez les parties indésirables d'une image.",
+    tool_image_rotator: "🔄 Rotation d'image",
+    tool_image_rotator_desc: "Faites pivoter les images instantanément.",
+    tool_color_picker: "🎨 Sélecteur de couleur",
+    tool_color_picker_desc: "Choisissez les couleurs HEX et RVB des images.",
+    tool_image_converter: "🖼 Convertisseur d'image",
+    tool_image_converter_desc: "Convertissez des images entre les formats JPG, PNG et WEBP.",
+    tool_watermark: "💧 Filigrane d'image",
+    tool_watermark_desc: "Ajoutez un filigrane de texte ou de logo à vos images.",
+    tool_blur: "🌫 Outil de flou d'image",
+    tool_blur_desc: "Floutez facilement certaines parties d'une image.",
+    tool_grayscale: "⚫ Niveaux de gris",
+    tool_grayscale_desc: "Convertissez les images couleur en niveaux de gris.",
+    tool_border: "🔲 Bordure d'image",
+    tool_border_desc: "Ajoutez des bordures à vos images.",
+    tool_thumbnail: "📸 Générateur de vignettes",
+    tool_thumbnail_desc: "Créez des vignettes YouTube et pour les réseaux sociaux.",
+    tool_pdf_word: "📄 PDF en Word",
+    tool_pdf_word_desc: "Convertissez un PDF en Word modifiable.",
+    tool_merge_pdf: "📦 Fusionner PDF",
+    tool_merge_pdf_desc: "Combinez plusieurs fichiers PDF.",
+    tool_compress_pdf: "📉 Compresser PDF",
+    tool_compress_pdf_desc: "Réduisez la taille du fichier PDF.",
+    tool_word_pdf: "📄 Word en PDF",
+    tool_word_pdf_desc: "Convertissez des documents Word en PDF.",
+    tool_split_pdf: "📂 Diviser PDF",
+    tool_split_pdf_desc: "Divisez les gros fichiers PDF en fichiers plus petits.",
+    tool_protect_pdf: "🔐 Protéger PDF",
+    tool_protect_pdf_desc: "Ajoutez une protection par mot de passe à votre PDF.",
+    tool_unlock_pdf: "🔓 Déverrouiller PDF",
+    tool_unlock_pdf_desc: "Supprimez la protection par mot de passe d'un PDF.",
+    tool_jpg_pdf: "📸 JPG en PDF",
+    tool_jpg_pdf_desc: "Convertissez rapidement des images JPG en documents PDF.",
+    tool_pdf_jpg: "📄 PDF en JPG",
+    tool_pdf_jpg_desc: "Extrayez des images JPG de fichiers PDF.",
+    tool_png_pdf: "🌄 PNG en PDF",
+    tool_png_pdf_desc: "Convertissez des images PNG au format PDF.",
+    tool_pdf_png: "📄 PDF en PNG",
+    tool_pdf_png_desc: "Transformez les pages PDF en images PNG.",
+    tool_excel_pdf: "📊 Excel en PDF",
+    tool_excel_pdf_desc: "Convertissez des feuilles de calcul Excel en PDF.",
+    tool_pdf_excel: "📄 PDF en Excel",
+    tool_pdf_excel_desc: "Extrayez des tableaux d'un PDF au format Excel.",
+    tool_image_pdf: "🖼 Image en PDF",
+    tool_image_pdf_desc: "Combinez plusieurs images en un seul PDF.",
+    tool_pdf_image: "📄 PDF en Image",
+    tool_pdf_image_desc: "Convertissez chaque page PDF en fichier image.",
+    tool_ai_writer: "🤖 Rédacteur d'articles IA",
+    tool_ai_writer_desc: "Générez des articles automatiquement.",
+    tool_yt_title: "🎬 Générateur de titres YouTube",
+    tool_yt_title_desc: "Créez des titres viraux pour YouTube.",
+    tool_blog_topic: "📝 Générateur de sujets de blog",
+    tool_blog_topic_desc: "Générez des idées de sujets de blog uniques.",
+    tool_instagram_caption: "📱 Générateur de légendes Instagram",
+    tool_instagram_caption_desc: "Créez des légendes attrayantes pour les posts Instagram.",
+    tool_rewriter: "🔁 Réécriture d'articles IA",
+    tool_rewriter_desc: "Réécrivez des articles tout en conservant le sens.",
+    tool_summarizer: "📄 Résumeur de texte IA",
+    tool_summarizer_desc: "Résumez un texte long en contenu court.",
+    tool_keyword_density: "🔍 Vérificateur de densité de mots-clés",
+    tool_keyword_density_desc: "Analysez l'utilisation des mots-clés dans le contenu.",
+    tool_meta_generator: "🏷 Générateur de balises méta",
+    tool_meta_generator_desc: "Générez des balises méta SEO pour les sites web.",
+    tool_word_counter: "🔢 Compteur de mots",
+    tool_word_counter_desc: "Comptez instantanément les mots et les caractères.",
+    tool_slug_generator: "🔗 Générateur d'URL slug",
+    tool_slug_generator_desc: "Créez des URL optimisées pour le SEO.",
+    tool_json_formatter: "💻 Formateur JSON",
+    tool_json_formatter_desc: "Formatez et validez des données JSON.",
+    tool_password_generator: "🔐 Générateur de mots de passe",
+    tool_password_generator_desc: "Générez des mots de passe aléatoires sécurisés.",
+    tool_base64_encoder: "🔡 Encodeur Base64",
+    tool_base64_encoder_desc: "Encodez du texte au format Base64.",
+    tool_base64_decoder: "🔓 Décodeur Base64",
+    tool_base64_decoder_desc: "Décodez du texte Base64 en texte normal.",
+    tool_color_converter: "🎨 Convertisseur de code couleur",
+    tool_color_converter_desc: "Convertissez la couleur HEX en RVB et HSL.",
+    tool_scientific_calc: "🧮 Calculatrice scientifique",
+    tool_scientific_calc_desc: "Calculs scientifiques avancés, trigonométrie, logarithmes et plus.",
+    tool_loan_calc: "💰 Calculatrice de prêt",
+    tool_loan_calc_desc: "Calculez l'EMI, l'intérêt total et la durée du prêt.",
+    tool_sip_calc: "📈 Calculatrice SIP",
+    tool_sip_calc_desc: "Estimez les rendements des plans d'investissement systématique.",
+    tool_fd_calc: "🏦 Calculatrice de dépôt fixe",
+    tool_fd_calc_desc: "Calculatrice d'échéance et d'intérêt pour dépôt fixe.",
+    tool_gst_calc: "📊 Calculatrice GST",
+    tool_gst_calc_desc: "Calculez les montants de GST, le prix net et la taxe.",
+    tool_age_calc: "🎂 Calculatrice d'âge",
+    tool_age_calc_desc: "Calculez l'âge exact en années, mois et jours.",
+    tool_fuel_calc: "⛽ Calculatrice de coût de carburant",
+    tool_fuel_calc_desc: "Estimez le coût du carburant pour un trajet selon la distance et la consommation.",
+    tool_shopping_calc: "🛒 Calculatrice de liste de courses",
+    tool_shopping_calc_desc: "Ajoutez des articles, suivez les dépenses et partagez les factures.",
+    tool_discount_calc: "🏷️ Calculatrice de réduction",
+    tool_discount_calc_desc: "Trouvez le prix final après une réduction en pourcentage.",
+    tool_tip_calc: "🍽️ Calculatrice de pourboire",
+    tool_tip_calc_desc: "Partagez la facture et calculez le pourboire par personne.",
+    tool_bmi_calc: "⚖️ Calculatrice IMC",
+    tool_bmi_calc_desc: "Indice de masse corporelle basé sur la taille et le poids.",
+    tool_calorie_calc: "🔥 Calculatrice de calories",
+    tool_calorie_calc_desc: "Estimez les besoins caloriques quotidiens pour le maintien du poids.",
+    tool_electricity_calc: "💡 Calculatrice de facture d'électricité",
+    tool_electricity_calc_desc: "Calculez le coût de l'électricité en fonction de la consommation et du tarif.",
+    footer_description: "Votre destination ultime pour des outils en ligne gratuits. De l'édition d'images à la génération de contenu IA, nous fournissons des utilitaires faciles à utiliser pour tous. 100% gratuit, sans inscription requise.",
+    quick_links: "Liens rapides",
+    home: "Accueil",
+    contact: "Contact",
+    privacy: "Politique de confidentialité",
+    terms: "Conditions générales",
+    categories: "Catégories",
+    cat_image: "🖼 Outils d'image",
+    cat_pdf: "📄 Outils PDF",
+    cat_ai: "🤖 Outils IA",
+    cat_seo: "📈 Outils SEO",
+    cat_dev: "💻 Outils développeur",
+    cat_calculator: "🧮 Calculatrices",
+    language_title: "🌐 Langue",
+    lang_en: "🇬🇧 Anglais",
+    choose_language: "Choisissez votre langue",
+    close: "Fermer",
+    copyright: "© 2026 MyTools Website. Tous droits réservés."
+  },
+
+  // German (placeholder)
+  de: {
+    nav_home: "Startseite",
+    nav_about: "Über uns",
+    nav_contact: "Kontakt",
+    nav_all: "Alle Tools",
+    hero_title: "Alle Ihre Online-Tools – 100% kostenlos",
+    hero_subtitle: "Bilder zuschneiden, PDFs konvertieren, KI-Inhalte generieren und mehr.",
+    search_placeholder: "🔍 Tools suchen",
+    clear_btn: "Löschen",
+    filter_all: "Alle",
+    filter_image: "🖼 Bild",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 KI",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Entwickler",
+    filter_calculator: "🧮 Taschenrechner",
+    open_btn: "Tool öffnen",
+    tool_image_resizer: "🖼 Bildgröße ändern",
+    tool_image_resizer_desc: "Ändern Sie die Größe von Bildern ganz einfach für soziale Medien.",
+    tool_image_compressor: "📉 Bildkomprimierer",
+    tool_image_compressor_desc: "Reduzieren Sie die Bildgröße ohne Qualitätsverlust.",
+    tool_image_cropper: "✂️ Bild zuschneiden",
+    tool_image_cropper_desc: "Schneiden Sie unerwünschte Teile eines Bildes aus.",
+    tool_image_rotator: "🔄 Bild drehen",
+    tool_image_rotator_desc: "Drehen Sie Bilder sofort.",
+    tool_color_picker: "🎨 Farbwähler",
+    tool_color_picker_desc: "Wählen Sie HEX- und RGB-Farben aus Bildern aus.",
+    tool_image_converter: "🖼 Bildkonverter",
+    tool_image_converter_desc: "Konvertieren Sie Bilder zwischen JPG-, PNG- und WEBP-Formaten.",
+    tool_watermark: "💧 Bild-Wasserzeichen",
+    tool_watermark_desc: "Fügen Sie Ihren Bildern ein Text- oder Logo-Wasserzeichen hinzu.",
+    tool_blur: "🌫 Bild-Unschärfewerkzeug",
+    tool_blur_desc: "Machen Sie ausgewählte Teile eines Bildes einfach unscharf.",
+    tool_grayscale: "⚫ Graustufen",
+    tool_grayscale_desc: "Konvertieren Sie Farbbilder in Graustufen.",
+    tool_border: "🔲 Bildrand",
+    tool_border_desc: "Fügen Sie Ihren Bildern Rahmen hinzu.",
+    tool_thumbnail: "📸 Thumbnail-Generator",
+    tool_thumbnail_desc: "Erstellen Sie YouTube- und Social-Media-Thumbnails.",
+    tool_pdf_word: "📄 PDF zu Word",
+    tool_pdf_word_desc: "Konvertieren Sie PDF in bearbeitbares Word.",
+    tool_merge_pdf: "📦 PDF zusammenführen",
+    tool_merge_pdf_desc: "Kombinieren Sie mehrere PDF-Dateien.",
+    tool_compress_pdf: "📉 PDF komprimieren",
+    tool_compress_pdf_desc: "Reduzieren Sie die PDF-Dateigröße.",
+    tool_word_pdf: "📄 Word zu PDF",
+    tool_word_pdf_desc: "Konvertieren Sie Word-Dokumente in PDF.",
+    tool_split_pdf: "📂 PDF teilen",
+    tool_split_pdf_desc: "Teilen Sie große PDF-Dateien in kleinere Dateien auf.",
+    tool_protect_pdf: "🔐 PDF schützen",
+    tool_protect_pdf_desc: "Fügen Sie Ihrem PDF einen Passwortschutz hinzu.",
+    tool_unlock_pdf: "🔓 PDF entsperren",
+    tool_unlock_pdf_desc: "Entfernen Sie den Passwortschutz von PDF.",
+    tool_jpg_pdf: "📸 JPG zu PDF",
+    tool_jpg_pdf_desc: "Konvertieren Sie JPG-Bilder schnell in PDF-Dokumente.",
+    tool_pdf_jpg: "📄 PDF zu JPG",
+    tool_pdf_jpg_desc: "Extrahieren Sie JPG-Bilder aus PDF-Dateien.",
+    tool_png_pdf: "🌄 PNG zu PDF",
+    tool_png_pdf_desc: "Konvertieren Sie PNG-Bilder in das PDF-Format.",
+    tool_pdf_png: "📄 PDF zu PNG",
+    tool_pdf_png_desc: "Wandeln Sie PDF-Seiten in PNG-Bilder um.",
+    tool_excel_pdf: "📊 Excel zu PDF",
+    tool_excel_pdf_desc: "Konvertieren Sie Excel-Tabellen in PDF.",
+    tool_pdf_excel: "📄 PDF zu Excel",
+    tool_pdf_excel_desc: "Extrahieren Sie Tabellen aus PDF in das Excel-Format.",
+    tool_image_pdf: "🖼 Bild zu PDF",
+    tool_image_pdf_desc: "Kombinieren Sie mehrere Bilder in einer einzigen PDF.",
+    tool_pdf_image: "📄 PDF zu Bild",
+    tool_pdf_image_desc: "Konvertieren Sie jede PDF-Seite in eine Bilddatei.",
+    tool_ai_writer: "🤖 KI-Artikelschreiber",
+    tool_ai_writer_desc: "Generieren Sie automatisch Artikel.",
+    tool_yt_title: "🎬 YouTube-Titelgenerator",
+    tool_yt_title_desc: "Erstellen Sie virale YouTube-Titel.",
+    tool_blog_topic: "📝 Blog-Themengenerator",
+    tool_blog_topic_desc: "Generieren Sie einzigartige Blog-Themenideen.",
+    tool_instagram_caption: "📱 Instagram-Bildunterschriftengenerator",
+    tool_instagram_caption_desc: "Erstellen Sie ansprechende Bildunterschriften für Instagram-Beiträge.",
+    tool_rewriter: "🔁 KI-Artikelumschreiber",
+    tool_rewriter_desc: "Schreiben Sie Artikel um, während die Bedeutung erhalten bleibt.",
+    tool_summarizer: "📄 KI-Textzusammenfasser",
+    tool_summarizer_desc: "Fassen Sie lange Texte in kurzen Inhalt zusammen.",
+    tool_keyword_density: "🔍 Keyword-Dichte-Prüfer",
+    tool_keyword_density_desc: "Analysieren Sie die Keyword-Nutzung im Inhalt.",
+    tool_meta_generator: "🏷 Meta-Tag-Generator",
+    tool_meta_generator_desc: "Generieren Sie SEO-Meta-Tags für Websites.",
+    tool_word_counter: "🔢 Wortzähler",
+    tool_word_counter_desc: "Zählen Sie Wörter und Zeichen sofort.",
+    tool_slug_generator: "🔗 URL-Slug-Generator",
+    tool_slug_generator_desc: "Erstellen Sie SEO-freundliche URLs für Seiten.",
+    tool_json_formatter: "💻 JSON-Formatierer",
+    tool_json_formatter_desc: "Formatieren und validieren Sie JSON-Daten.",
+    tool_password_generator: "🔐 Passwortgenerator",
+    tool_password_generator_desc: "Generieren Sie sichere zufällige Passwörter.",
+    tool_base64_encoder: "🔡 Base64-Encoder",
+    tool_base64_encoder_desc: "Codieren Sie Text in das Base64-Format.",
+    tool_base64_decoder: "🔓 Base64-Decoder",
+    tool_base64_decoder_desc: "Decodieren Sie Base64-Text zurück in normalen Text.",
+    tool_color_converter: "🎨 Farbcode-Konverter",
+    tool_color_converter_desc: "Konvertieren Sie HEX-Farbe in RGB und HSL.",
+    tool_scientific_calc: "🧮 Wissenschaftlicher Taschenrechner",
+    tool_scientific_calc_desc: "Fortgeschrittene wissenschaftliche Berechnungen, Trigonometrie, Logarithmen und mehr.",
+    tool_loan_calc: "💰 Darlehensrechner",
+    tool_loan_calc_desc: "Berechnen Sie EMI, Gesamtzinsen und Darlehenslaufzeit.",
+    tool_sip_calc: "📈 SIP-Rechner",
+    tool_sip_calc_desc: "Schätzen Sie die Renditen systematischer Investitionspläne.",
+    tool_fd_calc: "🏦 Festgeldrechner",
+    tool_fd_calc_desc: "Festgeld-Fälligkeits- und Zinsrechner.",
+    tool_gst_calc: "📊 GST-Rechner",
+    tool_gst_calc_desc: "Berechnen Sie GST-Beträge, Nettopreis und Steuer.",
+    tool_age_calc: "🎂 Altersrechner",
+    tool_age_calc_desc: "Berechnen Sie das genaue Alter in Jahren, Monaten und Tagen.",
+    tool_fuel_calc: "⛽ Kraftstoffkostenrechner",
+    tool_fuel_calc_desc: "Schätzen Sie die Kraftstoffkosten für eine Fahrt basierend auf Entfernung und Verbrauch.",
+    tool_shopping_calc: "🛒 Einkaufslistenrechner",
+    tool_shopping_calc_desc: "Artikel hinzufügen, Ausgaben verfolgen und Rechnungen teilen.",
+    tool_discount_calc: "🏷️ Rabattrechner",
+    tool_discount_calc_desc: "Finden Sie den Endpreis nach prozentualem Rabatt.",
+    tool_tip_calc: "🍽️ Trinkgeldrechner",
+    tool_tip_calc_desc: "Rechnung teilen und Trinkgeld pro Person berechnen.",
+    tool_bmi_calc: "⚖️ BMI-Rechner",
+    tool_bmi_calc_desc: "Body-Mass-Index basierend auf Größe und Gewicht.",
+    tool_calorie_calc: "🔥 Kalorienrechner",
+    tool_calorie_calc_desc: "Schätzen Sie den täglichen Kalorienbedarf zur Gewichtserhaltung.",
+    tool_electricity_calc: "💡 Stromrechnungsrechner",
+    tool_electricity_calc_desc: "Berechnen Sie die Stromkosten basierend auf Verbrauch und Tarif.",
+    footer_description: "Ihr ultimatives Ziel für kostenlose Online-Tools. Von der Bildbearbeitung bis zur KI-Inhaltsgenerierung bieten wir einfach zu bedienende Dienstprogramme für alle. 100% kostenlos, keine Registrierung erforderlich.",
+    quick_links: "Schnelllinks",
+    home: "Startseite",
+    contact: "Kontakt",
+    privacy: "Datenschutz",
+    terms: "AGB",
+    categories: "Kategorien",
+    cat_image: "🖼 Bild-Tools",
+    cat_pdf: "📄 PDF-Tools",
+    cat_ai: "🤖 KI-Tools",
+    cat_seo: "📈 SEO-Tools",
+    cat_dev: "💻 Entwickler-Tools",
+    cat_calculator: "🧮 Rechner",
+    language_title: "🌐 Sprache",
+    lang_en: "🇬🇧 Englisch",
+    choose_language: "Wählen Sie Ihre Sprache",
+    close: "Schließen",
+    copyright: "© 2026 MyTools Website. Alle Rechte vorbehalten."
+  },
+
+  // Chinese (placeholder – simplified)
+  zh: {
+    nav_home: "主页",
+    nav_about: "关于",
+    nav_contact: "联系方式",
+    nav_all: "所有工具",
+    hero_title: "您的所有在线工具 – 100% 免费",
+    hero_subtitle: "调整图像大小、转换 PDF、生成 AI 内容等等。",
+    search_placeholder: "🔍 搜索工具",
+    clear_btn: "清除",
+    filter_all: "全部",
+    filter_image: "🖼 图像",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 人工智能",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 开发者",
+    filter_calculator: "🧮 计算器",
+    open_btn: "打开工具",
+    tool_image_resizer: "🖼 图像调整器",
+    tool_image_resizer_desc: "轻松调整图像大小以适应社交媒体。",
+    tool_image_compressor: "📉 图像压缩器",
+    tool_image_compressor_desc: "在不损失质量的情况下减小图像尺寸。",
+    tool_image_cropper: "✂️ 图像裁剪器",
+    tool_image_cropper_desc: "裁剪图像中不需要的部分。",
+    tool_image_rotator: "🔄 图像旋转器",
+    tool_image_rotator_desc: "即时旋转图像。",
+    tool_color_picker: "🎨 颜色选择器",
+    tool_color_picker_desc: "从图像中选取 HEX 和 RGB 颜色。",
+    tool_image_converter: "🖼 图像转换器",
+    tool_image_converter_desc: "在 JPG、PNG 和 WEBP 格式之间转换图像。",
+    tool_watermark: "💧 图像水印",
+    tool_watermark_desc: "为图像添加文本或徽标水印。",
+    tool_blur: "🌫 图像模糊工具",
+    tool_blur_desc: "轻松模糊图像的选定部分。",
+    tool_grayscale: "⚫ 图像灰度",
+    tool_grayscale_desc: "将彩色图像转换为灰度。",
+    tool_border: "🔲 图像边框工具",
+    tool_border_desc: "为图像添加边框。",
+    tool_thumbnail: "📸 缩略图生成器",
+    tool_thumbnail_desc: "创建 YouTube 和社交媒体缩略图。",
+    tool_pdf_word: "📄 PDF 转 Word",
+    tool_pdf_word_desc: "将 PDF 转换为可编辑的 Word。",
+    tool_merge_pdf: "📦 合并 PDF",
+    tool_merge_pdf_desc: "合并多个 PDF 文件。",
+    tool_compress_pdf: "📉 压缩 PDF",
+    tool_compress_pdf_desc: "减小 PDF 文件大小。",
+    tool_word_pdf: "📄 Word 转 PDF",
+    tool_word_pdf_desc: "将 Word 文档转换为 PDF。",
+    tool_split_pdf: "📂 拆分 PDF",
+    tool_split_pdf_desc: "将大型 PDF 文件拆分为较小的文件。",
+    tool_protect_pdf: "🔐 保护 PDF",
+    tool_protect_pdf_desc: "为 PDF 添加密码保护。",
+    tool_unlock_pdf: "🔓 解锁 PDF",
+    tool_unlock_pdf_desc: "移除 PDF 的密码保护。",
+    tool_jpg_pdf: "📸 JPG 转 PDF",
+    tool_jpg_pdf_desc: "快速将 JPG 图像转换为 PDF 文档。",
+    tool_pdf_jpg: "📄 PDF 转 JPG",
+    tool_pdf_jpg_desc: "从 PDF 文件中提取 JPG 图像。",
+    tool_png_pdf: "🌄 PNG 转 PDF",
+    tool_png_pdf_desc: "将 PNG 图像转换为 PDF 格式。",
+    tool_pdf_png: "📄 PDF 转 PNG",
+    tool_pdf_png_desc: "将 PDF 页面转换为 PNG 图像。",
+    tool_excel_pdf: "📊 Excel 转 PDF",
+    tool_excel_pdf_desc: "将 Excel 电子表格转换为 PDF。",
+    tool_pdf_excel: "📄 PDF 转 Excel",
+    tool_pdf_excel_desc: "从 PDF 中提取表格到 Excel 格式。",
+    tool_image_pdf: "🖼 图像转 PDF",
+    tool_image_pdf_desc: "将多个图像合并为一个 PDF。",
+    tool_pdf_image: "📄 PDF 转图像",
+    tool_pdf_image_desc: "将每个 PDF 页面转换为图像文件。",
+    tool_ai_writer: "🤖 AI 文章写手",
+    tool_ai_writer_desc: "自动生成文章。",
+    tool_yt_title: "🎬 YouTube 标题生成器",
+    tool_yt_title_desc: "创建病毒式 YouTube 标题。",
+    tool_blog_topic: "📝 博客主题生成器",
+    tool_blog_topic_desc: "生成独特的博客主题创意。",
+    tool_instagram_caption: "📱 Instagram 说明生成器",
+    tool_instagram_caption_desc: "为 Instagram 帖子创建引人入胜的说明。",
+    tool_rewriter: "🔁 AI 文章重写器",
+    tool_rewriter_desc: "重写文章，同时保持原意。",
+    tool_summarizer: "📄 AI 文本摘要器",
+    tool_summarizer_desc: "将长文本总结为简短内容。",
+    tool_keyword_density: "🔍 关键词密度检查器",
+    tool_keyword_density_desc: "分析内容中的关键词使用情况。",
+    tool_meta_generator: "🏷 元标记生成器",
+    tool_meta_generator_desc: "为网站生成 SEO 元标记。",
+    tool_word_counter: "🔢 字数统计器",
+    tool_word_counter_desc: "即时统计字数和字符数。",
+    tool_slug_generator: "🔗 URL 别名生成器",
+    tool_slug_generator_desc: "为页面创建 SEO 友好的 URL。",
+    tool_json_formatter: "💻 JSON 格式化器",
+    tool_json_formatter_desc: "格式化和验证 JSON 数据。",
+    tool_password_generator: "🔐 密码生成器",
+    tool_password_generator_desc: "生成安全的随机密码。",
+    tool_base64_encoder: "🔡 Base64 编码器",
+    tool_base64_encoder_desc: "将文本编码为 Base64 格式。",
+    tool_base64_decoder: "🔓 Base64 解码器",
+    tool_base64_decoder_desc: "将 Base64 文本解码回正常文本。",
+    tool_color_converter: "🎨 颜色代码转换器",
+    tool_color_converter_desc: "将 HEX 颜色转换为 RGB 和 HSL。",
+    tool_scientific_calc: "🧮 科学计算器",
+    tool_scientific_calc_desc: "高级科学计算、三角函数、对数等。",
+    tool_loan_calc: "💰 贷款计算器",
+    tool_loan_calc_desc: "计算 EMI、总利息和贷款期限。",
+    tool_sip_calc: "📈 SIP 计算器",
+    tool_sip_calc_desc: "估算系统投资计划的回报。",
+    tool_fd_calc: "🏦 定期存款计算器",
+    tool_fd_calc_desc: "定期存款到期日和利息计算器。",
+    tool_gst_calc: "📊 GST 计算器",
+    tool_gst_calc_desc: "计算 GST 金额、净价和税费。",
+    tool_age_calc: "🎂 年龄计算器",
+    tool_age_calc_desc: "以年、月、日计算精确年龄。",
+    tool_fuel_calc: "⛽ 燃油成本计算器",
+    tool_fuel_calc_desc: "根据距离和油耗估算行程燃油成本。",
+    tool_shopping_calc: "🛒 购物清单计算器",
+    tool_shopping_calc_desc: "添加物品、跟踪支出并分摊账单。",
+    tool_discount_calc: "🏷️ 折扣计算器",
+    tool_discount_calc_desc: "计算百分比折扣后的最终价格。",
+    tool_tip_calc: "🍽️ 小费计算器",
+    tool_tip_calc_desc: "分摊账单并计算每人小费。",
+    tool_bmi_calc: "⚖️ BMI 计算器",
+    tool_bmi_calc_desc: "基于身高和体重的身体质量指数。",
+    tool_calorie_calc: "🔥 卡路里计算器",
+    tool_calorie_calc_desc: "估算维持体重的每日卡路里需求。",
+    tool_electricity_calc: "💡 电费计算器",
+    tool_electricity_calc_desc: "根据用电量和电价计算电费。",
+    footer_description: "免费在线工具的终极目的地。从图像编辑到 AI 内容生成，我们为每个人提供易于使用的实用程序。100% 免费，无需注册。",
+    quick_links: "快速链接",
+    home: "主页",
+    contact: "联系方式",
+    privacy: "隐私政策",
+    terms: "条款与条件",
+    categories: "分类",
+    cat_image: "🖼 图像工具",
+    cat_pdf: "📄 PDF 工具",
+    cat_ai: "🤖 AI 工具",
+    cat_seo: "📈 SEO 工具",
+    cat_dev: "💻 开发者工具",
+    cat_calculator: "🧮 计算器工具",
+    language_title: "🌐 语言",
+    lang_en: "🇬🇧 英语",
+    choose_language: "选择您的语言",
+    close: "关闭",
+    copyright: "© 2026 MyTools Website. 保留所有权利。"
+  },
+
+  // Japanese (placeholder)
+  ja: {
+    nav_home: "ホーム",
+    nav_about: "概要",
+    nav_contact: "お問い合わせ",
+    nav_all: "すべてのツール",
+    hero_title: "すべてのオンラインツール – 100%無料",
+    hero_subtitle: "画像のリサイズ、PDF変換、AIコンテンツ生成など。",
+    search_placeholder: "🔍 ツールを検索",
+    clear_btn: "クリア",
+    filter_all: "すべて",
+    filter_image: "🖼 画像",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 AI",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 開発者",
+    filter_calculator: "🧮 計算機",
+    open_btn: "ツールを開く",
+    tool_image_resizer: "🖼 画像リサイザー",
+    tool_image_resizer_desc: "ソーシャルメディア向けに簡単に画像をリサイズ。",
+    tool_image_compressor: "📉 画像圧縮",
+    tool_image_compressor_desc: "画質を落とさずに画像サイズを削減。",
+    tool_image_cropper: "✂️ 画像クロッパー",
+    tool_image_cropper_desc: "画像の不要な部分を切り取ります。",
+    tool_image_rotator: "🔄 画像回転",
+    tool_image_rotator_desc: "画像を即座に回転。",
+    tool_color_picker: "🎨 カラーピッカー",
+    tool_color_picker_desc: "画像からHEXおよびRGBカラーを取得。",
+    tool_image_converter: "🖼 画像コンバーター",
+    tool_image_converter_desc: "JPG、PNG、WEBP形式間で画像を変換。",
+    tool_watermark: "💧 画像ウォーターマーク",
+    tool_watermark_desc: "画像にテキストまたはロゴの透かしを追加。",
+    tool_blur: "🌫 画像ぼかしツール",
+    tool_blur_desc: "画像の選択部分を簡単にぼかします。",
+    tool_grayscale: "⚫ グレースケール",
+    tool_grayscale_desc: "カラー画像をグレースケールに変換。",
+    tool_border: "🔲 画像ボーダーツール",
+    tool_border_desc: "画像に枠線を追加。",
+    tool_thumbnail: "📸 サムネイルジェネレーター",
+    tool_thumbnail_desc: "YouTubeやソーシャルメディアのサムネイルを作成。",
+    tool_pdf_word: "📄 PDFをWordに",
+    tool_pdf_word_desc: "PDFを編集可能なWordに変換。",
+    tool_merge_pdf: "📦 PDF結合",
+    tool_merge_pdf_desc: "複数のPDFファイルを結合。",
+    tool_compress_pdf: "📉 PDF圧縮",
+    tool_compress_pdf_desc: "PDFファイルサイズを削減。",
+    tool_word_pdf: "📄 WordをPDFに",
+    tool_word_pdf_desc: "Word文書をPDFに変換。",
+    tool_split_pdf: "📂 PDF分割",
+    tool_split_pdf_desc: "大きなPDFファイルを小さなファイルに分割。",
+    tool_protect_pdf: "🔐 PDF保護",
+    tool_protect_pdf_desc: "PDFにパスワード保護を追加。",
+    tool_unlock_pdf: "🔓 PDFロック解除",
+    tool_unlock_pdf_desc: "PDFのパスワード保護を解除。",
+    tool_jpg_pdf: "📸 JPGをPDFに",
+    tool_jpg_pdf_desc: "JPG画像をすばやくPDFドキュメントに変換。",
+    tool_pdf_jpg: "📄 PDFをJPGに",
+    tool_pdf_jpg_desc: "PDFファイルからJPG画像を抽出。",
+    tool_png_pdf: "🌄 PNGをPDFに",
+    tool_png_pdf_desc: "PNG画像をPDF形式に変換。",
+    tool_pdf_png: "📄 PDFをPNGに",
+    tool_pdf_png_desc: "PDFページをPNG画像に変換。",
+    tool_excel_pdf: "📊 ExcelをPDFに",
+    tool_excel_pdf_desc: "ExcelスプレッドシートをPDFに変換。",
+    tool_pdf_excel: "📄 PDFをExcelに",
+    tool_pdf_excel_desc: "PDFから表を抽出しExcel形式に変換。",
+    tool_image_pdf: "🖼 画像をPDFに",
+    tool_image_pdf_desc: "複数の画像を1つのPDFに結合。",
+    tool_pdf_image: "📄 PDFを画像に",
+    tool_pdf_image_desc: "各PDFページを画像ファイルに変換。",
+    tool_ai_writer: "🤖 AI記事作成",
+    tool_ai_writer_desc: "記事を自動生成。",
+    tool_yt_title: "🎬 YouTubeタイトルジェネレーター",
+    tool_yt_title_desc: "バイラルなYouTubeタイトルを作成。",
+    tool_blog_topic: "📝 ブログテーマジェネレーター",
+    tool_blog_topic_desc: "ユニークなブログテーマのアイデアを生成。",
+    tool_instagram_caption: "📱 Instagramキャプションジェネレーター",
+    tool_instagram_caption_desc: "Instagram投稿の魅力的なキャプションを作成。",
+    tool_rewriter: "🔁 AI記事リライター",
+    tool_rewriter_desc: "意味を保持したまま記事を書き換え。",
+    tool_summarizer: "📄 AIテキスト要約",
+    tool_summarizer_desc: "長いテキストを短い内容に要約。",
+    tool_keyword_density: "🔍 キーワード密度チェッカー",
+    tool_keyword_density_desc: "コンテンツ内のキーワード使用状況を分析。",
+    tool_meta_generator: "🏷 メタタグジェネレーター",
+    tool_meta_generator_desc: "ウェブサイト向けのSEOメタタグを生成。",
+    tool_word_counter: "🔢 ワードカウンター",
+    tool_word_counter_desc: "単語数と文字数を即座にカウント。",
+    tool_slug_generator: "🔗 URLスラッグジェネレーター",
+    tool_slug_generator_desc: "ページ向けのSEOフレンドリーなURLを作成。",
+    tool_json_formatter: "💻 JSONフォーマッター",
+    tool_json_formatter_desc: "JSONデータのフォーマットと検証。",
+    tool_password_generator: "🔐 パスワードジェネレーター",
+    tool_password_generator_desc: "安全なランダムパスワードを生成。",
+    tool_base64_encoder: "🔡 Base64エンコーダー",
+    tool_base64_encoder_desc: "テキストをBase64形式にエンコード。",
+    tool_base64_decoder: "🔓 Base64デコーダー",
+    tool_base64_decoder_desc: "Base64テキストを通常のテキストにデコード。",
+    tool_color_converter: "🎨 カラーコードコンバーター",
+    tool_color_converter_desc: "HEXカラーをRGBとHSLに変換。",
+    tool_scientific_calc: "🧮 関数電卓",
+    tool_scientific_calc_desc: "高度な科学計算、三角関数、対数など。",
+    tool_loan_calc: "💰 ローン計算機",
+    tool_loan_calc_desc: "EMI、総利息、ローン期間を計算。",
+    tool_sip_calc: "📈 SIP計算機",
+    tool_sip_calc_desc: "定期投資計画のリターンを推定。",
+    tool_fd_calc: "🏦 定期預金計算機",
+    tool_fd_calc_desc: "定期預金の満期と利息の計算機。",
+    tool_gst_calc: "📊 GST計算機",
+    tool_gst_calc_desc: "GST額、正味価格、税額を計算。",
+    tool_age_calc: "🎂 年齢計算機",
+    tool_age_calc_desc: "年、月、日で正確な年齢を計算。",
+    tool_fuel_calc: "⛽ 燃料費計算機",
+    tool_fuel_calc_desc: "距離と燃費に基づいて旅行の燃料費を推定。",
+    tool_shopping_calc: "🛒 買い物リスト計算機",
+    tool_shopping_calc_desc: "アイテムを追加、支出を追跡、請求書を分割。",
+    tool_discount_calc: "🏷️ 割引計算機",
+    tool_discount_calc_desc: "パーセント割引後の最終価格を計算。",
+    tool_tip_calc: "🍽️ チップ計算機",
+    tool_tip_calc_desc: "請求書を分割し、一人当たりのチップを計算。",
+    tool_bmi_calc: "⚖️ BMI計算機",
+    tool_bmi_calc_desc: "身長と体重に基づくボディマス指数。",
+    tool_calorie_calc: "🔥 カロリー計算機",
+    tool_calorie_calc_desc: "体重維持のための1日の必要カロリーを推定。",
+    tool_electricity_calc: "💡 電気料金計算機",
+    tool_electricity_calc_desc: "使用量と料金に基づいて電気代を計算。",
+    footer_description: "無料オンラインツールの究極の目的地。画像編集からAIコンテンツ生成まで、誰でも簡単に使えるユーティリティを提供します。100％無料、登録不要。",
+    quick_links: "クイックリンク",
+    home: "ホーム",
+    contact: "お問い合わせ",
+    privacy: "プライバシーポリシー",
+    terms: "利用規約",
+    categories: "カテゴリー",
+    cat_image: "🖼 画像ツール",
+    cat_pdf: "📄 PDFツール",
+    cat_ai: "🤖 AIツール",
+    cat_seo: "📈 SEOツール",
+    cat_dev: "💻 開発者ツール",
+    cat_calculator: "🧮 計算機ツール",
+    language_title: "🌐 言語",
+    lang_en: "🇬🇧 英語",
+    choose_language: "言語を選択",
+    close: "閉じる",
+    copyright: "© 2026 MyTools Website. 全著作権所有。"
+  },
+
+  // Italian (placeholder)
+  it: {
+    nav_home: "Home",
+    nav_about: "Chi siamo",
+    nav_contact: "Contatti",
+    nav_all: "Tutti gli strumenti",
+    hero_title: "Tutti i tuoi strumenti online – 100% gratis",
+    hero_subtitle: "Ridimensiona immagini, converti PDF, genera contenuti AI e altro ancora.",
+    search_placeholder: "🔍 Cerca strumenti",
+    clear_btn: "Cancella",
+    filter_all: "Tutti",
+    filter_image: "🖼 Immagine",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 AI",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Sviluppatore",
+    filter_calculator: "🧮 Calcolatrice",
+    open_btn: "Apri strumento",
+    tool_image_resizer: "🖼 Ridimensiona immagine",
+    tool_image_resizer_desc: "Ridimensiona facilmente le immagini per i social media.",
+    tool_image_compressor: "📉 Compressore immagine",
+    tool_image_compressor_desc: "Riduci le dimensioni dell'immagine senza perdere qualità.",
+    tool_image_cropper: "✂️ Ritaglia immagine",
+    tool_image_cropper_desc: "Ritaglia parti indesiderate di un'immagine.",
+    tool_image_rotator: "🔄 Ruota immagine",
+    tool_image_rotator_desc: "Ruota le immagini istantaneamente.",
+    tool_color_picker: "🎨 Selettore colore",
+    tool_color_picker_desc: "Scegli i colori HEX e RGB dalle immagini.",
+    tool_image_converter: "🖼 Convertitore immagine",
+    tool_image_converter_desc: "Converti immagini tra formati JPG, PNG e WEBP.",
+    tool_watermark: "💧 Filigrana immagine",
+    tool_watermark_desc: "Aggiungi filigrana di testo o logo alle tue immagini.",
+    tool_blur: "🌫 Sfocatura immagine",
+    tool_blur_desc: "Sfoca facilmente parti selezionate di un'immagine.",
+    tool_grayscale: "⚫ Scala di grigi",
+    tool_grayscale_desc: "Converti immagini a colori in scala di grigi.",
+    tool_border: "🔲 Bordo immagine",
+    tool_border_desc: "Aggiungi bordi alle tue immagini.",
+    tool_thumbnail: "📸 Generatore di miniature",
+    tool_thumbnail_desc: "Crea miniature per YouTube e social media.",
+    tool_pdf_word: "📄 PDF in Word",
+    tool_pdf_word_desc: "Converti PDF in Word modificabile.",
+    tool_merge_pdf: "📦 Unisci PDF",
+    tool_merge_pdf_desc: "Combina più file PDF.",
+    tool_compress_pdf: "📉 Comprimi PDF",
+    tool_compress_pdf_desc: "Riduci le dimensioni del file PDF.",
+    tool_word_pdf: "📄 Word in PDF",
+    tool_word_pdf_desc: "Converti documenti Word in PDF.",
+    tool_split_pdf: "📂 Dividi PDF",
+    tool_split_pdf_desc: "Dividi file PDF di grandi dimensioni in file più piccoli.",
+    tool_protect_pdf: "🔐 Proteggi PDF",
+    tool_protect_pdf_desc: "Aggiungi protezione con password al tuo PDF.",
+    tool_unlock_pdf: "🔓 Sblocca PDF",
+    tool_unlock_pdf_desc: "Rimuovi la protezione con password dal PDF.",
+    tool_jpg_pdf: "📸 JPG in PDF",
+    tool_jpg_pdf_desc: "Converti rapidamente immagini JPG in documenti PDF.",
+    tool_pdf_jpg: "📄 PDF in JPG",
+    tool_pdf_jpg_desc: "Estrai immagini JPG da file PDF.",
+    tool_png_pdf: "🌄 PNG in PDF",
+    tool_png_pdf_desc: "Converti immagini PNG in formato PDF.",
+    tool_pdf_png: "📄 PDF in PNG",
+    tool_pdf_png_desc: "Trasforma le pagine PDF in immagini PNG.",
+    tool_excel_pdf: "📊 Excel in PDF",
+    tool_excel_pdf_desc: "Converti fogli di calcolo Excel in PDF.",
+    tool_pdf_excel: "📄 PDF in Excel",
+    tool_pdf_excel_desc: "Estrai tabelle da PDF in formato Excel.",
+    tool_image_pdf: "🖼 Immagine in PDF",
+    tool_image_pdf_desc: "Combina più immagini in un unico PDF.",
+    tool_pdf_image: "📄 PDF in Immagine",
+    tool_pdf_image_desc: "Converti ogni pagina PDF in un file immagine.",
+    tool_ai_writer: "🤖 Scrittore di articoli AI",
+    tool_ai_writer_desc: "Genera articoli automaticamente.",
+    tool_yt_title: "🎬 Generatore di titoli YouTube",
+    tool_yt_title_desc: "Crea titoli virali per YouTube.",
+    tool_blog_topic: "📝 Generatore di argomenti per blog",
+    tool_blog_topic_desc: "Genera idee uniche per argomenti di blog.",
+    tool_instagram_caption: "📱 Generatore di didascalie Instagram",
+    tool_instagram_caption_desc: "Crea didascalie accattivanti per i post di Instagram.",
+    tool_rewriter: "🔁 Riscrittore di articoli AI",
+    tool_rewriter_desc: "Riscrivi articoli mantenendo il significato.",
+    tool_summarizer: "📄 Riassuntore di testo AI",
+    tool_summarizer_desc: "Riassumi testi lunghi in contenuti brevi.",
+    tool_keyword_density: "🔍 Controllore densità parole chiave",
+    tool_keyword_density_desc: "Analizza l'uso delle parole chiave nei contenuti.",
+    tool_meta_generator: "🏷 Generatore di meta tag",
+    tool_meta_generator_desc: "Genera meta tag SEO per siti web.",
+    tool_word_counter: "🔢 Contaparole",
+    tool_word_counter_desc: "Conta parole e caratteri istantaneamente.",
+    tool_slug_generator: "🔗 Generatore di slug URL",
+    tool_slug_generator_desc: "Crea URL SEO friendly per le pagine.",
+    tool_json_formatter: "💻 Formattatore JSON",
+    tool_json_formatter_desc: "Formatta e valida dati JSON.",
+    tool_password_generator: "🔐 Generatore di password",
+    tool_password_generator_desc: "Genera password casuali sicure.",
+    tool_base64_encoder: "🔡 Codificatore Base64",
+    tool_base64_encoder_desc: "Codifica il testo in formato Base64.",
+    tool_base64_decoder: "🔓 Decodificatore Base64",
+    tool_base64_decoder_desc: "Decodifica il testo Base64 in testo normale.",
+    tool_color_converter: "🎨 Convertitore codice colore",
+    tool_color_converter_desc: "Converti colore HEX in RGB e HSL.",
+    tool_scientific_calc: "🧮 Calcolatrice scientifica",
+    tool_scientific_calc_desc: "Calcoli scientifici avanzati, trigonometria, logaritmi e altro.",
+    tool_loan_calc: "💰 Calcolatrice prestito",
+    tool_loan_calc_desc: "Calcola EMI, interesse totale e durata del prestito.",
+    tool_sip_calc: "📈 Calcolatrice SIP",
+    tool_sip_calc_desc: "Stima i rendimenti dei piani di investimento sistematico.",
+    tool_fd_calc: "🏦 Calcolatrice deposito fisso",
+    tool_fd_calc_desc: "Calcolatrice scadenza e interesse deposito fisso.",
+    tool_gst_calc: "📊 Calcolatrice GST",
+    tool_gst_calc_desc: "Calcola importi GST, prezzo netto e imposta.",
+    tool_age_calc: "🎂 Calcolatrice età",
+    tool_age_calc_desc: "Calcola l'età esatta in anni, mesi e giorni.",
+    tool_fuel_calc: "⛽ Calcolatrice costo carburante",
+    tool_fuel_calc_desc: "Stima il costo del carburante per un viaggio in base a distanza e consumo.",
+    tool_shopping_calc: "🛒 Calcolatrice lista della spesa",
+    tool_shopping_calc_desc: "Aggiungi articoli, traccia le spese e dividi i conti.",
+    tool_discount_calc: "🏷️ Calcolatrice sconto",
+    tool_discount_calc_desc: "Trova il prezzo finale dopo uno sconto percentuale.",
+    tool_tip_calc: "🍽️ Calcolatrice mancia",
+    tool_tip_calc_desc: "Dividi il conto e calcola la mancia per persona.",
+    tool_bmi_calc: "⚖️ Calcolatrice BMI",
+    tool_bmi_calc_desc: "Indice di massa corporea basato su altezza e peso.",
+    tool_calorie_calc: "🔥 Calcolatrice calorie",
+    tool_calorie_calc_desc: "Stima il fabbisogno calorico giornaliero per il mantenimento del peso.",
+    tool_electricity_calc: "💡 Calcolatrice bolletta elettrica",
+    tool_electricity_calc_desc: "Calcola il costo dell'elettricità in base a consumo e tariffa.",
+    footer_description: "La tua destinazione definitiva per strumenti online gratuiti. Dall'editing di immagini alla generazione di contenuti AI, forniamo utility facili da usare per tutti. 100% gratuito, nessuna registrazione richiesta.",
+    quick_links: "Link rapidi",
+    home: "Home",
+    contact: "Contatti",
+    privacy: "Informativa sulla privacy",
+    terms: "Termini e condizioni",
+    categories: "Categorie",
+    cat_image: "🖼 Strumenti immagine",
+    cat_pdf: "📄 Strumenti PDF",
+    cat_ai: "🤖 Strumenti AI",
+    cat_seo: "📈 Strumenti SEO",
+    cat_dev: "💻 Strumenti sviluppatore",
+    cat_calculator: "🧮 Calcolatrici",
+    language_title: "🌐 Lingua",
+    lang_en: "🇬🇧 Inglese",
+    choose_language: "Scegli la tua lingua",
+    close: "Chiudi",
+    copyright: "© 2026 MyTools Website. Tutti i diritti riservati."
+  },
+
+  // Portuguese (placeholder)
+  pt: {
+    nav_home: "Início",
+    nav_about: "Sobre",
+    nav_contact: "Contato",
+    nav_all: "Todas as ferramentas",
+    hero_title: "Todas as suas ferramentas online – 100% grátis",
+    hero_subtitle: "Redimensione imagens, converta PDFs, gere conteúdo de IA e muito mais.",
+    search_placeholder: "🔍 Pesquisar ferramentas",
+    clear_btn: "Limpar",
+    filter_all: "Todos",
+    filter_image: "🖼 Imagem",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 IA",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Desenvolvedor",
+    filter_calculator: "🧮 Calculadora",
+    open_btn: "Abrir ferramenta",
+    tool_image_resizer: "🖼 Redimensionar imagem",
+    tool_image_resizer_desc: "Redimensione imagens facilmente para mídias sociais.",
+    tool_image_compressor: "📉 Compressor de imagem",
+    tool_image_compressor_desc: "Reduza o tamanho da imagem sem perder qualidade.",
+    tool_image_cropper: "✂️ Cortar imagem",
+    tool_image_cropper_desc: "Corte partes indesejadas de uma imagem.",
+    tool_image_rotator: "🔄 Girar imagem",
+    tool_image_rotator_desc: "Gire imagens instantaneamente.",
+    tool_color_picker: "🎨 Seletor de cor",
+    tool_color_picker_desc: "Escolha cores HEX e RGB de imagens.",
+    tool_image_converter: "🖼 Conversor de imagem",
+    tool_image_converter_desc: "Converta imagens entre formatos JPG, PNG e WEBP.",
+    tool_watermark: "💧 Marca d'água",
+    tool_watermark_desc: "Adicione marca d'água de texto ou logotipo às suas imagens.",
+    tool_blur: "🌫 Ferramenta de desfoque",
+    tool_blur_desc: "Desfoque partes selecionadas de uma imagem facilmente.",
+    tool_grayscale: "⚫ Escala de cinza",
+    tool_grayscale_desc: "Converta imagens coloridas em escala de cinza.",
+    tool_border: "🔲 Borda para imagem",
+    tool_border_desc: "Adicione bordas às suas imagens.",
+    tool_thumbnail: "📸 Gerador de miniaturas",
+    tool_thumbnail_desc: "Crie miniaturas para YouTube e mídias sociais.",
+    tool_pdf_word: "📄 PDF para Word",
+    tool_pdf_word_desc: "Converta PDF em Word editável.",
+    tool_merge_pdf: "📦 Mesclar PDF",
+    tool_merge_pdf_desc: "Combine vários arquivos PDF.",
+    tool_compress_pdf: "📉 Comprimir PDF",
+    tool_compress_pdf_desc: "Reduza o tamanho do arquivo PDF.",
+    tool_word_pdf: "📄 Word para PDF",
+    tool_word_pdf_desc: "Converta documentos do Word em PDF.",
+    tool_split_pdf: "📂 Dividir PDF",
+    tool_split_pdf_desc: "Divida arquivos PDF grandes em arquivos menores.",
+    tool_protect_pdf: "🔐 Proteger PDF",
+    tool_protect_pdf_desc: "Adicione proteção por senha ao seu PDF.",
+    tool_unlock_pdf: "🔓 Desbloquear PDF",
+    tool_unlock_pdf_desc: "Remova a proteção por senha do PDF.",
+    tool_jpg_pdf: "📸 JPG para PDF",
+    tool_jpg_pdf_desc: "Converta imagens JPG em documentos PDF rapidamente.",
+    tool_pdf_jpg: "📄 PDF para JPG",
+    tool_pdf_jpg_desc: "Extraia imagens JPG de arquivos PDF.",
+    tool_png_pdf: "🌄 PNG para PDF",
+    tool_png_pdf_desc: "Converta imagens PNG para o formato PDF.",
+    tool_pdf_png: "📄 PDF para PNG",
+    tool_pdf_png_desc: "Transforme páginas PDF em imagens PNG.",
+    tool_excel_pdf: "📊 Excel para PDF",
+    tool_excel_pdf_desc: "Converta planilhas Excel em PDF.",
+    tool_pdf_excel: "📄 PDF para Excel",
+    tool_pdf_excel_desc: "Extraia tabelas de PDF para o formato Excel.",
+    tool_image_pdf: "🖼 Imagem para PDF",
+    tool_image_pdf_desc: "Combine várias imagens em um único PDF.",
+    tool_pdf_image: "📄 PDF para Imagem",
+    tool_pdf_image_desc: "Converta cada página PDF em um arquivo de imagem.",
+    tool_ai_writer: "🤖 Escritor de artigos IA",
+    tool_ai_writer_desc: "Gere artigos automaticamente.",
+    tool_yt_title: "🎬 Gerador de títulos YouTube",
+    tool_yt_title_desc: "Crie títulos virais para o YouTube.",
+    tool_blog_topic: "📝 Gerador de tópicos para blog",
+    tool_blog_topic_desc: "Gere ideias únicas para tópicos de blog.",
+    tool_instagram_caption: "📱 Gerador de legendas Instagram",
+    tool_instagram_caption_desc: "Crie legendas envolventes para posts do Instagram.",
+    tool_rewriter: "🔁 Reescritor de artigos IA",
+    tool_rewriter_desc: "Reescreva artigos mantendo o significado.",
+    tool_summarizer: "📄 Resumidor de texto IA",
+    tool_summarizer_desc: "Resuma textos longos em conteúdo curto.",
+    tool_keyword_density: "🔍 Verificador de densidade de palavras-chave",
+    tool_keyword_density_desc: "Analise o uso de palavras-chave no conteúdo.",
+    tool_meta_generator: "🏷 Gerador de meta tags",
+    tool_meta_generator_desc: "Gere meta tags SEO para sites.",
+    tool_word_counter: "🔢 Contador de palavras",
+    tool_word_counter_desc: "Conte palavras e caracteres instantaneamente.",
+    tool_slug_generator: "🔗 Gerador de slug URL",
+    tool_slug_generator_desc: "Crie URLs amigáveis para SEO.",
+    tool_json_formatter: "💻 Formatador JSON",
+    tool_json_formatter_desc: "Formate e valide dados JSON.",
+    tool_password_generator: "🔐 Gerador de senhas",
+    tool_password_generator_desc: "Gere senhas aleatórias seguras.",
+    tool_base64_encoder: "🔡 Codificador Base64",
+    tool_base64_encoder_desc: "Codifique texto no formato Base64.",
+    tool_base64_decoder: "🔓 Decodificador Base64",
+    tool_base64_decoder_desc: "Decodifique texto Base64 de volta ao normal.",
+    tool_color_converter: "🎨 Conversor de código de cor",
+    tool_color_converter_desc: "Converta cor HEX em RGB e HSL.",
+    tool_scientific_calc: "🧮 Calculadora científica",
+    tool_scientific_calc_desc: "Cálculos científicos avançados, trigonometria, logaritmos e mais.",
+    tool_loan_calc: "💰 Calculadora de empréstimo",
+    tool_loan_calc_desc: "Calcule EMI, juros totais e prazo do empréstimo.",
+    tool_sip_calc: "📈 Calculadora SIP",
+    tool_sip_calc_desc: "Estime retornos de planos de investimento sistemático.",
+    tool_fd_calc: "🏦 Calculadora de depósito fixo",
+    tool_fd_calc_desc: "Calculadora de vencimento e juros de depósito fixo.",
+    tool_gst_calc: "📊 Calculadora GST",
+    tool_gst_calc_desc: "Calcule valores GST, preço líquido e imposto.",
+    tool_age_calc: "🎂 Calculadora de idade",
+    tool_age_calc_desc: "Calcule idade exata em anos, meses e dias.",
+    tool_fuel_calc: "⛽ Calculadora de custo de combustível",
+    tool_fuel_calc_desc: "Estime o custo de combustível para viagem com base em distância e consumo.",
+    tool_shopping_calc: "🛒 Calculadora de lista de compras",
+    tool_shopping_calc_desc: "Adicione itens, acompanhe despesas e divida contas.",
+    tool_discount_calc: "🏷️ Calculadora de desconto",
+    tool_discount_calc_desc: "Encontre o preço final após desconto percentual.",
+    tool_tip_calc: "🍽️ Calculadora de gorjeta",
+    tool_tip_calc_desc: "Divida a conta e calcule a gorjeta por pessoa.",
+    tool_bmi_calc: "⚖️ Calculadora IMC",
+    tool_bmi_calc_desc: "Índice de Massa Corporal baseado em altura e peso.",
+    tool_calorie_calc: "🔥 Calculadora de calorias",
+    tool_calorie_calc_desc: "Estime as necessidades diárias de calorias para manutenção do peso.",
+    tool_electricity_calc: "💡 Calculadora de conta de luz",
+    tool_electricity_calc_desc: "Calcule o custo da eletricidade com base no consumo e tarifa.",
+    footer_description: "Seu destino definitivo para ferramentas online gratuitas. Da edição de imagens à geração de conteúdo de IA, fornecemos utilitários fáceis de usar para todos. 100% gratuito, sem necessidade de registro.",
+    quick_links: "Links rápidos",
+    home: "Início",
+    contact: "Contato",
+    privacy: "Política de privacidade",
+    terms: "Termos e condições",
+    categories: "Categorias",
+    cat_image: "🖼 Ferramentas de imagem",
+    cat_pdf: "📄 Ferramentas PDF",
+    cat_ai: "🤖 Ferramentas IA",
+    cat_seo: "📈 Ferramentas SEO",
+    cat_dev: "💻 Ferramentas desenvolvedor",
+    cat_calculator: "🧮 Calculadoras",
+    language_title: "🌐 Idioma",
+    lang_en: "🇬🇧 Inglês",
+    choose_language: "Escolha seu idioma",
+    close: "Fechar",
+    copyright: "© 2026 MyTools Website. Todos os direitos reservados."
+  },
+
+  // Russian (placeholder)
+  ru: {
+    nav_home: "Главная",
+    nav_about: "О нас",
+    nav_contact: "Контакты",
+    nav_all: "Все инструменты",
+    hero_title: "Все ваши онлайн-инструменты – 100% бесплатно",
+    hero_subtitle: "Изменяйте размер изображений, конвертируйте PDF, генерируйте контент с ИИ и многое другое.",
+    search_placeholder: "🔍 Поиск инструментов",
+    clear_btn: "Очистить",
+    filter_all: "Все",
+    filter_image: "🖼 Изображение",
+    filter_pdf: "📄 PDF",
+    filter_ai: "🤖 ИИ",
+    filter_seo: "📈 SEO",
+    filter_dev: "💻 Разработчик",
+    filter_calculator: "🧮 Калькулятор",
+    open_btn: "Открыть инструмент",
+    tool_image_resizer: "🖼 Изменение размера изображения",
+    tool_image_resizer_desc: "Легко изменяйте размер изображений для социальных сетей.",
+    tool_image_compressor: "📉 Сжатие изображения",
+    tool_image_compressor_desc: "Уменьшите размер изображения без потери качества.",
+    tool_image_cropper: "✂️ Обрезка изображения",
+    tool_image_cropper_desc: "Обрежьте ненужные части изображения.",
+    tool_image_rotator: "🔄 Поворот изображения",
+    tool_image_rotator_desc: "Мгновенно поворачивайте изображения.",
+    tool_color_picker: "🎨 Выбор цвета",
+    tool_color_picker_desc: "Выбирайте HEX и RGB цвета из изображений.",
+    tool_image_converter: "🖼 Конвертер изображений",
+    tool_image_converter_desc: "Конвертируйте изображения между форматами JPG, PNG и WEBP.",
+    tool_watermark: "💧 Водяной знак",
+    tool_watermark_desc: "Добавьте текстовый или графический водяной знак на изображения.",
+    tool_blur: "🌫 Размытие изображения",
+    tool_blur_desc: "Легко размывайте выбранные части изображения.",
+    tool_grayscale: "⚫ Оттенки серого",
+    tool_grayscale_desc: "Преобразуйте цветные изображения в оттенки серого.",
+    tool_border: "🔲 Рамка для изображения",
+    tool_border_desc: "Добавьте рамки к вашим изображениям.",
+    tool_thumbnail: "📸 Генератор миниатюр",
+    tool_thumbnail_desc: "Создавайте миниатюры для YouTube и социальных сетей.",
+    tool_pdf_word: "📄 PDF в Word",
+    tool_pdf_word_desc: "Конвертируйте PDF в редактируемый Word.",
+    tool_merge_pdf: "📦 Объединение PDF",
+    tool_merge_pdf_desc: "Объедините несколько файлов PDF.",
+    tool_compress_pdf: "📉 Сжатие PDF",
+    tool_compress_pdf_desc: "Уменьшите размер файла PDF.",
+    tool_word_pdf: "📄 Word в PDF",
+    tool_word_pdf_desc: "Конвертируйте документы Word в PDF.",
+    tool_split_pdf: "📂 Разделение PDF",
+    tool_split_pdf_desc: "Разделите большие файлы PDF на более мелкие.",
+    tool_protect_pdf: "🔐 Защита PDF",
+    tool_protect_pdf_desc: "Добавьте защиту паролем к вашему PDF.",
+    tool_unlock_pdf: "🔓 Разблокировка PDF",
+    tool_unlock_pdf_desc: "Снимите защиту паролем с PDF.",
+    tool_jpg_pdf: "📸 JPG в PDF",
+    tool_jpg_pdf_desc: "Быстро конвертируйте изображения JPG в документы PDF.",
+    tool_pdf_jpg: "📄 PDF в JPG",
+    tool_pdf_jpg_desc: "Извлеките изображения JPG из файлов PDF.",
+    tool_png_pdf: "🌄 PNG в PDF",
+    tool_png_pdf_desc: "Конвертируйте изображения PNG в формат PDF.",
+    tool_pdf_png: "📄 PDF в PNG",
+    tool_pdf_png_desc: "Преобразуйте страницы PDF в изображения PNG.",
+    tool_excel_pdf: "📊 Excel в PDF",
+    tool_excel_pdf_desc: "Конвертируйте таблицы Excel в PDF.",
+    tool_pdf_excel: "📄 PDF в Excel",
+    tool_pdf_excel_desc: "Извлеките таблицы из PDF в формат Excel.",
+    tool_image_pdf: "🖼 Изображение в PDF",
+    tool_image_pdf_desc: "Объедините несколько изображений в один PDF.",
+    tool_pdf_image: "📄 PDF в Изображение",
+    tool_pdf_image_desc: "Преобразуйте каждую страницу PDF в файл изображения.",
+    tool_ai_writer: "🤖 ИИ-писатель статей",
+    tool_ai_writer_desc: "Автоматически генерируйте статьи.",
+    tool_yt_title: "🎬 Генератор заголовков YouTube",
+    tool_yt_title_desc: "Создавайте вирусные заголовки для YouTube.",
+    tool_blog_topic: "📝 Генератор тем для блога",
+    tool_blog_topic_desc: "Генерируйте уникальные идеи для тем блога.",
+    tool_instagram_caption: "📱 Генератор подписей Instagram",
+    tool_instagram_caption_desc: "Создавайте привлекательные подписи для постов Instagram.",
+    tool_rewriter: "🔁 ИИ-переписчик статей",
+    tool_rewriter_desc: "Переписывайте статьи, сохраняя смысл.",
+    tool_summarizer: "📄 ИИ-суммаризатор текста",
+    tool_summarizer_desc: "Суммируйте длинный текст в краткое содержание.",
+    tool_keyword_density: "🔍 Проверка плотности ключевых слов",
+    tool_keyword_density_desc: "Анализируйте использование ключевых слов в контенте.",
+    tool_meta_generator: "🏷 Генератор мета-тегов",
+    tool_meta_generator_desc: "Генерируйте SEO мета-теги для сайтов.",
+    tool_word_counter: "🔢 Счетчик слов",
+    tool_word_counter_desc: "Мгновенно считайте слова и символы.",
+    tool_slug_generator: "🔗 Генератор URL-слага",
+    tool_slug_generator_desc: "Создавайте SEO-дружественные URL для страниц.",
+    tool_json_formatter: "💻 Форматировщик JSON",
+    tool_json_formatter_desc: "Форматируйте и проверяйте данные JSON.",
+    tool_password_generator: "🔐 Генератор паролей",
+    tool_password_generator_desc: "Генерируйте безопасные случайные пароли.",
+    tool_base64_encoder: "🔡 Кодировщик Base64",
+    tool_base64_encoder_desc: "Кодируйте текст в формат Base64.",
+    tool_base64_decoder: "🔓 Декодер Base64",
+    tool_base64_decoder_desc: "Декодируйте текст Base64 обратно в обычный текст.",
+    tool_color_converter: "🎨 Конвертер цветовых кодов",
+    tool_color_converter_desc: "Преобразуйте HEX цвет в RGB и HSL.",
+    tool_scientific_calc: "🧮 Научный калькулятор",
+    tool_scientific_calc_desc: "Продвинутые научные расчеты, тригонометрия, логарифмы и другое.",
+    tool_loan_calc: "💰 Калькулятор кредита",
+    tool_loan_calc_desc: "Рассчитайте EMI, общую сумму процентов и срок кредита.",
+    tool_sip_calc: "📈 SIP калькулятор",
+    tool_sip_calc_desc: "Оцените доходность систематических инвестиционных планов.",
+    tool_fd_calc: "🏦 Калькулятор срочного вклада",
+    tool_fd_calc_desc: "Калькулятор срока и процентов по срочному вкладу.",
+    tool_gst_calc: "📊 GST калькулятор",
+    tool_gst_calc_desc: "Рассчитайте суммы GST, чистую цену и налог.",
+    tool_age_calc: "🎂 Калькулятор возраста",
+    tool_age_calc_desc: "Рассчитайте точный возраст в годах, месяцах и днях.",
+    tool_fuel_calc: "⛽ Калькулятор стоимости топлива",
+    tool_fuel_calc_desc: "Оцените стоимость топлива для поездки на основе расстояния и расхода.",
+    tool_shopping_calc: "🛒 Калькулятор списка покупок",
+    tool_shopping_calc_desc: "Добавляйте товары, отслеживайте расходы и делите счета.",
+    tool_discount_calc: "🏷️ Калькулятор скидки",
+    tool_discount_calc_desc: "Найдите конечную цену после процентной скидки.",
+    tool_tip_calc: "🍽️ Калькулятор чаевых",
+    tool_tip_calc_desc: "Разделите счет и рассчитайте чаевые на человека.",
+    tool_bmi_calc: "⚖️ Калькулятор ИМТ",
+    tool_bmi_calc_desc: "Индекс массы тела на основе роста и веса.",
+    tool_calorie_calc: "🔥 Калькулятор калорий",
+    tool_calorie_calc_desc: "Оцените суточную потребность в калориях для поддержания веса.",
+    tool_electricity_calc: "💡 Калькулятор счета за электричество",
+    tool_electricity_calc_desc: "Рассчитайте стоимость электроэнергии на основе потребления и тарифа.",
+    footer_description: "Ваше идеальное место для бесплатных онлайн-инструментов. От редактирования изображений до генерации контента с помощью ИИ, мы предоставляем простые в использовании утилиты для всех. 100% бесплатно, без регистрации.",
+    quick_links: "Быстрые ссылки",
+    home: "Главная",
+    contact: "Контакты",
+    privacy: "Политика конфиденциальности",
+    terms: "Условия использования",
+    categories: "Категории",
+    cat_image: "🖼 Инструменты для изображений",
+    cat_pdf: "📄 PDF инструменты",
+    cat_ai: "🤖 Инструменты ИИ",
+    cat_seo: "📈 SEO инструменты",
+    cat_dev: "💻 Инструменты разработчика",
+    cat_calculator: "🧮 Калькуляторы",
+    language_title: "🌐 Язык",
+    lang_en: "🇬🇧 Английский",
+    choose_language: "Выберите язык",
+    close: "Закрыть",
+    copyright: "© 2026 MyTools Website. Все права защищены."
+  }
+};
+
+/* ========== LANGUAGE SWITCHING FUNCTION ========== */
+function setLanguage(lang) {
+  const dict = translations[lang] || translations.en; // fallback to English if missing
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+    else if (translations.en[key]) el.textContent = translations.en[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) el.placeholder = dict[key];
+    else if (translations.en[key]) el.placeholder = translations.en[key];
+  });
+  closeModal();
+}
+
+/* ========== LANGUAGE MODAL CONTROLS ========== */
+function openLanguageModal() {
+  document.getElementById('languageModal').style.display = 'flex';
+}
+function closeModal() {
+  document.getElementById('languageModal').style.display = 'none';
+}
+window.onclick = function(event) {
+  const modal = document.getElementById('languageModal');
+  if (event.target === modal) closeModal();
+};
+
+/* ========== SEARCH ========== */
 document.getElementById("toolSearch").addEventListener("keyup",function(){
   let value=this.value.toLowerCase();
   document.querySelectorAll(".tool-card").forEach(function(card){
@@ -564,41 +2176,35 @@ document.getElementById("toolSearch").addEventListener("keyup",function(){
   });
 });
 
-/* CLEAR SEARCH */
 function clearSearch(){
   document.getElementById("toolSearch").value="";
-  document.querySelectorAll(".tool-card").forEach(function(card){
-    card.style.display="block";
-  });
+  document.querySelectorAll(".tool-card").forEach(card => card.style.display="block");
 }
 
 /* FILTER */
 function filterTools(category){
-  document.querySelectorAll(".tool-card").forEach(function(card){
-    if(category==="all"){
-      card.style.display="block";
-    } else if(card.dataset.category===category){
-      card.style.display="block";
-    } else{
-      card.style.display="none";
-    }
+  document.querySelectorAll(".tool-card").forEach(card => {
+    if(category==="all") card.style.display="block";
+    else if(card.dataset.category===category) card.style.display="block";
+    else card.style.display="none";
   });
 }
 
 /* TOP BUTTON */
 let btn=document.getElementById("topBtn");
 window.onscroll=function(){
-  if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+  if(document.body.scrollTop>200 || document.documentElement.scrollTop>200)
     btn.style.display="block";
-  } else{
+  else
     btn.style.display="none";
-  }
 };
-
 function topFunction(){
   document.body.scrollTop=0;
   document.documentElement.scrollTop=0;
 }
+
+// Default language
+window.addEventListener('DOMContentLoaded', () => setLanguage('en'));
 </script>
 
 </body>
