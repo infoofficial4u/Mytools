@@ -1,1035 +1,605 @@
- <!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
 <title>Ultimate Multi Tools Website</title>
-
-
-
 <meta name="description" content="Free online tools for image, pdf, seo and developer tasks">
-
 <meta name="keywords" content="image tools, pdf tools, seo tools, developer tools, free online tools">
 
-
-
 <style>
-
-
-
 body{
-
-font-family:Arial;
-
-margin:0;
-
-background:#f4f6fb;
-
+  font-family:Arial;
+  margin:0;
+  background:#f4f6fb;
 }
-
-
 
 /* HEADER */
-
-
-
 header{
-
-background:white;
-
-padding:15px 40px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
-
+  background:white;
+  padding:15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
-
-
 
 .logo{
-font-size:20px;
-font-weight:bold;
-color:#ff4b4b;
-display:flex;
-align-items:center;
-  }
-
+  font-size:20px;
+  font-weight:bold;
+  color:#ff4b4b;
+  display:flex;
+  align-items:center;
+}
   
 nav a{
-
-margin:0 15px;
-
-text-decoration:none;
-
-color:#333;
-
-font-weight:500;
-
+  margin:0 15px;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
 }
-
-
 
 /* HERO */
-
-
-
 .hero{
-
-text-align:center;
-
-padding:70px 20px;
-
+  text-align:center;
+  padding:70px 20px;
 }
-
-
-
 .hero h1{
-
-font-size:38px;
-
-margin-bottom:10px;
-
+  font-size:38px;
+  margin-bottom:10px;
 }
-
-
-
 .hero p{
-
-color:#666;
-
+  color:#666;
 }
-
-
 
 /* SEARCH */
-
-
-
 .search-box{
-
-text-align:center;
-
-margin-bottom:20px;
-
+  text-align:center;
+  margin-bottom:20px;
 }
-
-
-
 .search-box input{
-
-padding:12px;
-
-width:60%;
-
-max-width:400px;
-
-border-radius:6px;
-
-border:1px solid #ccc;
-
+  padding:12px;
+  width:60%;
+  max-width:400px;
+  border-radius:6px;
+  border:1px solid #ccc;
 }
-
-
-
 .search-box button{
-
-padding:12px 15px;
-
-border:none;
-
-background:#ff4b4b;
-
-color:white;
-
-border-radius:6px;
-
-cursor:pointer;
-
+  padding:12px 15px;
+  border:none;
+  background:#ff4b4b;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
 }
-
-
 
 /* FILTER */
-
-
-
 .filters{
-
-text-align:center;
-
-margin-bottom:30px;
-
+  text-align:center;
+  margin-bottom:30px;
 }
-
-
-
 .filters button{
-
-margin:5px;
-
-padding:8px 14px;
-
-border:none;
-
-background:#4a6cff;
-
-color:white;
-
-border-radius:5px;
-
-cursor:pointer;
-
+  margin:5px;
+  padding:8px 14px;
+  border:none;
+  background:#4a6cff;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
 }
 
-
-
-/* TOOL GRID */
-
-
-
+/* TOOL GRID – increased card size */
 .tools{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-
-gap:25px;
-
-padding:40px;
-
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+  padding:40px;
 }
-
-
-
 .tool-card{
-
-background:white;
-
-padding:25px;
-
-border-radius:10px;
-
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
-
-transition:0.3s;
-
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+  transition:0.3s;
 }
-
-
-
 .tool-card:hover{
-
-transform:translateY(-6px);
-
+  transform:translateY(-6px);
 }
-
-
-
 .tool-card h3{
-
-margin-top:10px;
-
+  margin-top:10px;
+  font-size:1.3rem;
 }
-
-
-
 .tool-card p{
-
-font-size:14px;
-
-color:#666;
-
+  font-size:15px;
+  color:#666;
+  line-height:1.5;
 }
-
-
-
 .open-btn{
-
-display:inline-block;
-
-margin-top:15px;
-
-padding:8px 16px;
-
-background:#4a6cff;
-
-color:white;
-
-text-decoration:none;
-
-border-radius:5px;
-
+  display:inline-block;
+  margin-top:15px;
+  padding:10px 18px;
+  background:#4a6cff;
+  color:white;
+  text-decoration:none;
+  border-radius:5px;
 }
 
-
-
-/* FOOTER */
-
-
-
+/* FOOTER – redesigned */
 footer{
-
-text-align:center;
-
-padding:30px;
-
-background:white;
-
-margin-top:40px;
-
+  background:white;
+  margin-top:40px;
+  padding:20px 0 0;
+  box-shadow:0 -2px 10px rgba(0,0,0,0.02);
 }
-
-
+.footer-container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px;
+  text-align:left;
+}
+.footer-col{
+  flex:1 1 220px;
+  margin:10px 15px;
+}
+.footer-col .logo{
+  font-size:24px;
+  margin-bottom:10px;
+}
+.footer-col p{
+  color:#666;
+  line-height:1.6;
+  font-size:14px;
+}
+.footer-col h4{
+  margin-bottom:15px;
+  color:#333;
+  font-size:16px;
+  border-left:3px solid #ff4b4b;
+  padding-left:10px;
+}
+.footer-col ul{
+  list-style:none;
+  padding:0;
+}
+.footer-col li{
+  margin-bottom:8px;
+}
+.footer-col a{
+  color:#444;
+  text-decoration:none;
+  font-size:14px;
+  transition:0.2s;
+}
+.footer-col a:hover{
+  color:#ff4b4b;
+  padding-left:5px;
+}
+.footer-bottom{
+  text-align:center;
+  padding:15px;
+  border-top:1px solid #eaeaea;
+  margin-top:20px;
+  color:#777;
+  font-size:14px;
+}
 
 /* BACK TO TOP */
-
-
-
 #topBtn{
-
-position:fixed;
-
-bottom:30px;
-
-right:30px;
-
-padding:10px 14px;
-
-background:#ff4b4b;
-
-color:white;
-
-border:none;
-
-border-radius:6px;
-
-cursor:pointer;
-
-display:none;
-
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  padding:10px 14px;
+  background:#ff4b4b;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  display:none;
 }
-
-
-
 </style>
-
-
-
 </head>
-
-
 
 <body>
 
-
-
 <header>
+  <!-- Logo is clickable and returns to homepage (index.html) -->
+  <a href="index.html" style="text-decoration:none; color:inherit;">
+    <div class="logo">
+      <svg width="32" height="32" viewBox="0 0 100 100" style="vertical-align:middle;margin-right:8px">
+        <rect width="100" height="100" rx="20" fill="#ff4b4b"/>
+        <text x="50" y="65" font-size="50" text-anchor="middle" fill="white" font-family="Arial">T</text>
+      </svg>
+      MyTools
+    </div>
+  </a>
 
-
-
-<div class="logo">
-<svg width="32" height="32" viewBox="0 0 100 100" style="vertical-align:middle;margin-right:8px">
-<rect width="100" height="100" rx="20" fill="#ff4b4b"/>
-<text x="50" y="65" font-size="50" text-anchor="middle" fill="white" font-family="Arial">T</text>
-</svg>
-MyTools
-</div>
-  
-
-<nav>
-
-<a href="#">Home</a>
-
-<a href="#">About</a>
-
-<a href="#">Contact</a>
-
-<a href="#">All Tools</a>
-
-</nav>
-
-
-
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <a href="#">All Tools</a>
+  </nav>
 </header>
 
-
-
 <section class="hero">
-
-
-
-<h1>All Your Online Tools – 100% Free</h1>
-
-<p>Resize images, convert PDFs, generate AI content and more.</p>
-
-
-
+  <h1>All Your Online Tools – 100% Free</h1>
+  <p>Resize images, convert PDFs, generate AI content and more.</p>
 </section>
-
-
 
 <!-- SEARCH -->
-
-
-
 <div class="search-box">
-
-
-
-<input type="text" id="toolSearch" placeholder="🔍 Search tools">
-
-
-
-<button onclick="clearSearch()">Clear</button>
-
-
-
+  <input type="text" id="toolSearch" placeholder="🔍 Search tools">
+  <button onclick="clearSearch()">Clear</button>
 </div>
 
-
-
-<!-- FILTER -->
-
-
-
+<!-- FILTER (NEW: Calculator category added) -->
 <div class="filters">
-
-
-
-<button onclick="filterTools('all')">All</button>
-
-<button onclick="filterTools('image')">🖼 Image</button>
-
-<button onclick="filterTools('pdf')">📄 PDF</button>
-
-<button onclick="filterTools('ai')">🤖 AI</button>
-
-<button onclick="filterTools('seo')">📈 SEO</button>
-
-<button onclick="filterTools('dev')">💻 Developer</button>
-
-
-
+  <button onclick="filterTools('all')">All</button>
+  <button onclick="filterTools('image')">🖼 Image</button>
+  <button onclick="filterTools('pdf')">📄 PDF</button>
+  <button onclick="filterTools('ai')">🤖 AI</button>
+  <button onclick="filterTools('seo')">📈 SEO</button>
+  <button onclick="filterTools('dev')">💻 Developer</button>
+  <button onclick="filterTools('calculator')">🧮 Calculator</button>
 </div>
-
-
 
 <!-- TOOLS -->
-
-
-
 <section class="tools">
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>🖼 Image Resizer</h3>
-
-<p>Resize images easily for social media.</p>
-
-<a class="open-btn" href="Image-Resizer.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>📉 Image Compressor</h3>
-
-<p>Reduce image size without losing quality.</p>
-
-<a class="open-btn" href="Image-Compressor.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>✂️ Image Cropper</h3>
-
-<p>Crop unwanted parts of an image.</p>
-
-<a class="open-btn" href="Image-Cropper.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>🔄 Image Rotator</h3>
-
-<p>Rotate images instantly.</p>
-
-<a class="open-btn" href="Image-Rotator.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>🎨 Color Picker</h3>
-
-<p>Pick HEX and RGB colors from images.</p>
-
-<a class="open-btn" href="Color-Picker.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="pdf">
-
-<h3>📄 PDF to Word</h3>
-
-<p>Convert PDF into editable Word.</p>
-
-<a class="open-btn" href="PDF-Word.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="pdf">
-
-<h3>📦 Merge PDF</h3>
-
-<p>Combine multiple PDF files.</p>
-
-<a class="open-btn" href="Merge-PDF.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="pdf">
-
-<h3>📉 Compress PDF</h3>
-
-<p>Reduce PDF file size.</p>
-
-<a class="open-btn" href="Compress-PDF.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="ai">
-
-<h3>🤖 AI Article Writer</h3>
-
-<p>Generate articles automatically.</p>
-
-<a class="open-btn" href="#">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="ai">
-
-<h3>🎬 YouTube Title Generator</h3>
-
-<p>Create viral YouTube titles.</p>
-
-<a class="open-btn" href="#">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="seo">
-
-<h3>🔍 Keyword Density Checker</h3>
-
-<p>Analyze keyword usage in content.</p>
-
-<a class="open-btn" href="#">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="dev">
-
-<h3>💻 JSON Formatter</h3>
-
-<p>Format and validate JSON data.</p>
-
-<a class="open-btn" href="#">Open Tool</a>
-
-</div>
-
-<div class="tool-card" data-category="image">
-
-<h3>🖼 Image Converter</h3>
-
-<p>Convert images between JPG, PNG and WEBP formats.</p>
-
-<a class="open-btn" href="Image-Converter.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>💧 Image Watermark</h3>
-
-<p>Add text or logo watermark to your images.</p>
-
-<a class="open-btn" href="image-watermark.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>🌫 Image Blur Tool</h3>
-
-<p>Blur selected parts of an image easily.</p>
-
-<a class="open-btn" href="image-blur.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>⚫ Image Grayscale</h3>
-
-<p>Convert color images into grayscale.</p>
-
-<a class="open-btn" href="image-grayscale.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
- <h3>⚫ Image Border Tool</h3>
-
-<p>Image Border Tool.</p>
-
-<a class="open-btn" href="image-border-tool.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="image">
-
-<h3>📸 Thumbnail Generator</h3>
-
-<p>Create YouTube and social media thumbnails.</p>
-
-<a class="open-btn" href="thumbnail-generator.html">Open Tool</a>
-
-</div>
-
-<div class="tool-card" data-category="pdf">
-
-<h3>📄 Word to PDF</h3>
-
-<p>Convert Word documents into PDF.</p>
-
-<a class="open-btn" href="word-to-pdf.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="pdf">
-
-<h3>📂 Split PDF</h3>
-
-<p>Split large PDF files into smaller files.</p>
-
-<a class="open-btn" href="split-pdf.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="pdf">
-
-<h3>🔐 Protect PDF</h3>
-
-<p>Add password protection to your PDF.</p>
-
-<a class="open-btn" href="protect-pdf.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="pdf">
-
-<h3>🔓 Unlock PDF</h3>
-
-<p>Remove password protection from PDF.</p>
-
-<a class="open-btn" href="unlock-pdf.html">Open Tool</a>
-
-</div>
-
-<div class="tool-card" data-category="ai">
-
-<h3>📝 Blog Topic Generator</h3>
-
-<p>Generate unique blog topic ideas.</p>
-
-<a class="open-btn" href="blog-topic.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="ai">
-
-<h3>📱 Instagram Caption Generator</h3>
-
-<p>Create engaging captions for Instagram posts.</p>
-
-<a class="open-btn" href="caption-generator.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="ai">
-
-<h3>🔁 AI Article Rewriter</h3>
-
-<p>Rewrite articles while keeping meaning.</p>
-
-<a class="open-btn" href="article-rewriter.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="ai">
-
-<h3>📄 AI Text Summarizer</h3>
-
-<p>Summarize long text into short content.</p>
-
-<a class="open-btn" href="text-summarizer.html">Open Tool</a>
-
-</div>
-
-<div class="tool-card" data-category="seo">
-
-<h3>🏷 Meta Tag Generator</h3>
-
-<p>Generate SEO meta tags for websites.</p>
-
-<a class="open-btn" href="meta-generator.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="seo">
-
-<h3>🔢 Word Counter</h3>
-
-<p>Count words and characters instantly.</p>
-
-<a class="open-btn" href="word-counter.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="seo">
-
-<h3>🔗 URL Slug Generator</h3>
-
-<p>Create SEO friendly URLs for pages.</p>
-
-<a class="open-btn" href="slug-generator.html">Open Tool</a>
-
-</div>
-
-<div class="tool-card" data-category="dev">
-
-<h3>🔐 Password Generator</h3>
-
-<p>Generate secure random passwords.</p>
-
-<a class="open-btn" href="password-generator.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="dev">
-
-<h3>🔡 Base64 Encoder</h3>
-
-<p>Encode text into Base64 format.</p>
-
-<a class="open-btn" href="base64-encoder.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="dev">
-
-<h3>🔓 Base64 Decoder</h3>
-
-<p>Decode Base64 text back to normal.</p>
-
-<a class="open-btn" href="base64-decoder.html">Open Tool</a>
-
-</div>
-
-
-
-<div class="tool-card" data-category="dev">
-
-<h3>🎨 Color Code Converter</h3>
-
-<p>Convert HEX color to RGB and HSL.</p>
-
-<a class="open-btn" href="color-converter.html">Open Tool</a>
-
-</div>
-
-
-
+  <!-- image tools -->
+  <div class="tool-card" data-category="image">
+    <h3>🖼 Image Resizer</h3>
+    <p>Resize images easily for social media.</p>
+    <a class="open-btn" href="image-resizer.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>📉 Image Compressor</h3>
+    <p>Reduce image size without losing quality.</p>
+    <a class="open-btn" href="image-compressor.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>✂️ Image Cropper</h3>
+    <p>Crop unwanted parts of an image.</p>
+    <a class="open-btn" href="image-cropper.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>🔄 Image Rotator</h3>
+    <p>Rotate images instantly.</p>
+    <a class="open-btn" href="image-rotator.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>🎨 Color Picker</h3>
+    <p>Pick HEX and RGB colors from images.</p>
+    <a class="open-btn" href="color-picker.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>🖼 Image Converter</h3>
+    <p>Convert images between JPG, PNG and WEBP formats.</p>
+    <a class="open-btn" href="image-converter.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>💧 Image Watermark</h3>
+    <p>Add text or logo watermark to your images.</p>
+    <a class="open-btn" href="image-watermark.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>🌫 Image Blur Tool</h3>
+    <p>Blur selected parts of an image easily.</p>
+    <a class="open-btn" href="image-blur.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>⚫ Image Grayscale</h3>
+    <p>Convert color images into grayscale.</p>
+    <a class="open-btn" href="image-grayscale.html">Open Tool</a>
+  </div>
+  <!-- Image Border Tool with updated emoji 🔲 -->
+  <div class="tool-card" data-category="image">
+    <h3>🔲 Image Border Tool</h3>
+    <p>Add borders to your images.</p>
+    <a class="open-btn" href="image-border-tool.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="image">
+    <h3>📸 Thumbnail Generator</h3>
+    <p>Create YouTube and social media thumbnails.</p>
+    <a class="open-btn" href="thumbnail-generator.html">Open Tool</a>
+  </div>
+
+  <!-- pdf tools -->
+  <div class="tool-card" data-category="pdf">
+    <h3>📄 PDF to Word</h3>
+    <p>Convert PDF into editable Word.</p>
+    <a class="open-btn" href="pdf-word.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3>📦 Merge PDF</h3>
+    <p>Combine multiple PDF files.</p>
+    <a class="open-btn" href="merge-pdf.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3>📉 Compress PDF</h3>
+    <p>Reduce PDF file size.</p>
+    <a class="open-btn" href="compress-pdf.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3>📄 Word to PDF</h3>
+    <p>Convert Word documents into PDF.</p>
+    <a class="open-btn" href="word-to-pdf.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3>📂 Split PDF</h3>
+    <p>Split large PDF files into smaller files.</p>
+    <a class="open-btn" href="split-pdf.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3>🔐 Protect PDF</h3>
+    <p>Add password protection to your PDF.</p>
+    <a class="open-btn" href="protect-pdf.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="pdf">
+    <h3>🔓 Unlock PDF</h3>
+    <p>Remove password protection from PDF.</p>
+    <a class="open-btn" href="unlock-pdf.html">Open Tool</a>
+  </div>
+
+  <!-- ai tools -->
+  <div class="tool-card" data-category="ai">
+    <h3>🤖 AI Article Writer</h3>
+    <p>Generate articles automatically.</p>
+    <a class="open-btn" href="ai-article-writer.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="ai">
+    <h3>🎬 YouTube Title Generator</h3>
+    <p>Create viral YouTube titles.</p>
+    <a class="open-btn" href="youtube-title-generator.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="ai">
+    <h3>📝 Blog Topic Generator</h3>
+    <p>Generate unique blog topic ideas.</p>
+    <a class="open-btn" href="blog-topic.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="ai">
+    <h3>📱 Instagram Caption Generator</h3>
+    <p>Create engaging captions for Instagram posts.</p>
+    <a class="open-btn" href="caption-generator.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="ai">
+    <h3>🔁 AI Article Rewriter</h3>
+    <p>Rewrite articles while keeping meaning.</p>
+    <a class="open-btn" href="article-rewriter.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="ai">
+    <h3>📄 AI Text Summarizer</h3>
+    <p>Summarize long text into short content.</p>
+    <a class="open-btn" href="text-summarizer.html">Open Tool</a>
+  </div>
+
+  <!-- seo tools -->
+  <div class="tool-card" data-category="seo">
+    <h3>🔍 Keyword Density Checker</h3>
+    <p>Analyze keyword usage in content.</p>
+    <a class="open-btn" href="keyword-density-checker.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="seo">
+    <h3>🏷 Meta Tag Generator</h3>
+    <p>Generate SEO meta tags for websites.</p>
+    <a class="open-btn" href="meta-generator.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="seo">
+    <h3>🔢 Word Counter</h3>
+    <p>Count words and characters instantly.</p>
+    <a class="open-btn" href="word-counter.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="seo">
+    <h3>🔗 URL Slug Generator</h3>
+    <p>Create SEO friendly URLs for pages.</p>
+    <a class="open-btn" href="slug-generator.html">Open Tool</a>
+  </div>
+
+  <!-- dev tools -->
+  <div class="tool-card" data-category="dev">
+    <h3>💻 JSON Formatter</h3>
+    <p>Format and validate JSON data.</p>
+    <a class="open-btn" href="json-formatter.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="dev">
+    <h3>🔐 Password Generator</h3>
+    <p>Generate secure random passwords.</p>
+    <a class="open-btn" href="password-generator.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="dev">
+    <h3>🔡 Base64 Encoder</h3>
+    <p>Encode text into Base64 format.</p>
+    <a class="open-btn" href="base64-encoder.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="dev">
+    <h3>🔓 Base64 Decoder</h3>
+    <p>Decode Base64 text back to normal.</p>
+    <a class="open-btn" href="base64-decoder.html">Open Tool</a>
+  </div>
+  <div class="tool-card" data-category="dev">
+    <h3>🎨 Color Code Converter</h3>
+    <p>Convert HEX color to RGB and HSL.</p>
+    <a class="open-btn" href="color-converter.html">Open Tool</a>
+  </div>
+
+  <!-- ========== NEW CALCULATOR TOOLS ========== -->
+  <!-- scientific calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🧮 Scientific Calculator</h3>
+    <p>Advanced scientific calculations, trigonometry, logarithms and more.</p>
+    <a class="open-btn" href="scientific-calculator.html">Open Tool</a>
+  </div>
+  <!-- loan calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>💰 Loan Calculator</h3>
+    <p>Calculate EMI, total interest and loan tenure.</p>
+    <a class="open-btn" href="#loan-calculator.html">Open Tool</a>
+  </div>
+  <!-- sip calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>📈 SIP Calculator</h3>
+    <p>Estimate returns on Systematic Investment Plans.</p>
+    <a class="open-btn" href="sip-calculator.html">Open Tool</a>
+  </div>
+  <!-- fd calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🏦 FD Calculator</h3>
+    <p>Fixed deposit maturity and interest calculator.</p>
+    <a class="open-btn" href="fd-calculator.html">Open Tool</a>
+  </div>
+  <!-- gst calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>📊 GST Calculator</h3>
+    <p>Compute GST amounts, net price and tax.</p>
+    <a class="open-btn" href="gst-calculator.html">Open Tool</a>
+  </div>
+  <!-- age calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🎂 Age Calculator</h3>
+    <p>Calculate exact age in years, months and days.</p>
+    <a class="open-btn" href="#age-calculator.html">Open Tool</a>
+  </div>
+  <!-- fuel cost calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>⛽ Fuel Cost Calculator</h3>
+    <p>Estimate trip fuel cost based on distance and mileage.</p>
+    <a class="open-btn" href="fuel-cost-calculator.html">Open Tool</a>
+  </div>
+  <!-- shopping list calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🛒 Shopping List Calculator</h3>
+    <p>Add items, track expenses and split bills.</p>
+    <a class="open-btn" href="shopping-list-calculator.html">Open Tool</a>
+  </div>
+  <!-- discount calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🏷️ Discount Calculator</h3>
+    <p>Find final price after percentage discount.</p>
+    <a class="open-btn" href="discount-calculator.html">Open Tool</a>
+  </div>
+  <!-- tip calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🍽️ Tip Calculator</h3>
+    <p>Split bill and calculate tip per person.</p>
+    <a class="open-btn" href="tip-calculator.html">Open Tool</a>
+  </div>
+  <!-- bmi calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>⚖️ BMI Calculator</h3>
+    <p>Body Mass Index based on height and weight.</p>
+    <a class="open-btn" href="bmi-calculator.html">Open Tool</a>
+  </div>
+  <!-- calorie calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>🔥 Calorie Calculator</h3>
+    <p>Estimate daily calorie needs for weight maintenance.</p>
+    <a class="open-btn" href="calorie-calculator.html">Open Tool</a>
+  </div>
+  <!-- electricity bill calculator -->
+  <div class="tool-card" data-category="calculator">
+    <h3>💡 Electricity Bill Calculator</h3>
+    <p>Compute electricity cost based on usage and tariff.</p>
+    <a class="open-btn" href="electricity-bill-calculator.html">Open Tool</a>
+  </div>
 </section>
 
-
-
+<!-- REDESIGNED FOOTER with logo, description, links and categories -->
 <footer>
+  <div class="footer-container">
+    <!-- Logo + description column -->
+    <div class="footer-col">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 100 100" style="vertical-align:middle;margin-right:8px">
+          <rect width="100" height="100" rx="20" fill="#ff4b4b"/>
+          <text x="50" y="65" font-size="50" text-anchor="middle" fill="white" font-family="Arial">T</text>
+        </svg>
+        MyTools
+      </div>
+      <p>Your ultimate destination for free online tools. From image editing to AI content generation, we provide easy-to-use utilities for everyone. 100% free, no registration required.</p>
+    </div>
 
+    <!-- Quick links (privacy, terms, contact, home) -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
+    </div>
 
+    <!-- Categories (filter triggers) - updated with Calculator -->
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="#" onclick="filterTools('image'); return false;">🖼 Image Tools</a></li>
+        <li><a href="#" onclick="filterTools('pdf'); return false;">📄 PDF Tools</a></li>
+        <li><a href="#" onclick="filterTools('ai'); return false;">🤖 AI Tools</a></li>
+        <li><a href="#" onclick="filterTools('seo'); return false;">📈 SEO Tools</a></li>
+        <li><a href="#" onclick="filterTools('dev'); return false;">💻 Developer Tools</a></li>
+        <li><a href="#" onclick="filterTools('calculator'); return false;">🧮 Calculator Tools</a></li>
+      </ul>
+    </div>
+  </div>
 
-<p>© 2026 My Tools Website</p>
-
-
-
+  <!-- Copyright line -->
+  <div class="footer-bottom">
+    <p>© 2026 MyTools Website. All rights reserved.</p>
+  </div>
 </footer>
-
-
 
 <button id="topBtn" onclick="topFunction()">⬆ Top</button>
 
-
-
 <script>
-
-
-
 /* SEARCH */
-
-
-
 document.getElementById("toolSearch").addEventListener("keyup",function(){
-
-
-
-let value=this.value.toLowerCase();
-
-
-
-document.querySelectorAll(".tool-card").forEach(function(card){
-
-
-
-let text=card.innerText.toLowerCase();
-
-
-
-card.style.display=text.includes(value)?"block":"none";
-
-
-
+  let value=this.value.toLowerCase();
+  document.querySelectorAll(".tool-card").forEach(function(card){
+    let text=card.innerText.toLowerCase();
+    card.style.display=text.includes(value)?"block":"none";
+  });
 });
-
-
-
-});
-
-
 
 /* CLEAR SEARCH */
-
-
-
 function clearSearch(){
-
-
-
-document.getElementById("toolSearch").value="";
-
-
-
-document.querySelectorAll(".tool-card").forEach(function(card){
-
-
-
-card.style.display="block";
-
-
-
-});
-
-
-
+  document.getElementById("toolSearch").value="";
+  document.querySelectorAll(".tool-card").forEach(function(card){
+    card.style.display="block";
+  });
 }
-
-
 
 /* FILTER */
-
-
-
 function filterTools(category){
-
-
-
-document.querySelectorAll(".tool-card").forEach(function(card){
-
-
-
-if(category==="all"){
-
-
-
-card.style.display="block";
-
-
-
+  document.querySelectorAll(".tool-card").forEach(function(card){
+    if(category==="all"){
+      card.style.display="block";
+    } else if(card.dataset.category===category){
+      card.style.display="block";
+    } else{
+      card.style.display="none";
+    }
+  });
 }
-
-
-
-else if(card.dataset.category===category){
-
-
-
-card.style.display="block";
-
-
-
-}
-
-
-
-else{
-
-
-
-card.style.display="none";
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
 
 /* TOP BUTTON */
-
-
-
 let btn=document.getElementById("topBtn");
-
-
-
 window.onscroll=function(){
-
-
-
-if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
-
-
-
-btn.style.display="block";
-
-
-
-}
-
-
-
-else{
-
-
-
-btn.style.display="none";
-
-
-
-}
-
-
-
+  if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+    btn.style.display="block";
+  } else{
+    btn.style.display="none";
+  }
 };
 
-
-
 function topFunction(){
-
-
-
-document.body.scrollTop=0;
-
-document.documentElement.scrollTop=0;
-
-
-
+  document.body.scrollTop=0;
+  document.documentElement.scrollTop=0;
 }
-
-
-
 </script>
 
-
-
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
