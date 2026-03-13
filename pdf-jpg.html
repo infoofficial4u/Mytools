@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF to JPG Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+.preview img{
+width:160px;
+margin:10px;
+border-radius:6px;
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>PDF to JPG Tool</h2>
+
+<input type="file" id="upload" accept="application/pdf">
+
+<br><br>
+
+<button onclick="convertPDF()">Convert to JPG</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let images=[]
+
+async function convertPDF(){
+
+let file=document.getElementById("upload").files[0]
+
+if(!file){
+alert("Upload PDF first")
+return
+}
+
+const fileReader=new FileReader()
+
+fileReader.onload=async function(){
+
+const typedarray=new Uint8Array(this.result)
+
+const pdf=await pdfjsLib.getDocument(typedarray).promise
+
+let preview=document.getElementById("preview")
+preview.innerHTML=""
+
+for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
+
+const page=await pdf.getPage(pageNum)
+
+const viewport=page.getViewport({scale:2})
+
+const canvas=document.createElement("canvas")
+
+const context=canvas.getContext("2d")
+
+canvas.height=viewport.height
+canvas.width=viewport.width
+
+await page.render({
+canvasContext:context,
+viewport:viewport
+}).promise
+
+let imgURL=canvas.toDataURL("image/jpeg")
+
+let img=document.createElement("img")
+img.src=imgURL
+preview.appendChild(img)
+
+let link=document.createElement("a")
+link.href=imgURL
+link.download="page-"+pageNum+".jpg"
+link.innerText="Download Page "+pageNum
+link.style.display="block"
+link.style.marginBottom="10px"
+
+preview.appendChild(link)
+
+}
+
+}
+
+fileReader.readAsArrayBuffer(file)
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("preview").innerHTML=""
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>PDF to JPG – Complete Guide</h1>
+
+<p>The <strong>PDF to JPG</strong> tool is one of the most useful utilities for converting documents into image format. PDF files are widely used for sharing documents because they preserve formatting and layout. However, there are many situations where users need to convert PDF pages into JPG images.</p>
+
+<p>The PDF to JPG conversion process allows users to transform each page of a PDF file into a separate JPG image. This makes it easier to view, share, and edit the content.</p>
+
+<h2>What is PDF to JPG</h2>
+
+<p><strong>PDF to JPG</strong> refers to the process of converting pages from a PDF document into JPG image files. Each page of the PDF becomes a separate JPG image.</p>
+
+<p>This format is extremely useful for presentations, social media sharing, and image editing.</p>
+
+<h2>Why Use PDF to JPG</h2>
+
+<p>There are several reasons why users prefer converting PDF documents into JPG images. Images are easier to upload on websites, social media platforms, and messaging applications.</p>
+
+<p>Unlike PDF files, JPG images can be easily edited using photo editing software.</p>
+
+<h2>Benefits of PDF to JPG</h2>
+
+<p>The PDF to JPG tool provides several advantages. One major benefit is improved accessibility. JPG images can be viewed on almost any device without requiring a special PDF reader.</p>
+
+<p>Another benefit is easy sharing. Images can be quickly uploaded to websites or shared through messaging platforms.</p>
+
+<p>PDF to JPG conversion also allows users to edit document pages using image editing tools.</p>
+
+<h2>PDF to JPG for Students</h2>
+
+<p>Students often convert PDF pages into JPG images for presentations, notes, and study materials.</p>
+
+<p>For example, a student may convert a diagram from a PDF textbook into a JPG image for use in a presentation.</p>
+
+<h2>PDF to JPG for Businesses</h2>
+
+<p>Businesses use PDF to JPG tools when they need to share document previews or graphics extracted from reports.</p>
+
+<p>For example, charts or graphs from PDF reports can be converted into JPG images for presentations.</p>
+
+<h2>PDF to JPG for Online Content</h2>
+
+<p>Website owners frequently convert PDF pages into JPG images to display them directly on webpages.</p>
+
+<p>Images load faster and are easier to embed in blog posts and articles.</p>
+
+<h2>How PDF to JPG Works</h2>
+
+<p>The PDF to JPG process involves rendering each page of the PDF document and converting it into an image format. Modern tools use advanced rendering libraries to maintain high image quality.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>PDF to JPG</strong> tool is an essential solution for converting document pages into image format. It allows users to extract visual content from PDFs and use it in presentations, websites, and social media.</p>
+
+<p>Whether you are a student, professional, or business owner, the PDF to JPG tool can help you convert documents quickly and efficiently.</p>
+
+</div>
+
+</body>
+</html>
