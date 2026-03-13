@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Protect PDF Tool</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef0f6;
+margin:0;
+}
+
+header{
+background:#f5f5f5;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:1100px;
+margin:40px auto;
+}
+
+.tool-box{
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+button{
+background:#3d6ef7;
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+margin:6px;
+}
+
+button:hover{
+background:#2c52c9;
+}
+
+input{
+padding:8px;
+margin-top:10px;
+}
+
+.status{
+margin-top:15px;
+font-size:14px;
+color:#555;
+}
+
+.article{
+max-width:1100px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<a href="javascript:history.back()">← Back</a>
+<div>All Tools</div>
+</header>
+
+<div class="container">
+
+<div class="tool-box">
+
+<h2>Protect PDF Tool</h2>
+
+<input type="file" id="upload" accept="application/pdf">
+
+<br><br>
+
+<label>Enter Password</label><br>
+<input type="password" id="password" placeholder="Enter PDF password">
+
+<br><br>
+
+<button onclick="protectPDF()">Protect PDF</button>
+<button onclick="downloadPDF()">Download Protected PDF</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="status" id="status"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let protectedBlob=null
+
+async function protectPDF(){
+
+let file=document.getElementById("upload").files[0]
+let password=document.getElementById("password").value
+
+if(!file){
+alert("Upload PDF first")
+return
+}
+
+if(!password){
+alert("Enter password")
+return
+}
+
+const arrayBuffer=await file.arrayBuffer()
+
+const pdfDoc=await PDFLib.PDFDocument.load(arrayBuffer)
+
+const pdfBytes=await pdfDoc.save({
+userPassword:password,
+ownerPassword:password,
+permissions:{
+printing:"lowResolution",
+modifying:false,
+copying:false,
+annotating:false
+}
+})
+
+protectedBlob=new Blob([pdfBytes],{type:"application/pdf"})
+
+document.getElementById("status").innerText="PDF protected successfully"
+
+}
+
+function downloadPDF(){
+
+if(!protectedBlob){
+alert("Protect PDF first")
+return
+}
+
+let link=document.createElement("a")
+
+link.href=URL.createObjectURL(protectedBlob)
+
+link.download="protected.pdf"
+
+link.click()
+
+}
+
+function clearAll(){
+
+document.getElementById("upload").value=""
+document.getElementById("password").value=""
+document.getElementById("status").innerText=""
+
+protectedBlob=null
+
+}
+
+</script>
+
+<div class="article">
+
+<h1>Protect PDF – Complete Guide</h1>
+
+<p>The <strong>Protect PDF</strong> tool is an essential document security solution that allows users to protect PDF files using a password. In today’s digital world, documents often contain sensitive information such as contracts, invoices, personal data, or confidential business details. Protecting these documents is extremely important.</p>
+
+<p>A Protect PDF tool helps users secure their PDF documents by adding password protection. Once the PDF is protected, only users who know the password can open or access the document.</p>
+
+<h2>What is Protect PDF</h2>
+
+<p><strong>Protect PDF</strong> refers to the process of securing a PDF document with a password or access restrictions. This ensures that unauthorized users cannot open, edit, or copy the contents of the document.</p>
+
+<p>Password protection is one of the most common ways to secure digital documents.</p>
+
+<h2>Why Use Protect PDF</h2>
+
+<p>Many PDF files contain sensitive information that should not be shared publicly. A Protect PDF tool ensures that only authorized users can access the document.</p>
+
+<p>This is especially important for business contracts, financial documents, and confidential reports.</p>
+
+<h2>Benefits of Protect PDF</h2>
+
+<p>The Protect PDF tool offers several advantages. One major benefit is improved document security. Password protection prevents unauthorized access.</p>
+
+<p>Another benefit is privacy protection. When sharing files online or through email, password-protected PDFs keep information secure.</p>
+
+<p>The Protect PDF tool also helps organizations maintain data confidentiality.</p>
+
+<h2>Protect PDF for Businesses</h2>
+
+<p>Businesses frequently use the Protect PDF tool to secure contracts, agreements, financial reports, and confidential documents.</p>
+
+<p>Adding password protection ensures that sensitive information remains safe.</p>
+
+<h2>Protect PDF for Students</h2>
+
+<p>Students sometimes use Protect PDF tools to secure assignments, research papers, and project documents before sharing them online.</p>
+
+<h2>Protect PDF for Online Sharing</h2>
+
+<p>When uploading documents to websites or sharing them via email, password protection ensures that only intended recipients can open the document.</p>
+
+<h2>How Protect PDF Works</h2>
+
+<p>The Protect PDF process encrypts the document and requires a password to open it. Modern PDF tools use strong encryption methods to keep documents secure.</p>
+
+<h2>Conclusion</h2>
+
+<p>The <strong>Protect PDF</strong> tool is an important solution for anyone who wants to secure their PDF documents. By adding password protection, users can ensure that their files remain safe and confidential.</p>
+
+<p>Whether you are a student, professional, or business owner, using a Protect PDF tool helps protect sensitive information and maintain document privacy.</p>
+
+</div>
+
+</body>
+</html>
